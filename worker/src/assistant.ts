@@ -21,7 +21,7 @@ export const DAILY_QUESTIONS = 10;
 export const MODEL = "claude-haiku-5-5";
 
 // USD per 1M tokens, claude-haiku-5-5, prompts up to 100K tokens.
-// Source: owner ruling D485 (2026-10-22) and the Anthropic model pricing table. Cache write is the
+// Source: the Anthropic model pricing table (read 2026-10-22). Cache write is the
 // 5-minute ephemeral rate (1.25x input); cache read is 0.1x input.
 export const PRICE = { input: 0.1, cacheWrite: 0.125, cacheRead: 0.01, output: 0.5 };
 
