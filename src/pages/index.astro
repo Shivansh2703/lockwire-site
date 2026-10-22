@@ -10,6 +10,13 @@ const EMAIL = "shivansh@lockwirerobotics.com";
 const ASK = "mailto:" + EMAIL + "?subject=" + encodeURIComponent("48-hour check");
 const GITHUB = "https://github.com/Shivansh2703/lockwire";
 
+const DESC = "Lockwire checks power rails, mass, buses and sensors against your datasheets. For makers and robotics teams. See it catch real problems on five robot designs.";
+const SITE = "https://lockwirerobotics.com";
+const ld = [
+  { "@context": "https://schema.org", "@type": "Organization", name: "Lockwire", url: SITE + "/", logo: SITE + "/favicon.svg", email: EMAIL, sameAs: [GITHUB] },
+  { "@context": "https://schema.org", "@type": "SoftwareApplication", name: "Lockwire", applicationCategory: "DeveloperApplication", operatingSystem: "macOS, Linux", description: DESC, url: SITE + "/" },
+];
+
 const plan = demo.plan;
 const zKey = "Accelerometer Z";
 const z = test.outside_pct[zKey];
@@ -20,14 +27,19 @@ const z = test.outside_pct[zKey];
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Lockwire · From Idea to Robot</title>
-  <meta name="description" content="Lockwire checks that the numbers from every datasheet in your robot add up, then checks the powered robot against them. See it catch real problems on five robot designs." />
+  <meta name="description" content={DESC} />
   <meta property="og:title" content="Lockwire" />
   <meta property="og:description" content="From Idea to Robot. Lockwire checks every number in your robot, from the first parts list to every power-on." />
   <meta property="og:image" content="https://lockwirerobotics.com/og.png" />
   <meta property="og:url" content="https://lockwirerobotics.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Lockwire" />
   <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Lockwire" />
+  <meta name="twitter:description" content={DESC} />
   <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
   <link rel="canonical" href="https://lockwirerobotics.com/" />
+  <script type="application/ld+json" set:html={JSON.stringify(ld)} />
 </head>
 <body>
   <header class="nav wrap">
@@ -122,9 +134,11 @@ const z = test.outside_pct[zKey];
     <span>© 2026 Lockwire</span>
     <span><a href={GITHUB}>GitHub</a> · <a href={`mailto:${EMAIL}`}>{EMAIL}</a></span>
     <span class="credits">Drone model: <a href={GITHUB}>lockwire</a>, Apache-2.0. Test data: <a href="https://review.px4.io/">PX4 Flight Review</a>, CC BY 4.0.</span>
+    <span class="credits">We count page views and button clicks. No cookies, nothing about you.</span>
   </footer>
 
   <script>
+    import "../scripts/hits.js";
     document.getElementById("copy")?.addEventListener("click", (e) => {
       const b = e.currentTarget;
       navigator.clipboard?.writeText(b.dataset.text).then(() => (b.textContent = "Copied"), () => {});

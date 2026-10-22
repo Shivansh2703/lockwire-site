@@ -13,6 +13,8 @@ import humanoidRun from "../../src/data/runs/humanoid.json";
 export interface Env {
   ANTHROPIC_API_KEY: string;
   LIMITS: KVNamespace;
+  HITS: DurableObjectNamespace;
+  STATS_TOKEN?: string;
 }
 
 // ponytail: monthly cap is a read-modify-write on KV (eventually consistent); the 0.50 margin under the owner's $10 covers it.

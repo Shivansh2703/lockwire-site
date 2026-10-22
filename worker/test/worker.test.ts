@@ -1,5 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { handle, costUsd, validate, MONTHLY_CAP_USD, type Env } from "../src/assistant";
+import { Counter, handleHits } from "../src/hits";
 
 const kv = (init: Record<string, string> = {}) => {
   const m = new Map(Object.entries(init));
@@ -54,5 +55,40 @@ describe("worker", () => {
   it("rejects other origins", async () => {
     const r = new Request("https://w.example/ask", { method: "POST", headers: { origin: "https://evil.example" }, body: JSON.stringify(good) });
     expect((await handle(r, env().e, vi.fn())).status).toBe(403);
+  });
+});
+
+describe("hit counts", () => {
+  // In-memory stand-in for the Durable Object's SQLite table.
+  const hitEnv = (token?: string) => {
+    const rows = new Map<string, number>();
+    const sql = {
+      exec: (q: string, ...b: string[]) => {
+        if (q.startsWith("INSERT")) rows.set(`${b[0]}|${b[1]}`, (rows.get(`${b[0]}|${b[1]}`) ?? 0) + 1);
+        return { toArray: () => [...rows].map(([k, n]) => ({ day: k.split("|")[0], e: k.split("|")[1], n })).filter((r) => r.day >= b[0]) };
+      },
+    };
+    const counter = new Counter({ storage: { sql } } as never);
+    return { rows, e: { STATS_TOKEN: token, HITS: { idFromName: () => "x", get: () => ({ fetch: (u: string, i?: RequestInit) => counter.fetch(new Request(u, i)) }) } } as unknown as Env };
+  };
+  const post = (body: string) => new Request("https://w.example/hit", { method: "POST", headers: { origin: "http://127.0.0.1:4329", "content-type": "text/plain" }, body });
+
+  it("rejects unknown events and counts known ones", async () => {
+    const { e, rows } = hitEnv();
+    expect((await handleHits(post('{"e":"robot_toaster"}'), e))!.status).toBe(400);
+    expect((await handleHits(post("not json"), e))!.status).toBe(400);
+    for (const ev of ["view", "view", "mode_run", "robot_drone"]) expect((await handleHits(post(JSON.stringify({ e: ev })), e))!.status).toBe(204);
+    expect([...rows.values()].sort()).toEqual([1, 1, 2]);
+  });
+
+  it("stats need the token", async () => {
+    const { e } = hitEnv("s3cret");
+    await handleHits(post('{"e":"view"}'), e);
+    const get = (auth?: string) => handleHits(new Request("https://w.example/stats", { headers: auth ? { authorization: auth } : {} }), e);
+    expect((await get())!.status).toBe(401);
+    expect((await get("Bearer nope"))!.status).toBe(401);
+    const ok = await get("Bearer s3cret");
+    expect(Object.values((await ok!.json()) as Record<string, Record<string, number>>)[0]).toEqual({ view: 1 });
+    expect((await handleHits(new Request("https://w.example/stats"), hitEnv().e))!.status).toBe(401); // no token configured
   });
 });

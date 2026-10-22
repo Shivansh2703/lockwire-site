@@ -9,3 +9,14 @@ binding = "LIMITS"
 id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
 
 # The API key is NOT here. Set it with: npx wrangler secret put ANTHROPIC_API_KEY
+
+# Click counts live in a SQLite-backed Durable Object (free-plan friendly). No setup needed; deploy creates it.
+[[durable_objects.bindings]]
+name = "HITS"
+class_name = "Counter"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["Counter"]
+
+# Stats are read with a bearer token. Set it with: npx wrangler secret put STATS_TOKEN

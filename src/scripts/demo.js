@@ -1,4 +1,6 @@
 // Demo: robot picker, seven modes, 3D view. The first paint (Drone, Check) is already in the HTML.
+import { hit } from "./hits.js";
+
 const root = document.querySelector("[data-demo]");
 const $ = (s, el = root) => el.querySelector(s);
 const $$ = (s, el = root) => [...el.querySelectorAll(s)];
@@ -28,6 +30,7 @@ let askRobot = state.robot;
 async function sendAsk(q) {
   q = q.trim();
   if (!q || ask.dataset.busy) return;
+  hit("ask");
   ask.dataset.busy = "1";
   const btn = $("button[type=submit]", ask);
   btn.disabled = true;
@@ -125,6 +128,7 @@ async function pick3d() {
 
 async function setRobot(id) {
   state.robot = id; state.part = null;
+  hit("robot_" + id);
   $$("[data-robot-btn]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.robotBtn === id)));
   data = await load(id);
   if (state.robot !== id) return; // clicked again meanwhile
@@ -134,6 +138,7 @@ async function setRobot(id) {
 
 async function setMode(m) {
   state.mode = m;
+  hit("mode_" + m);
   data ??= await load(state.robot);
   render();
 }
