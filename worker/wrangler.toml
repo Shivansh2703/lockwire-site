@@ -1,0 +1,11 @@
+name = "lockwire-assistant"
+main = "src/index.ts"
+compatibility_date = "2026-10-01"
+
+# OWNER: run `npx wrangler kv namespace create LIMITS`, then paste the id it prints below.
+# This placeholder will not deploy until you replace it.
+[[kv_namespaces]]
+binding = "LIMITS"
+id = "REPLACE_WITH_YOUR_KV_NAMESPACE_ID"
+
+# The API key is NOT here. Set it with: npx wrangler secret put ANTHROPIC_API_KEY

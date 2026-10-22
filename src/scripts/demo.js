@@ -20,6 +20,47 @@ const state = { robot: "drone", mode: "check", part: null };
 let data = null; // loaded data for state.robot; null until first interaction
 let view3d = null;
 
+// Ask box (present only when the site was built with PUBLIC_ASSISTANT_URL). Answers go in via textContent.
+const ask = $("[data-ask]");
+const askOut = ask && $("[data-ask-out]", ask);
+let askHistory = [];
+let askRobot = state.robot;
+async function sendAsk(q) {
+  q = q.trim();
+  if (!q || ask.dataset.busy) return;
+  ask.dataset.busy = "1";
+  const btn = $("button[type=submit]", ask);
+  btn.disabled = true;
+  askOut.textContent = "Thinking\u2026";
+  const robot = state.robot;
+  let text;
+  try {
+    const r = await fetch(ask.dataset.url.replace(/\/$/, "") + "/ask", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ robot, mode: state.mode, question: q, history: askHistory.slice(-6) }),
+      signal: AbortSignal.timeout(30000),
+    });
+    const j = await r.json().catch(() => ({}));
+    text = j.answer ?? j.message ?? "Something went wrong. Try again.";
+    if (j.answer && robot === state.robot) askHistory = [...askHistory, { role: "user", content: q }, { role: "assistant", content: j.answer }].slice(-6);
+  } catch {
+    text = "Couldn't reach the assistant. Try again in a moment.";
+  }
+  if (robot === state.robot) askOut.textContent = text;
+  delete ask.dataset.busy;
+  btn.disabled = false;
+}
+if (ask) {
+  ask.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const input = $("input", ask);
+    const q = input.value;
+    input.value = "";
+    sendAsk(q);
+  });
+}
+
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
 const tone = (v) => (v === "NO-GO" ? "bad" : v === "GO" ? "go" : "muted");
 const isNum = (s) => /^[\d.+-]/.test(s);
@@ -70,6 +111,7 @@ function render() {
   const r = data.robot;
   credit.innerHTML = `${esc(r.title)}: based on ${esc(r.based_on)} (${esc(r.licence)}). Numbers come from <code>${esc(r.source)}</code>.`;
   paint3d();
+  if (state.robot !== askRobot) { askRobot = state.robot; askHistory = []; if (askOut) askOut.textContent = ""; }
 }
 
 async function pick3d() {
@@ -105,6 +147,7 @@ function select(id) {
 root.addEventListener("click", async (e) => {
   const t = e.target.closest("button");
   if (!t) return;
+  if (t.dataset.q) { sendAsk(t.dataset.q); return; }
   if (t.dataset.robotBtn && t.dataset.robotBtn !== state.robot) await setRobot(t.dataset.robotBtn);
   else if (t.dataset.modeBtn) await setMode(t.dataset.modeBtn);
   else if (t.dataset.step) await setMode(MODES[(MODES.indexOf(state.mode) + Number(t.dataset.step) + MODES.length) % MODES.length]);

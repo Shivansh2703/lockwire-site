@@ -14,6 +14,7 @@ const robot = drone;
 const mode = robot.modes.check;
 const tone = mode.verdict === "NO-GO" ? "bad" : mode.verdict === "GO" ? "go" : "muted";
 const hi = new Set(mode.highlight);
+const assistantUrl = import.meta.env.PUBLIC_ASSISTANT_URL; // unset: the Ask box is not rendered
 ---
 <section class="demo wrap" id="demo" aria-label="Interactive demo" data-demo data-robot="drone" data-mode="check">
   <div class="demo-bar">
@@ -40,6 +41,7 @@ const hi = new Set(mode.highlight);
       </nav>
     </div>
 
+    <div class:list={["demo-side", { "has-ask": !!assistantUrl }]}>
     <div class="demo-panel" id="demo-panel" role="tabpanel" aria-labelledby="demo-tab-check" data-panel data-tone={tone}>
       <div class="demo-verdict-row">
         {mode.verdict && <span class={`demo-verdict ${tone}`}>{mode.verdict}</span>}
@@ -53,6 +55,23 @@ const hi = new Set(mode.highlight);
           <li><button type="button" data-part={p.id} aria-pressed="false" class={hi.has(p.id) ? "hl" : ""}>{p.name}</button></li>
         ))}
       </ul>
+    </div>
+    {assistantUrl && (
+      <form class="demo-ask" data-ask data-url={assistantUrl} aria-label="Ask about this robot">
+        <label class="demo-sub" for="demo-ask-q">Ask about this robot</label>
+        <div class="demo-ask-chips">
+          <button type="button" data-q="Why is this NO-GO?">Why is this NO-GO?</button>
+          <button type="button" data-q="How would I fix it?">How would I fix it?</button>
+          <button type="button" data-q="What did the test catch?">What did the test catch?</button>
+        </div>
+        <div class="demo-ask-row">
+          <input id="demo-ask-q" name="q" type="text" maxlength="500" autocomplete="off" placeholder="Type a question" />
+          <button type="submit">Send</button>
+        </div>
+        <p class="demo-ask-out" data-ask-out role="status" aria-live="polite"></p>
+        <p class="demo-ask-note">Answers come from this page's data. 10 questions a day.</p>
+      </form>
+    )}
     </div>
   </div>
   <p class="demo-credit">{robot.title}: based on {robot.based_on} ({robot.licence}). Numbers come from <code>{robot.source}</code>.</p>
