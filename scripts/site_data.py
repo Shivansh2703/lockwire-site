@@ -18,7 +18,7 @@ from ruamel.yaml import YAML
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "src" / "data" / "demo.json"
-ROBOTS = ["drone", "arm", "quadruped", "rover", "humanoid"]
+ROBOTS = ["drone", "arm", "quadruped"]
 RAIL = "rail.supply-5v"
 BEC = "https://www.castlecreations.com/en/cc-bec-pro-010-0004-01"
 # The fix: the same three commands a user would type (see the README's X500 correction).

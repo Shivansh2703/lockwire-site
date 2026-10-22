@@ -1,7 +1,7 @@
 // Privacy-first click counts: one counter per (UTC day, event). No IP, user agent, referrer or id is read or stored.
 import type { Env } from "./assistant";
 
-const ROBOTS = ["drone", "arm", "quadruped", "rover", "humanoid"];
+const ROBOTS = ["drone", "arm", "quadruped"];
 const MODES = ["design", "declare", "check", "plan", "test", "run", "docs"];
 const EVENTS = new Set(["view", "cta_check", "try_free", "ask", "copy_email", ...ROBOTS.map((r) => `robot_${r}`), ...MODES.map((m) => `mode_${m}`)]);
 const ALLOWED = /^(https:\/\/(www\.)?lockwirerobotics\.com|http:\/\/(127\.0\.0\.1|localhost)(:\d+)?)$/;

@@ -2,13 +2,9 @@ import Anthropic from "@anthropic-ai/sdk";
 import droneRobot from "../../src/data/robots/drone.json";
 import armRobot from "../../src/data/robots/arm.json";
 import quadrupedRobot from "../../src/data/robots/quadruped.json";
-import roverRobot from "../../src/data/robots/rover.json";
-import humanoidRobot from "../../src/data/robots/humanoid.json";
 import droneRun from "../../src/data/runs/drone.json";
 import armRun from "../../src/data/runs/arm.json";
 import quadrupedRun from "../../src/data/runs/quadruped.json";
-import roverRun from "../../src/data/runs/rover.json";
-import humanoidRun from "../../src/data/runs/humanoid.json";
 
 export interface Env {
   ANTHROPIC_API_KEY: string;
@@ -46,8 +42,6 @@ const DATA: Record<string, unknown> = {
   drone: { robot: droneRobot, runs: droneRun },
   arm: { robot: armRobot, runs: armRun },
   quadruped: { robot: quadrupedRobot, runs: quadrupedRun },
-  rover: { robot: roverRobot, runs: roverRun },
-  humanoid: { robot: humanoidRobot, runs: humanoidRun },
 };
 const MODES = ["design", "declare", "check", "plan", "test", "run", "docs"];
 
