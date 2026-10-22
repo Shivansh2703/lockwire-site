@@ -10,7 +10,6 @@ const EMAIL = "shivansh@lockwirerobotics.com";
 const ASK = "mailto:" + EMAIL + "?subject=" + encodeURIComponent("48-hour check");
 const GITHUB = "https://github.com/Shivansh2703/lockwire";
 
-// Every number below is read from the data files.
 const plan = demo.plan;
 const zKey = "Accelerometer Z";
 const z = test.outside_pct[zKey];
@@ -20,10 +19,10 @@ const z = test.outside_pct[zKey];
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Lockwire · Find out your robot won't work before you buy the parts</title>
-  <meta name="description" content="Lockwire checks that the numbers from every datasheet in your robot add up, then checks the powered robot against them. See it catch a real overloaded rail on a real drone design." />
+  <title>Lockwire · From Idea to Robot</title>
+  <meta name="description" content="Lockwire checks that the numbers from every datasheet in your robot add up, then checks the powered robot against them. See it catch real problems on five robot designs." />
   <meta property="og:title" content="Lockwire" />
-  <meta property="og:description" content="Find out your robot won't work before you buy the parts." />
+  <meta property="og:description" content="From Idea to Robot. Lockwire checks every number in your robot, from the first parts list to every power-on." />
   <meta property="og:image" content="https://lockwirerobotics.com/og.png" />
   <meta property="og:url" content="https://lockwirerobotics.com/" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -32,59 +31,71 @@ const z = test.outside_pct[zKey];
 </head>
 <body>
   <header class="nav wrap">
-    <a class="brand" href="/" aria-label="Lockwire home"><img src="/favicon.svg" alt="" width="24" height="24" />lockwire</a>
+    <a class="brand" href="/" aria-label="Lockwire home"><img src="/favicon.svg" alt="" width="28" height="28" />lockwire</a>
     <nav>
       <a href="#catches">What it catches</a>
       <a href="#plans">Plans</a>
-      <a href={GITHUB}>GitHub</a>
+      <a class="btn small dark" href={ASK}>Get a 48-hour check</a>
     </nav>
   </header>
 
   <main>
     <section class="hero wrap">
-      <h1>Find out your robot won't work before you buy the parts.</h1>
-      <p class="sub">Every robot is a stack of numbers from a dozen datasheets. Lockwire checks that they add up while you plan, then checks the powered robot against them.</p>
-      <p class="actions">
-        <a class="btn" href={ASK}>Get a 48-hour check</a>
-        <a class="quiet" href={GITHUB}>Try it free on GitHub</a>
-      </p>
+      <span class="pill"><span class="dot"></span>Real checks on five robots, below</span>
+      <h1>From Idea <em>to Robot</em></h1>
+      <p class="sub">Lockwire checks every number in your robot, from the first parts list to every power-on. Free and open source if you build robots for fun. The full go/no-go gate if you ship them.</p>
+      <div class="ctas">
+        <a class="btn dark" href={ASK}>Get a 48-hour check</a>
+        <a class="btn" href={GITHUB}>Try it free</a>
+      </div>
     </section>
 
-    <Demo />
+    <section class="demo-wrap wrap" aria-label="Lockwire on three robots, every mode">
+      <Demo />
+    </section>
 
     <section id="catches" class="wrap section">
-      <h2>What it catches</h2>
+      <h2 class="h2">What it catches</h2>
       <div class="tablewrap">
         <table>
-          <thead><tr><th>Problem</th><th>How Lockwire knows</th><th>On the drone above</th></tr></thead>
+          <thead><tr><th>Problem</th><th>How Lockwire knows</th><th>Real example</th></tr></thead>
           <tbody>
             {plan.check.violations.map((x) => (
-              <tr><td>{x.quantity.endsWith("7w-mode") ? "Overloaded even in low-power mode" : "Overloaded power rail"}</td><td>Adds every part's draw on a rail and compares it with what the supply can give</td><td class="num">{x.observed.split(" (")[0]} on {x.expected.replace("<= ", "")} · <span class="badtext">{x.delta.match(/\(([^)]+)\)/)?.[1]}</span></td></tr>
+              <tr><td>{x.quantity.endsWith("7w-mode") ? "Overloaded even in low-power mode" : "Overloaded power rail"}</td><td>Adds every part's draw on a rail and compares it with what the supply can give</td><td class="num">Drone: {x.observed.split(" (")[0]} on {x.expected.replace("<= ", "")} · <span class="badtext">{x.delta.match(/\(([^)]+)\)/)?.[1]}</span></td></tr>
             ))}
-            <tr><td>Missing numbers</td><td>Names every value it could not check, so a gap is never a silent pass</td><td class="num">{plan.check.counts.not_scored} not checked, each named</td></tr>
-            <tr><td>Sensors drifting after power-on</td><td>Learns each sensor's normal range from known-good runs, then flags readings outside it</td><td class="num">{zKey}: {z.known_good}% → <span class="badtext">{z.checked}%</span> out of range</td></tr>
+            <tr><td>Missing numbers</td><td>Names every value it could not check, so a gap is never a silent pass</td><td class="num">Drone: {plan.check.counts.not_scored} not checked, each named</td></tr>
+            <tr><td>Sensors drifting after power-on</td><td>Learns each sensor's normal range from known-good runs, then flags readings outside it</td><td class="num">Public PX4 flight log: {zKey} {z.known_good}% → <span class="badtext">{z.checked}%</span> out of range</td></tr>
           </tbody>
         </table>
       </div>
     </section>
 
+    <section class="wrap section">
+      <h2 class="h2">How it fits your team</h2>
+      <div class="three">
+        <div><span class="kicker">1 · Plan</span><h3>One file for every number</h3><p>Start from your URDF or a parts list. Every value carries its source.</p></div>
+        <div><span class="kicker">2 · Check</span><h3>On every change</h3><p>A GitHub Action reruns the check, so a part swap can't quietly break the robot.</p></div>
+        <div><span class="kicker">3 · Test</span><h3>Before every power-on</h3><p>A go/no-go gate compares the powered robot with its lockfile and its known-good runs.</p></div>
+      </div>
+    </section>
+
     <section id="plans" class="wrap section">
-      <h2>Plans</h2>
+      <h2 class="h2">Plans</h2>
       <div class="plans">
         <div class="plan">
           <h3>Lockwire Free</h3>
-          <p class="planline">Open source. Plan and check a robot yourself.</p>
+          <p class="planline">For makers and hobbyists. Open source: plan and check a robot yourself.</p>
           <ul>
             <li>The check: power, mass and bus budgets</li>
             <li>Command line and Python library</li>
             <li>Desktop app for macOS and Linux</li>
             <li>GitHub Action for CI</li>
           </ul>
-          <a class="quiet" href={GITHUB}>Try it free on GitHub</a>
+          <a class="btn" href={GITHUB}>Try it free on GitHub</a>
         </div>
-        <div class="plan">
+        <div class="plan pro">
           <h3>Lockwire Pro</h3>
-          <p class="planline">For teams with a robot on the bench.</p>
+          <p class="planline">For teams and firms with robots on the bench and in the field.</p>
           <ul>
             <li>Everything in Free</li>
             <li>The go/no-go gate on the powered robot</li>
@@ -92,7 +103,7 @@ const z = test.outside_pct[zKey];
             <li>ROS 2 bags and PX4 flight logs</li>
             <li>Set up with you on your own robot</li>
           </ul>
-          <a class="quiet" href={ASK}>Get a 48-hour check</a>
+          <a class="btn dark" href={ASK}>Talk to us</a>
         </div>
       </div>
     </section>
@@ -100,7 +111,10 @@ const z = test.outside_pct[zKey];
     <section class="wrap section ask">
       <h2>Send us your parts list or URDF.</h2>
       <p>Within 48 hours you get back the numbers that don't add up.</p>
-      <p class="actions"><a class="btn" href={ASK}>Get a 48-hour check</a> <a class="quiet" href={`mailto:${EMAIL}`}>{EMAIL}</a></p>
+      <div class="ctas">
+        <a class="btn dark" href={ASK}>Email {EMAIL}</a>
+        <button class="btn" type="button" id="copy" data-text={EMAIL}>Copy address</button>
+      </div>
     </section>
   </main>
 
@@ -109,5 +123,13 @@ const z = test.outside_pct[zKey];
     <span><a href={GITHUB}>GitHub</a> · <a href={`mailto:${EMAIL}`}>{EMAIL}</a></span>
     <span class="credits">Drone model: <a href={GITHUB}>lockwire</a>, Apache-2.0. Test data: <a href="https://review.px4.io/">PX4 Flight Review</a>, CC BY 4.0.</span>
   </footer>
+
+  <script>
+    document.getElementById("copy")?.addEventListener("click", (e) => {
+      const b = e.currentTarget;
+      navigator.clipboard?.writeText(b.dataset.text).then(() => (b.textContent = "Copied"), () => {});
+    });
+  </script>
+
 </body>
 </html>

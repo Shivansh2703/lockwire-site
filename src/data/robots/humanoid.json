@@ -1,0 +1,834 @@
+{
+  "id": "humanoid",
+  "title": "Humanoid",
+  "based_on": "ToddlerBot 2xm",
+  "licence": "MIT",
+  "source": "lockwire 0.2.3 from PyPI, `lockwire start --example humanoid`",
+  "glb": "/robots/humanoid.glb",
+  "parts": [
+    {
+      "id": "dev.servo.left-hip-pitch",
+      "name": "Servo left hip pitch",
+      "node": "left_hip_pitch_link",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "0.48 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Power modes",
+          "value": "standby 0.48 W, stall 27.6 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Rail",
+          "value": "Legs 12V rail",
+          "source": "https://www.pololu.com/product/4095; https://arxiv.org/abs/2502.00893 appendix 8.7"
+        }
+      ]
+    },
+    {
+      "id": "dev.servo.left-hip-roll",
+      "name": "Servo left hip roll",
+      "node": "left_hip_pitch_link",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "0.48 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Power modes",
+          "value": "standby 0.48 W, stall 27.6 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Rail",
+          "value": "Legs 12V rail",
+          "source": "https://www.pololu.com/product/4095; https://arxiv.org/abs/2502.00893 appendix 8.7"
+        }
+      ]
+    },
+    {
+      "id": "dev.servo.left-hip-yaw",
+      "name": "Servo left hip yaw",
+      "node": "left_hip_yaw_link",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "0.204 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xc330-t288/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Power modes",
+          "value": "standby 0.204 W, stall 10.56 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xc330-t288/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Rail",
+          "value": "Legs 12V rail",
+          "source": "https://www.pololu.com/product/4095; https://arxiv.org/abs/2502.00893 appendix 8.7"
+        }
+      ]
+    },
+    {
+      "id": "dev.servo.left-knee",
+      "name": "Servo left knee",
+      "node": "left_knee_link",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "0.48 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xm430-w210/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Power modes",
+          "value": "standby 0.48 W, stall 27.6 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xm430-w210/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Rail",
+          "value": "Legs 12V rail",
+          "source": "https://www.pololu.com/product/4095; https://arxiv.org/abs/2502.00893 appendix 8.7"
+        }
+      ]
+    },
+    {
+      "id": "dev.servo.left-ankle-pitch",
+      "name": "Servo left ankle pitch",
+      "node": "left_ankle_pitch_link",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "0.48 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xm430-w210/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Power modes",
+          "value": "standby 0.48 W, stall 27.6 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xm430-w210/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Rail",
+          "value": "Legs 12V rail",
+          "source": "https://www.pololu.com/product/4095; https://arxiv.org/abs/2502.00893 appendix 8.7"
+        }
+      ]
+    },
+    {
+      "id": "dev.servo.left-ankle-roll",
+      "name": "Servo left ankle roll",
+      "node": "left_ankle_roll_link",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "0.552 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xc430-t240bb/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Power modes",
+          "value": "standby 0.552 W, stall 16.8 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xc430-t240bb/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Rail",
+          "value": "Legs 12V rail",
+          "source": "https://www.pololu.com/product/4095; https://arxiv.org/abs/2502.00893 appendix 8.7"
+        }
+      ]
+    },
+    {
+      "id": "dev.servo.left-shoulder-pitch",
+      "name": "Servo left shoulder pitch",
+      "node": "torso",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "0.552 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xc430-t240bb/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Power modes",
+          "value": "standby 0.552 W, stall 16.8 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xc430-t240bb/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Rail",
+          "value": "Upper body 12V rail",
+          "source": "https://www.pololu.com/product/4095; https://arxiv.org/abs/2502.00893 appendix 8.7"
+        }
+      ]
+    },
+    {
+      "id": "dev.servo.left-shoulder-roll-yaw",
+      "name": "Servo left shoulder roll yaw",
+      "node": "left_shoulder_roll_link",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "0.588 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/2xc430-w250/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Power modes",
+          "value": "standby 0.588 W, stall 16.8 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/2xc430-w250/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Rail",
+          "value": "Upper body 12V rail",
+          "source": "https://www.pololu.com/product/4095; https://arxiv.org/abs/2502.00893 appendix 8.7"
+        }
+      ]
+    },
+    {
+      "id": "dev.servo.left-elbow-roll-yaw",
+      "name": "Servo left elbow roll yaw",
+      "node": "left_elbow_roll_link",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "0.588 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/2xc430-w250/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Power modes",
+          "value": "standby 0.588 W, stall 16.8 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/2xc430-w250/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Rail",
+          "value": "Upper body 12V rail",
+          "source": "https://www.pololu.com/product/4095; https://arxiv.org/abs/2502.00893 appendix 8.7"
+        }
+      ]
+    },
+    {
+      "id": "dev.servo.left-wrist-pitch-roll",
+      "name": "Servo left wrist pitch roll",
+      "node": "left_wrist_pitch_link",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "0.588 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/2xc430-w250/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Power modes",
+          "value": "standby 0.588 W, stall 16.8 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/2xc430-w250/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Rail",
+          "value": "Upper body 12V rail",
+          "source": "https://www.pololu.com/product/4095; https://arxiv.org/abs/2502.00893 appendix 8.7"
+        }
+      ]
+    },
+    {
+      "id": "dev.servo.right-hip-pitch",
+      "name": "Servo right hip pitch",
+      "node": "right_hip_pitch_link",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "0.48 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Power modes",
+          "value": "standby 0.48 W, stall 27.6 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Rail",
+          "value": "Legs 12V rail",
+          "source": "https://www.pololu.com/product/4095; https://arxiv.org/abs/2502.00893 appendix 8.7"
+        }
+      ]
+    },
+    {
+      "id": "dev.servo.right-hip-roll",
+      "name": "Servo right hip roll",
+      "node": "right_hip_pitch_link",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "0.48 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Power modes",
+          "value": "standby 0.48 W, stall 27.6 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xm430-w350/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Rail",
+          "value": "Legs 12V rail",
+          "source": "https://www.pololu.com/product/4095; https://arxiv.org/abs/2502.00893 appendix 8.7"
+        }
+      ]
+    },
+    {
+      "id": "dev.servo.right-hip-yaw",
+      "name": "Servo right hip yaw",
+      "node": "right_hip_yaw_link",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "0.204 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xc330-t288/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Power modes",
+          "value": "standby 0.204 W, stall 10.56 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xc330-t288/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Rail",
+          "value": "Legs 12V rail",
+          "source": "https://www.pololu.com/product/4095; https://arxiv.org/abs/2502.00893 appendix 8.7"
+        }
+      ]
+    },
+    {
+      "id": "dev.servo.right-knee",
+      "name": "Servo right knee",
+      "node": "right_knee_link",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "0.48 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xm430-w210/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Power modes",
+          "value": "standby 0.48 W, stall 27.6 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xm430-w210/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Rail",
+          "value": "Legs 12V rail",
+          "source": "https://www.pololu.com/product/4095; https://arxiv.org/abs/2502.00893 appendix 8.7"
+        }
+      ]
+    },
+    {
+      "id": "dev.servo.right-ankle-pitch",
+      "name": "Servo right ankle pitch",
+      "node": "right_ankle_pitch_link",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "0.48 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xm430-w210/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Power modes",
+          "value": "standby 0.48 W, stall 27.6 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xm430-w210/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Rail",
+          "value": "Legs 12V rail",
+          "source": "https://www.pololu.com/product/4095; https://arxiv.org/abs/2502.00893 appendix 8.7"
+        }
+      ]
+    },
+    {
+      "id": "dev.servo.right-ankle-roll",
+      "name": "Servo right ankle roll",
+      "node": "right_ankle_roll_link",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "0.552 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xc430-t240bb/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Power modes",
+          "value": "standby 0.552 W, stall 16.8 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xc430-t240bb/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Rail",
+          "value": "Legs 12V rail",
+          "source": "https://www.pololu.com/product/4095; https://arxiv.org/abs/2502.00893 appendix 8.7"
+        }
+      ]
+    },
+    {
+      "id": "dev.servo.right-shoulder-pitch",
+      "name": "Servo right shoulder pitch",
+      "node": "torso",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "0.552 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xc430-t240bb/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Power modes",
+          "value": "standby 0.552 W, stall 16.8 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xc430-t240bb/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Rail",
+          "value": "Upper body 12V rail",
+          "source": "https://www.pololu.com/product/4095; https://arxiv.org/abs/2502.00893 appendix 8.7"
+        }
+      ]
+    },
+    {
+      "id": "dev.servo.right-shoulder-roll-yaw",
+      "name": "Servo right shoulder roll yaw",
+      "node": "right_shoulder_roll_link",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "0.588 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/2xc430-w250/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Power modes",
+          "value": "standby 0.588 W, stall 16.8 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/2xc430-w250/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Rail",
+          "value": "Upper body 12V rail",
+          "source": "https://www.pololu.com/product/4095; https://arxiv.org/abs/2502.00893 appendix 8.7"
+        }
+      ]
+    },
+    {
+      "id": "dev.servo.right-elbow-roll-yaw",
+      "name": "Servo right elbow roll yaw",
+      "node": "right_elbow_roll_link",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "0.588 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/2xc430-w250/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Power modes",
+          "value": "standby 0.588 W, stall 16.8 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/2xc430-w250/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Rail",
+          "value": "Upper body 12V rail",
+          "source": "https://www.pololu.com/product/4095; https://arxiv.org/abs/2502.00893 appendix 8.7"
+        }
+      ]
+    },
+    {
+      "id": "dev.servo.right-wrist-pitch-roll",
+      "name": "Servo right wrist pitch roll",
+      "node": "right_wrist_pitch_link",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "0.588 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/2xc430-w250/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Power modes",
+          "value": "standby 0.588 W, stall 16.8 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/2xc430-w250/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Rail",
+          "value": "Upper body 12V rail",
+          "source": "https://www.pololu.com/product/4095; https://arxiv.org/abs/2502.00893 appendix 8.7"
+        }
+      ]
+    },
+    {
+      "id": "dev.servo.neck-yaw",
+      "name": "Servo neck yaw",
+      "node": "torso",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "0.204 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xc330-t288/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Power modes",
+          "value": "standby 0.204 W, stall 10.56 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xc330-t288/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Rail",
+          "value": "Upper body 12V rail",
+          "source": "https://www.pololu.com/product/4095; https://arxiv.org/abs/2502.00893 appendix 8.7"
+        }
+      ]
+    },
+    {
+      "id": "dev.servo.neck-pitch",
+      "name": "Servo neck pitch",
+      "node": "head",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "0.204 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xc330-t288/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Power modes",
+          "value": "standby 0.204 W, stall 10.56 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xc330-t288/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Rail",
+          "value": "Upper body 12V rail",
+          "source": "https://www.pololu.com/product/4095; https://arxiv.org/abs/2502.00893 appendix 8.7"
+        }
+      ]
+    },
+    {
+      "id": "dev.servo.waist-yaw",
+      "name": "Servo waist yaw",
+      "node": "torso",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "0.204 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xc330-t288/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Power modes",
+          "value": "standby 0.204 W, stall 10.56 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xc330-t288/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Rail",
+          "value": "Upper body 12V rail",
+          "source": "https://www.pololu.com/product/4095; https://arxiv.org/abs/2502.00893 appendix 8.7"
+        }
+      ]
+    },
+    {
+      "id": "dev.servo.waist-roll",
+      "name": "Servo waist roll",
+      "node": "pelvis_link",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "0.204 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xc330-t288/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Power modes",
+          "value": "standby 0.204 W, stall 10.56 W",
+          "source": "https://emanual.robotis.com/docs/en/dxl/x/xc330-t288/; https://docs.google.com/spreadsheets/d/e/2PACX-1vQmoxJnTnUaQ_-WAAjnchBhaX5HZ4ElUV5pXksEV6GEbeEjiie1E_BdN9XCMt6FtfBaopXoaeSOeMDg/pubhtml; https://arxiv.org/abs/2502.00893 Table 2"
+        },
+        {
+          "label": "Rail",
+          "value": "Upper body 12V rail",
+          "source": "https://www.pololu.com/product/4095; https://arxiv.org/abs/2502.00893 appendix 8.7"
+        }
+      ]
+    },
+    {
+      "id": "dev.jetson-orin",
+      "name": "Jetson orin",
+      "node": "torso",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "15 W",
+          "source": "https://arxiv.org/abs/2502.00893 appendix 8.7"
+        },
+        {
+          "label": "Rail",
+          "value": "Battery pack rail",
+          "source": "https://arxiv.org/abs/2502.00893 appendix 8.7"
+        }
+      ]
+    }
+  ],
+  "modes": {
+    "design": {
+      "title": "Design",
+      "verdict": null,
+      "headline": "25 parts, 25 without a declared mass",
+      "lines": [
+        "25 parts placed on the 3D model",
+        "0 of 25 have a declared mass",
+        "Centre of gravity: not worked out until every part has a mass"
+      ],
+      "highlight": [
+        "dev.jetson-orin",
+        "dev.servo.left-ankle-pitch",
+        "dev.servo.left-ankle-roll",
+        "dev.servo.left-elbow-roll-yaw",
+        "dev.servo.left-hip-pitch",
+        "dev.servo.left-hip-roll",
+        "dev.servo.left-hip-yaw",
+        "dev.servo.left-knee",
+        "dev.servo.left-shoulder-pitch",
+        "dev.servo.left-shoulder-roll-yaw",
+        "dev.servo.left-wrist-pitch-roll",
+        "dev.servo.neck-pitch",
+        "dev.servo.neck-yaw",
+        "dev.servo.right-ankle-pitch",
+        "dev.servo.right-ankle-roll",
+        "dev.servo.right-elbow-roll-yaw",
+        "dev.servo.right-hip-pitch",
+        "dev.servo.right-hip-roll",
+        "dev.servo.right-hip-yaw",
+        "dev.servo.right-knee",
+        "dev.servo.right-shoulder-pitch",
+        "dev.servo.right-shoulder-roll-yaw",
+        "dev.servo.right-wrist-pitch-roll",
+        "dev.servo.waist-roll",
+        "dev.servo.waist-yaw"
+      ],
+      "source": "lockwire check --json run.json (forces) and the lockfile's devices"
+    },
+    "declare": {
+      "title": "Declare",
+      "verdict": null,
+      "headline": "74 sourced values, 0 still unset",
+      "lines": [
+        "74 values declared, each with its source"
+      ],
+      "highlight": [],
+      "source": "the lockfile (lockwire start --example humanoid) and lockwire check --json run.json"
+    },
+    "check": {
+      "title": "Check",
+      "verdict": "NO-GO",
+      "headline": "Don't power it on yet - 2 things do not add up",
+      "lines": [
+        "Servo left ankle pitch, Servo left ankle roll, Servo left hip pitch and 9 more: observed 275.52 W (draw mode: stall), expected <= 54.00 W, over by +221.52 W (+410%)",
+        "Servo left elbow roll yaw, Servo left shoulder pitch, Servo left shoulder roll yaw and 9 more: observed 176.64 W (draw mode: stall), expected <= 54.00 W, over by +122.64 W (+227%)",
+        "1 frame without mass (normal for sensor and mount frames)",
+        "1 check not scored (nothing declared to compare)"
+      ],
+      "highlight": [
+        "dev.servo.left-ankle-pitch",
+        "dev.servo.left-ankle-roll",
+        "dev.servo.left-elbow-roll-yaw",
+        "dev.servo.left-hip-pitch",
+        "dev.servo.left-hip-roll",
+        "dev.servo.left-hip-yaw",
+        "dev.servo.left-knee",
+        "dev.servo.left-shoulder-pitch",
+        "dev.servo.left-shoulder-roll-yaw",
+        "dev.servo.left-wrist-pitch-roll",
+        "dev.servo.neck-pitch",
+        "dev.servo.neck-yaw",
+        "dev.servo.right-ankle-pitch",
+        "dev.servo.right-ankle-roll",
+        "dev.servo.right-elbow-roll-yaw",
+        "dev.servo.right-hip-pitch",
+        "dev.servo.right-hip-roll",
+        "dev.servo.right-hip-yaw",
+        "dev.servo.right-knee",
+        "dev.servo.right-shoulder-pitch",
+        "dev.servo.right-shoulder-roll-yaw",
+        "dev.servo.right-wrist-pitch-roll",
+        "dev.servo.waist-roll",
+        "dev.servo.waist-yaw"
+      ],
+      "source": "lockwire check --json run.json"
+    },
+    "plan": {
+      "title": "Plan",
+      "verdict": "NO-GO",
+      "headline": "NO-GO \u2014 2 violation(s), 0 warning(s)",
+      "lines": [
+        "Step 1, set power mode: fails. Observed 275.52 W rolled-up draw on Legs 12V rail at mode 'stall', expected <= 54.00 W capacity",
+        "Step 2, rail load: fails. Observed 527.40 W rolled-up draw on Battery pack rail, expected <= 370.00 W capacity"
+      ],
+      "highlight": [
+        "dev.jetson-orin",
+        "dev.servo.left-ankle-pitch",
+        "dev.servo.left-ankle-roll",
+        "dev.servo.left-hip-pitch",
+        "dev.servo.left-hip-roll",
+        "dev.servo.left-hip-yaw",
+        "dev.servo.left-knee",
+        "dev.servo.right-ankle-pitch",
+        "dev.servo.right-ankle-roll",
+        "dev.servo.right-hip-pitch",
+        "dev.servo.right-hip-roll",
+        "dev.servo.right-hip-yaw",
+        "dev.servo.right-knee"
+      ],
+      "source": "lockwire plan lockwire.yaml lockwire.plan.yaml --json plan.json"
+    },
+    "docs": {
+      "title": "Docs",
+      "verdict": null,
+      "headline": "A reference sheet for each of the 25 parts, written from the lockfile",
+      "lines": [
+        "Jetson orin draws 15.00 W",
+        "Servo left hip pitch draws 0.48 W",
+        "Servo left hip roll draws 0.48 W",
+        "Servo left hip yaw draws 0.20 W",
+        "Servo left knee draws 0.48 W",
+        "Servo left ankle pitch draws 0.48 W"
+      ],
+      "highlight": [
+        "dev.jetson-orin",
+        "dev.servo.left-ankle-pitch",
+        "dev.servo.left-ankle-roll",
+        "dev.servo.left-elbow-roll-yaw",
+        "dev.servo.left-hip-pitch",
+        "dev.servo.left-hip-roll",
+        "dev.servo.left-hip-yaw",
+        "dev.servo.left-knee",
+        "dev.servo.left-shoulder-pitch",
+        "dev.servo.left-shoulder-roll-yaw",
+        "dev.servo.left-wrist-pitch-roll",
+        "dev.servo.neck-pitch",
+        "dev.servo.neck-yaw",
+        "dev.servo.right-ankle-pitch",
+        "dev.servo.right-ankle-roll",
+        "dev.servo.right-elbow-roll-yaw",
+        "dev.servo.right-hip-pitch",
+        "dev.servo.right-hip-roll",
+        "dev.servo.right-hip-yaw",
+        "dev.servo.right-knee",
+        "dev.servo.right-shoulder-pitch",
+        "dev.servo.right-shoulder-roll-yaw",
+        "dev.servo.right-wrist-pitch-roll",
+        "dev.servo.waist-roll",
+        "dev.servo.waist-yaw"
+      ],
+      "source": "lockwire describe lockwire.yaml"
+    }
+  }
+}

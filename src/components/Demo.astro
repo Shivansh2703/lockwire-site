@@ -3,9 +3,11 @@ import "../styles/demo.css";
 import drone from "../data/robots/drone.json";
 import arm from "../data/robots/arm.json";
 import quadruped from "../data/robots/quadruped.json";
+import rover from "../data/robots/rover.json";
+import humanoid from "../data/robots/humanoid.json";
 
 // First paint is Drone + Check, rendered here so it works with JavaScript off. demo.js takes over from there.
-const pickers = [drone, arm, quadruped].map((r) => ({ id: r.id, title: r.title }));
+const pickers = [drone, arm, quadruped, rover, humanoid].map((r) => ({ id: r.id, title: r.title }));
 const MODES = ["design", "declare", "check", "plan", "test", "run", "docs"];
 const label = (m: string) => m[0].toUpperCase() + m.slice(1);
 const robot = drone;

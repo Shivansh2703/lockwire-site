@@ -18,7 +18,7 @@ from ruamel.yaml import YAML
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "src" / "data" / "demo.json"
-ROBOTS = ["drone", "arm", "quadruped"]
+ROBOTS = ["drone", "arm", "quadruped", "rover", "humanoid"]
 RAIL = "rail.supply-5v"
 BEC = "https://www.castlecreations.com/en/cc-bec-pro-010-0004-01"
 # The fix: the same three commands a user would type (see the README's X500 correction).
@@ -108,7 +108,10 @@ def qty(q):
 def glb_nodes(path):
     b = path.read_bytes()
     n = struct.unpack("<I", b[12:16])[0]
-    return {x.get("name") for x in json.loads(b[20:20 + n])["nodes"]}
+    doc = json.loads(b[20:20 + n])
+    roots = {doc["nodes"][i].get("name") for i in doc["scenes"][0]["nodes"]}
+    # A top-level frame like base_link is the whole robot: never light it up for one part.
+    return {x.get("name") for x in doc["nodes"]} - (roots if len(doc["scenes"][0]["nodes"]) == 1 else {"base_link", "base_footprint"})
 
 
 def robot(example):
@@ -160,7 +163,7 @@ def robot(example):
             facts.append({"label": "Rail", "value": name[pw["rail"]], "source": (rails[pw["rail"]].get("provenance") or {}).get("source")})
         if d.get("identity", {}).get("bus_ref"):
             facts.append({"label": "Bus", "value": humanise(d["identity"]["bus_ref"]), "source": src})
-        parts.append({"id": d["id"], "name": name[d["id"]], "node": d["id"] if d["id"] in nodes else None, "facts": facts})
+        parts.append({"id": d["id"], "name": name[d["id"]], "node": d["id"] if d["id"] in nodes else (phys.get("mount_frame") if phys.get("mount_frame") in nodes else None), "facts": facts})
     unmassed = [d["id"] for d in devices if not d.get("physical", {}).get("mass")]
 
     def mode(title, verdict, headline, lines, highlight, source):

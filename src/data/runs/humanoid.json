@@ -1,0 +1,35 @@
+{
+  "test": {
+    "title": "Test a recording",
+    "verdict": "NO-GO",
+    "headline": "Servo left knee is outside its limit",
+    "lines": [
+      "Servo left knee: temperature read 87.45 \u00b0C, its limit: -5.00 \u00b0C to 80.00 \u00b0C.",
+      "Power budget (found at design time, not from the recording): 275.52 W (draw mode: stall), allowed <= 54.00 W.",
+      "Power budget (found at design time, not from the recording): 176.64 W (draw mode: stall), allowed <= 54.00 W.",
+      "48 comparisons made, 33 left unscored (devices the recording does not carry).",
+      "A simulated 30 s recording of the Humanoid; one fault was planted in it."
+    ],
+    "highlight": [
+      "dev.servo.left-knee"
+    ],
+    "label": "Simulated recording",
+    "source": "Built by the simulated-recording builder, seed 20261022"
+  },
+  "run": {
+    "title": "Run against the robot's record",
+    "verdict": "NO-GO",
+    "headline": "1 device over a limit",
+    "lines": [
+      "Servo left knee: temperature read 87.45 \u00b0C, over a limit.",
+      "23 other watched devices inside their limits.",
+      "1 device not watched: nothing in the recording to compare.",
+      "A simulated 30 s recording of the Humanoid; one fault was planted in it."
+    ],
+    "highlight": [
+      "dev.servo.left-knee"
+    ],
+    "label": "Simulated recording",
+    "source": "Built by the simulated-recording builder, seed 20261022"
+  }
+}

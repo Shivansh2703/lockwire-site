@@ -1,0 +1,33 @@
+{
+  "test": {
+    "title": "Test a recording",
+    "verdict": "NO-GO",
+    "headline": "Right wheel motor is outside its limit",
+    "lines": [
+      "Right wheel motor: temperature read 79.84 \u00b0C, its limit: -5.00 \u00b0C to 72.00 \u00b0C.",
+      "4 comparisons made, 11 left unscored (devices the recording does not carry).",
+      "A simulated 30 s recording of the Rover; one fault was planted in it."
+    ],
+    "highlight": [
+      "dev.right-wheel-motor"
+    ],
+    "label": "Simulated recording",
+    "source": "Built by the simulated-recording builder, seed 20261022"
+  },
+  "run": {
+    "title": "Run against the robot's record",
+    "verdict": "NO-GO",
+    "headline": "1 device over a limit",
+    "lines": [
+      "Right wheel motor: temperature read 79.84 \u00b0C, over a limit.",
+      "1 other watched device inside their limits.",
+      "4 devices not watched: nothing in the recording to compare.",
+      "A simulated 30 s recording of the Rover; one fault was planted in it."
+    ],
+    "highlight": [
+      "dev.right-wheel-motor"
+    ],
+    "label": "Simulated recording",
+    "source": "Built by the simulated-recording builder, seed 20261022"
+  }
+}
