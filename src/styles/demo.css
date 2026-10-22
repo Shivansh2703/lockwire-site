@@ -80,3 +80,6 @@
   .demo-view { min-height: 0; }
   .demo-panel { overflow-y: auto; }
 }
+/* One mode at a time between the arrows. */
+.demo-modes .demo-tabs button[aria-selected="false"] { display: none; }
+.demo-modes .demo-tabs button[aria-selected="true"] { min-width: 96px; }
