@@ -20,11 +20,6 @@ const hi = new Set(mode.highlight);
     <div class="demo-pick" role="group" aria-label="Robot">
       {pickers.map((p) => <button type="button" data-robot-btn={p.id} aria-pressed={String(p.id === "drone")}>{p.title}</button>)}
     </div>
-    <div class="demo-tabs" role="tablist" aria-label="Mode">
-      {MODES.map((m) => (
-        <button type="button" role="tab" id={`demo-tab-${m}`} data-mode-btn={m} aria-selected={String(m === "check")} aria-controls="demo-panel" tabindex={m === "check" ? 0 : -1}>{label(m)}</button>
-      ))}
-    </div>
   </div>
 
   <div class="demo-grid">
@@ -34,6 +29,15 @@ const hi = new Set(mode.highlight);
       <div class="demo-tip" data-tip hidden></div>
       <div class="demo-card" data-card role="region" aria-label="Part facts" hidden></div>
       <p class="demo-hint" data-hint>Drag to turn. Click a part.</p>
+      <nav class="demo-modes" aria-label="Modes">
+        <button type="button" class="demo-step" data-step="-1" aria-label="Previous mode">&lsaquo;</button>
+        <div class="demo-tabs" role="tablist" aria-label="Mode">
+          {MODES.map((m) => (
+            <button type="button" role="tab" id={`demo-tab-${m}`} data-mode-btn={m} aria-selected={String(m === "check")} aria-controls="demo-panel" tabindex={m === "check" ? 0 : -1}>{label(m)}</button>
+          ))}
+        </div>
+        <button type="button" class="demo-step" data-step="1" aria-label="Next mode">&rsaquo;</button>
+      </nav>
     </div>
 
     <div class="demo-panel" id="demo-panel" role="tabpanel" aria-labelledby="demo-tab-check" data-panel data-tone={tone}>

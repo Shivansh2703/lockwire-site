@@ -107,6 +107,7 @@ root.addEventListener("click", async (e) => {
   if (!t) return;
   if (t.dataset.robotBtn && t.dataset.robotBtn !== state.robot) await setRobot(t.dataset.robotBtn);
   else if (t.dataset.modeBtn) await setMode(t.dataset.modeBtn);
+  else if (t.dataset.step) await setMode(MODES[(MODES.indexOf(state.mode) + Number(t.dataset.step) + MODES.length) % MODES.length]);
   else if (t.dataset.part) { data ??= await load(state.robot); select(t.dataset.part); }
   else if (t.hasAttribute("data-close")) select(null);
 });
