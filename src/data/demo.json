@@ -1,0 +1,84 @@
+{
+  "source": "lockwire 0.2.3 from PyPI, `lockwire start --example drone`",
+  "plan": {
+    "check": {
+      "verdict": "NO-GO",
+      "exit_code": 1,
+      "headline": "Don't power it on yet - 2 things do not add up",
+      "counts": {
+        "violation": 2,
+        "warning": 0,
+        "not_scored": 9
+      },
+      "violations": [
+        {
+          "quantity": "budgets/bud.power.supply-5v",
+          "observed": "35.20 W (draw mode: nominal)",
+          "expected": "<= 15.60 W",
+          "delta": "+19.60 W (+126%)",
+          "dependent": "dev.depth-camera, dev.onboard-computer, dev.telemetry-radio"
+        },
+        {
+          "quantity": "budgets/bud.power.supply-5v.7w-mode",
+          "observed": "17.20 W (draw mode: 7W)",
+          "expected": "<= 15.60 W",
+          "delta": "+1.60 W (+10%)",
+          "dependent": "dev.depth-camera, dev.onboard-computer, dev.telemetry-radio"
+        }
+      ]
+    },
+    "rail": {
+      "capacity_w": 15.6,
+      "loads": [
+        {
+          "device": "dev.onboard-computer",
+          "model": "mdl.companion.jetson-orin-nano",
+          "watts": 25
+        },
+        {
+          "device": "dev.telemetry-radio",
+          "model": "mdl.radio.rfd900x",
+          "watts": 5.2
+        },
+        {
+          "device": "dev.depth-camera",
+          "model": "mdl.camera.oak-d-lite",
+          "watts": 5
+        }
+      ]
+    }
+  },
+  "fix_commands": [
+    "lockwire add rail lockwire.yaml --id ...",
+    "lockwire add device lockwire.yaml --id ...",
+    "lockwire declare lockwire.yaml devices/dev.onboard-computer/power/rail rail.bec-5v ..."
+  ],
+  "fixed": {
+    "check": {
+      "verdict": "GO",
+      "exit_code": 0,
+      "headline": "Nothing I checked disagrees",
+      "counts": {
+        "violation": 0,
+        "warning": 0,
+        "not_scored": 9
+      },
+      "violations": []
+    },
+    "rail": {
+      "capacity_w": 15.6,
+      "loads": [
+        {
+          "device": "dev.telemetry-radio",
+          "model": "mdl.radio.rfd900x",
+          "watts": 5.2
+        },
+        {
+          "device": "dev.depth-camera",
+          "model": "mdl.camera.oak-d-lite",
+          "watts": 5
+        }
+      ]
+    }
+  }
+}
