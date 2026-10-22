@@ -1,0 +1,447 @@
+{
+  "id": "quadruped",
+  "title": "Quadruped",
+  "based_on": "Solo-12 (Open Dynamic Robot Initiative)",
+  "licence": "BSD-3-Clause",
+  "source": "lockwire 0.2.3 from PyPI, `lockwire start --example quadruped`",
+  "glb": "/robots/quadruped.glb",
+  "parts": [
+    {
+      "id": "dev.motor.front-left-hip-abduction",
+      "name": "Motor front left hip abduction",
+      "node": "dev.motor.front-left-hip-abduction",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "56.55 W",
+          "source": "author-chosen: peak-power model from ODRI figures; walk from open_robot_actuator_hardware issue #42"
+        },
+        {
+          "label": "Power modes",
+          "value": "walk 8 W, jump 56.55 W",
+          "source": "author-chosen: peak-power model from ODRI figures; walk from open_robot_actuator_hardware issue #42"
+        },
+        {
+          "label": "Rail",
+          "value": "Bench supply 24V rail",
+          "source": "github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware electronics/details/details_components.md (Power Supply)"
+        }
+      ]
+    },
+    {
+      "id": "dev.motor.front-left-hip-flexion",
+      "name": "Motor front left hip flexion",
+      "node": "dev.motor.front-left-hip-flexion",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "56.55 W",
+          "source": "author-chosen: peak-power model from ODRI figures; walk from open_robot_actuator_hardware issue #42"
+        },
+        {
+          "label": "Power modes",
+          "value": "walk 8 W, jump 56.55 W",
+          "source": "author-chosen: peak-power model from ODRI figures; walk from open_robot_actuator_hardware issue #42"
+        },
+        {
+          "label": "Rail",
+          "value": "Bench supply 24V rail",
+          "source": "github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware electronics/details/details_components.md (Power Supply)"
+        }
+      ]
+    },
+    {
+      "id": "dev.motor.front-left-knee",
+      "name": "Motor front left knee",
+      "node": "dev.motor.front-left-knee",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "56.55 W",
+          "source": "author-chosen: peak-power model from ODRI figures; walk from open_robot_actuator_hardware issue #42"
+        },
+        {
+          "label": "Power modes",
+          "value": "walk 8 W, jump 56.55 W",
+          "source": "author-chosen: peak-power model from ODRI figures; walk from open_robot_actuator_hardware issue #42"
+        },
+        {
+          "label": "Rail",
+          "value": "Bench supply 24V rail",
+          "source": "github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware electronics/details/details_components.md (Power Supply)"
+        }
+      ]
+    },
+    {
+      "id": "dev.motor.front-right-hip-abduction",
+      "name": "Motor front right hip abduction",
+      "node": "dev.motor.front-right-hip-abduction",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "56.55 W",
+          "source": "author-chosen: peak-power model from ODRI figures; walk from open_robot_actuator_hardware issue #42"
+        },
+        {
+          "label": "Power modes",
+          "value": "walk 8 W, jump 56.55 W",
+          "source": "author-chosen: peak-power model from ODRI figures; walk from open_robot_actuator_hardware issue #42"
+        },
+        {
+          "label": "Rail",
+          "value": "Bench supply 24V rail",
+          "source": "github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware electronics/details/details_components.md (Power Supply)"
+        }
+      ]
+    },
+    {
+      "id": "dev.motor.front-right-hip-flexion",
+      "name": "Motor front right hip flexion",
+      "node": "dev.motor.front-right-hip-flexion",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "56.55 W",
+          "source": "author-chosen: peak-power model from ODRI figures; walk from open_robot_actuator_hardware issue #42"
+        },
+        {
+          "label": "Power modes",
+          "value": "walk 8 W, jump 56.55 W",
+          "source": "author-chosen: peak-power model from ODRI figures; walk from open_robot_actuator_hardware issue #42"
+        },
+        {
+          "label": "Rail",
+          "value": "Bench supply 24V rail",
+          "source": "github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware electronics/details/details_components.md (Power Supply)"
+        }
+      ]
+    },
+    {
+      "id": "dev.motor.front-right-knee",
+      "name": "Motor front right knee",
+      "node": "dev.motor.front-right-knee",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "56.55 W",
+          "source": "author-chosen: peak-power model from ODRI figures; walk from open_robot_actuator_hardware issue #42"
+        },
+        {
+          "label": "Power modes",
+          "value": "walk 8 W, jump 56.55 W",
+          "source": "author-chosen: peak-power model from ODRI figures; walk from open_robot_actuator_hardware issue #42"
+        },
+        {
+          "label": "Rail",
+          "value": "Bench supply 24V rail",
+          "source": "github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware electronics/details/details_components.md (Power Supply)"
+        }
+      ]
+    },
+    {
+      "id": "dev.motor.hind-left-hip-abduction",
+      "name": "Motor hind left hip abduction",
+      "node": "dev.motor.hind-left-hip-abduction",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "56.55 W",
+          "source": "author-chosen: peak-power model from ODRI figures; walk from open_robot_actuator_hardware issue #42"
+        },
+        {
+          "label": "Power modes",
+          "value": "walk 8 W, jump 56.55 W",
+          "source": "author-chosen: peak-power model from ODRI figures; walk from open_robot_actuator_hardware issue #42"
+        },
+        {
+          "label": "Rail",
+          "value": "Bench supply 24V rail",
+          "source": "github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware electronics/details/details_components.md (Power Supply)"
+        }
+      ]
+    },
+    {
+      "id": "dev.motor.hind-left-hip-flexion",
+      "name": "Motor hind left hip flexion",
+      "node": "dev.motor.hind-left-hip-flexion",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "56.55 W",
+          "source": "author-chosen: peak-power model from ODRI figures; walk from open_robot_actuator_hardware issue #42"
+        },
+        {
+          "label": "Power modes",
+          "value": "walk 8 W, jump 56.55 W",
+          "source": "author-chosen: peak-power model from ODRI figures; walk from open_robot_actuator_hardware issue #42"
+        },
+        {
+          "label": "Rail",
+          "value": "Bench supply 24V rail",
+          "source": "github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware electronics/details/details_components.md (Power Supply)"
+        }
+      ]
+    },
+    {
+      "id": "dev.motor.hind-left-knee",
+      "name": "Motor hind left knee",
+      "node": "dev.motor.hind-left-knee",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "56.55 W",
+          "source": "author-chosen: peak-power model from ODRI figures; walk from open_robot_actuator_hardware issue #42"
+        },
+        {
+          "label": "Power modes",
+          "value": "walk 8 W, jump 56.55 W",
+          "source": "author-chosen: peak-power model from ODRI figures; walk from open_robot_actuator_hardware issue #42"
+        },
+        {
+          "label": "Rail",
+          "value": "Bench supply 24V rail",
+          "source": "github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware electronics/details/details_components.md (Power Supply)"
+        }
+      ]
+    },
+    {
+      "id": "dev.motor.hind-right-hip-abduction",
+      "name": "Motor hind right hip abduction",
+      "node": "dev.motor.hind-right-hip-abduction",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "56.55 W",
+          "source": "author-chosen: peak-power model from ODRI figures; walk from open_robot_actuator_hardware issue #42"
+        },
+        {
+          "label": "Power modes",
+          "value": "walk 8 W, jump 56.55 W",
+          "source": "author-chosen: peak-power model from ODRI figures; walk from open_robot_actuator_hardware issue #42"
+        },
+        {
+          "label": "Rail",
+          "value": "Bench supply 24V rail",
+          "source": "github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware electronics/details/details_components.md (Power Supply)"
+        }
+      ]
+    },
+    {
+      "id": "dev.motor.hind-right-hip-flexion",
+      "name": "Motor hind right hip flexion",
+      "node": "dev.motor.hind-right-hip-flexion",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "56.55 W",
+          "source": "author-chosen: peak-power model from ODRI figures; walk from open_robot_actuator_hardware issue #42"
+        },
+        {
+          "label": "Power modes",
+          "value": "walk 8 W, jump 56.55 W",
+          "source": "author-chosen: peak-power model from ODRI figures; walk from open_robot_actuator_hardware issue #42"
+        },
+        {
+          "label": "Rail",
+          "value": "Bench supply 24V rail",
+          "source": "github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware electronics/details/details_components.md (Power Supply)"
+        }
+      ]
+    },
+    {
+      "id": "dev.motor.hind-right-knee",
+      "name": "Motor hind right knee",
+      "node": "dev.motor.hind-right-knee",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "56.55 W",
+          "source": "author-chosen: peak-power model from ODRI figures; walk from open_robot_actuator_hardware issue #42"
+        },
+        {
+          "label": "Power modes",
+          "value": "walk 8 W, jump 56.55 W",
+          "source": "author-chosen: peak-power model from ODRI figures; walk from open_robot_actuator_hardware issue #42"
+        },
+        {
+          "label": "Rail",
+          "value": "Bench supply 24V rail",
+          "source": "github.com/open-dynamic-robot-initiative/open_robot_actuator_hardware electronics/details/details_components.md (Power Supply)"
+        }
+      ]
+    }
+  ],
+  "modes": {
+    "design": {
+      "title": "Design",
+      "verdict": null,
+      "headline": "12 parts, 12 without a declared mass",
+      "lines": [
+        "12 parts placed on the 3D model",
+        "0 of 12 have a declared mass",
+        "Centre of gravity: not worked out until every part has a mass"
+      ],
+      "highlight": [
+        "dev.motor.front-left-hip-abduction",
+        "dev.motor.front-left-hip-flexion",
+        "dev.motor.front-left-knee",
+        "dev.motor.front-right-hip-abduction",
+        "dev.motor.front-right-hip-flexion",
+        "dev.motor.front-right-knee",
+        "dev.motor.hind-left-hip-abduction",
+        "dev.motor.hind-left-hip-flexion",
+        "dev.motor.hind-left-knee",
+        "dev.motor.hind-right-hip-abduction",
+        "dev.motor.hind-right-hip-flexion",
+        "dev.motor.hind-right-knee"
+      ],
+      "source": "lockwire check --json run.json (forces) and the lockfile's devices"
+    },
+    "declare": {
+      "title": "Declare",
+      "verdict": null,
+      "headline": "36 sourced values, 0 still unset",
+      "lines": [
+        "36 values declared, each with its source"
+      ],
+      "highlight": [],
+      "source": "the lockfile (lockwire start --example quadruped) and lockwire check --json run.json"
+    },
+    "check": {
+      "title": "Check",
+      "verdict": "NO-GO",
+      "headline": "Don't power it on yet - 1 thing does not add up",
+      "lines": [
+        "Motor front left hip abduction, Motor front left hip flexion, Motor front left knee and 9 more: observed 678.60 W (draw mode: jump), expected <= 480.00 W, over by +198.60 W (+41%)",
+        "4 frames without mass (normal for sensor and mount frames)",
+        "1 check not scored (nothing declared to compare)"
+      ],
+      "highlight": [
+        "dev.motor.front-left-hip-abduction",
+        "dev.motor.front-left-hip-flexion",
+        "dev.motor.front-left-knee",
+        "dev.motor.front-right-hip-abduction",
+        "dev.motor.front-right-hip-flexion",
+        "dev.motor.front-right-knee",
+        "dev.motor.hind-left-hip-abduction",
+        "dev.motor.hind-left-hip-flexion",
+        "dev.motor.hind-left-knee",
+        "dev.motor.hind-right-hip-abduction",
+        "dev.motor.hind-right-hip-flexion",
+        "dev.motor.hind-right-knee"
+      ],
+      "source": "lockwire check --json run.json"
+    },
+    "plan": {
+      "title": "Plan",
+      "verdict": "NO-GO",
+      "headline": "NO-GO \u2014 1 violation(s), 0 warning(s)",
+      "lines": [
+        "Step 1, set power mode: fails. Observed 678.60 W rolled-up draw on Bench supply 24V rail at mode 'jump', expected <= 480.00 W capacity"
+      ],
+      "highlight": [
+        "dev.motor.front-left-hip-abduction",
+        "dev.motor.front-left-hip-flexion",
+        "dev.motor.front-left-knee",
+        "dev.motor.front-right-hip-abduction",
+        "dev.motor.front-right-hip-flexion",
+        "dev.motor.front-right-knee",
+        "dev.motor.hind-left-hip-abduction",
+        "dev.motor.hind-left-hip-flexion",
+        "dev.motor.hind-left-knee",
+        "dev.motor.hind-right-hip-abduction",
+        "dev.motor.hind-right-hip-flexion",
+        "dev.motor.hind-right-knee"
+      ],
+      "source": "lockwire plan lockwire.yaml lockwire.plan.yaml --json plan.json"
+    },
+    "docs": {
+      "title": "Docs",
+      "verdict": null,
+      "headline": "A reference sheet for each of the 12 parts, written from the lockfile",
+      "lines": [
+        "Motor front left hip abduction draws 56.55 W",
+        "Motor front left hip flexion draws 56.55 W",
+        "Motor front left knee draws 56.55 W",
+        "Motor front right hip abduction draws 56.55 W",
+        "Motor front right hip flexion draws 56.55 W",
+        "Motor front right knee draws 56.55 W"
+      ],
+      "highlight": [
+        "dev.motor.front-left-hip-abduction",
+        "dev.motor.front-left-hip-flexion",
+        "dev.motor.front-left-knee",
+        "dev.motor.front-right-hip-abduction",
+        "dev.motor.front-right-hip-flexion",
+        "dev.motor.front-right-knee",
+        "dev.motor.hind-left-hip-abduction",
+        "dev.motor.hind-left-hip-flexion",
+        "dev.motor.hind-left-knee",
+        "dev.motor.hind-right-hip-abduction",
+        "dev.motor.hind-right-hip-flexion",
+        "dev.motor.hind-right-knee"
+      ],
+      "source": "lockwire describe lockwire.yaml"
+    }
+  }
+}

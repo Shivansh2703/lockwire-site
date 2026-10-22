@@ -10,8 +10,10 @@ npm run build              # static site in dist/
 
 Every number on the page is read from `src/data/`, which is written by real runs:
 
-- `demo.json`: `uv run --no-project --with lockwire==0.2.3 python scripts/site_data.py`
-  (add `--check` to confirm it still matches a fresh run).
+- `demo.json`, `robots/{drone,arm,quadruped}.json` and `public/robots/*.glb` (three starter
+  robots across the design, declare, check, plan and docs modes):
+  `uv run --no-project --with lockwire==0.2.3 python scripts/site_data.py`
+  (add `--check` to confirm they still match a fresh run).
 - `test_step.json`: a baseline check on public PX4 flight log
   `1b8e43d5-04d8-4130-8227-628898f319c5` (PX4 Flight Review, CC BY 4.0).
 

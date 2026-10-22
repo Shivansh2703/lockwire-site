@@ -1,0 +1,33 @@
+{
+  "test": {
+    "title": "Test a recording",
+    "verdict": "NO-GO",
+    "headline": "Motor front right knee is outside its limit",
+    "lines": [
+      "Motor front right knee: current read 14.70 A, its limit: -12.00 A to 12.00 A.",
+      "Power budget (found at design time, not from the recording): 678.60 W (draw mode: jump), allowed <= 480.00 W.",
+      "24 comparisons made, 21 left unscored (devices the recording does not carry).",
+      "A simulated 30 s recording of the Quadruped; one fault was planted in it."
+    ],
+    "highlight": [
+      "dev.motor.front-right-knee"
+    ],
+    "label": "Simulated recording",
+    "source": "Built by the simulated-recording builder, seed 20261022"
+  },
+  "run": {
+    "title": "Run against the robot's record",
+    "verdict": "NO-GO",
+    "headline": "1 device over a limit",
+    "lines": [
+      "Motor front right knee: current read 14.70 A, over a limit.",
+      "11 other watched devices inside their limits.",
+      "A simulated 30 s recording of the Quadruped; one fault was planted in it."
+    ],
+    "highlight": [
+      "dev.motor.front-right-knee"
+    ],
+    "label": "Simulated recording",
+    "source": "Built by the simulated-recording builder, seed 20261022"
+  }
+}

@@ -1,0 +1,404 @@
+{
+  "id": "drone",
+  "title": "Drone",
+  "based_on": "Holybro X500 V2 PX4 reference quadrotor",
+  "licence": "Apache-2.0",
+  "source": "lockwire 0.2.3 from PyPI, `lockwire start --example drone`",
+  "glb": "/robots/drone.glb",
+  "parts": [
+    {
+      "id": "dev.onboard-computer",
+      "name": "Onboard computer",
+      "node": "dev.onboard-computer",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "25 W",
+          "source": "NVIDIA module datasheet; NVIDIA power-mode docs; NVIDIA staff forum reply; docs/reference_robot_specs.md"
+        },
+        {
+          "label": "Power modes",
+          "value": "7W 7 W, 15W 15 W, 25W 25 W",
+          "source": "NVIDIA module datasheet; NVIDIA power-mode docs; NVIDIA staff forum reply; docs/reference_robot_specs.md"
+        },
+        {
+          "label": "Rail",
+          "value": "Supply 5V rail",
+          "source": "docs/reference_robot_specs.md"
+        },
+        {
+          "label": "Bus",
+          "value": "UART companion",
+          "source": "NVIDIA module datasheet; NVIDIA power-mode docs; NVIDIA staff forum reply; docs/reference_robot_specs.md"
+        }
+      ]
+    },
+    {
+      "id": "dev.gnss-receiver",
+      "name": "GNSS receiver",
+      "node": "dev.gnss-receiver",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "51.8 g",
+          "source": "irlock.com; retailer source; PX4-Autopilot v1.16.2@54f0455ffcd755534539a7cf33a09a20bf71d29d src/modules/uxrce_dds_client/dds_topics.yaml (source-derived bridge declaration); PX4/px4_msgs v1.16.2@392e831c1f659429ca83902e66820d7094591410 msg/SensorGps.msg"
+        },
+        {
+          "label": "Bus",
+          "value": "CAN dronecan",
+          "source": "irlock.com; retailer source; PX4-Autopilot v1.16.2@54f0455ffcd755534539a7cf33a09a20bf71d29d src/modules/uxrce_dds_client/dds_topics.yaml (source-derived bridge declaration); PX4/px4_msgs v1.16.2@392e831c1f659429ca83902e66820d7094591410 msg/SensorGps.msg"
+        }
+      ]
+    },
+    {
+      "id": "dev.telemetry-radio",
+      "name": "Telemetry radio",
+      "node": "dev.telemetry-radio",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "14.5 g",
+          "source": "https://store.rfdesign.com.au/rfd-900x-modem/; docs.holybro.com/autopilot/pixhawk-6c/technical-specification"
+        },
+        {
+          "label": "Draw",
+          "value": "5.2 W",
+          "source": "https://store.rfdesign.com.au/rfd-900x-modem/; docs.holybro.com/autopilot/pixhawk-6c/technical-specification"
+        },
+        {
+          "label": "Power modes",
+          "value": "transmit 5.2 W, receive 0.312 W",
+          "source": "https://store.rfdesign.com.au/rfd-900x-modem/; docs.holybro.com/autopilot/pixhawk-6c/technical-specification"
+        },
+        {
+          "label": "Rail",
+          "value": "Telemetry port 5V rail",
+          "source": "docs.holybro.com/autopilot/pixhawk-6c/technical-specification"
+        },
+        {
+          "label": "Bus",
+          "value": "UART telemetry",
+          "source": "https://store.rfdesign.com.au/rfd-900x-modem/; docs.holybro.com/autopilot/pixhawk-6c/technical-specification"
+        }
+      ]
+    },
+    {
+      "id": "dev.depth-camera",
+      "name": "Depth camera",
+      "node": "dev.depth-camera",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "5 W",
+          "source": "Luxonis docs"
+        },
+        {
+          "label": "Rail",
+          "value": "Supply 5V rail",
+          "source": "docs/reference_robot_specs.md"
+        },
+        {
+          "label": "Bus",
+          "value": "USB companion",
+          "source": "Luxonis docs"
+        }
+      ]
+    },
+    {
+      "id": "dev.flight-controller.pixhawk-6c",
+      "name": "Flight controller Pixhawk 6C",
+      "node": "dev.flight-controller.pixhawk-6c",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "59.3 g",
+          "source": "docs.holybro.com/autopilot/pixhawk-6c/technical-specification"
+        }
+      ]
+    },
+    {
+      "id": "dev.power-module.pm02-v3",
+      "name": "Power module PM02 V3",
+      "node": "dev.power-module.pm02-v3",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "20 g",
+          "source": "docs/reference_robot_specs.md"
+        }
+      ]
+    },
+    {
+      "id": "dev.magnetometer.ist8310",
+      "name": "Magnetometer IST8310",
+      "node": "dev.magnetometer.ist8310",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Bus",
+          "value": "I2C external",
+          "source": "https://tw.isentek.com/userfiles/files/IST8310Datasheet_3DMagneticSensors.pdf"
+        }
+      ]
+    },
+    {
+      "id": "dev.motor.motor-1",
+      "name": "Motor 1",
+      "node": "dev.motor.motor-1",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "80 g",
+          "source": "https://holybro.com/products/x500-v2-kits; https://holybro.com/products/spare-parts-x500-v2-kit"
+        },
+        {
+          "label": "Draw",
+          "value": "61.67 W",
+          "source": "https://holybro.com/products/x500-v2-kits; https://holybro.com/products/spare-parts-x500-v2-kit"
+        },
+        {
+          "label": "Power modes",
+          "value": "hover 61.67 W",
+          "source": "https://holybro.com/products/x500-v2-kits; https://holybro.com/products/spare-parts-x500-v2-kit"
+        },
+        {
+          "label": "Rail",
+          "value": "Motor power rail",
+          "source": "Holybro X500 V2 kit page; docs/reference_robot_specs.md"
+        }
+      ]
+    },
+    {
+      "id": "dev.motor.motor-2",
+      "name": "Motor 2",
+      "node": "dev.motor.motor-2",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "80 g",
+          "source": "https://holybro.com/products/x500-v2-kits; https://holybro.com/products/spare-parts-x500-v2-kit"
+        },
+        {
+          "label": "Draw",
+          "value": "61.67 W",
+          "source": "https://holybro.com/products/x500-v2-kits; https://holybro.com/products/spare-parts-x500-v2-kit"
+        },
+        {
+          "label": "Power modes",
+          "value": "hover 61.67 W",
+          "source": "https://holybro.com/products/x500-v2-kits; https://holybro.com/products/spare-parts-x500-v2-kit"
+        },
+        {
+          "label": "Rail",
+          "value": "Motor power rail",
+          "source": "Holybro X500 V2 kit page; docs/reference_robot_specs.md"
+        }
+      ]
+    },
+    {
+      "id": "dev.motor.motor-3",
+      "name": "Motor 3",
+      "node": "dev.motor.motor-3",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "80 g",
+          "source": "https://holybro.com/products/x500-v2-kits; https://holybro.com/products/spare-parts-x500-v2-kit"
+        },
+        {
+          "label": "Draw",
+          "value": "61.67 W",
+          "source": "https://holybro.com/products/x500-v2-kits; https://holybro.com/products/spare-parts-x500-v2-kit"
+        },
+        {
+          "label": "Power modes",
+          "value": "hover 61.67 W",
+          "source": "https://holybro.com/products/x500-v2-kits; https://holybro.com/products/spare-parts-x500-v2-kit"
+        },
+        {
+          "label": "Rail",
+          "value": "Motor power rail",
+          "source": "Holybro X500 V2 kit page; docs/reference_robot_specs.md"
+        }
+      ]
+    },
+    {
+      "id": "dev.motor.motor-4",
+      "name": "Motor 4",
+      "node": "dev.motor.motor-4",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "80 g",
+          "source": "https://holybro.com/products/x500-v2-kits; https://holybro.com/products/spare-parts-x500-v2-kit"
+        },
+        {
+          "label": "Draw",
+          "value": "61.67 W",
+          "source": "https://holybro.com/products/x500-v2-kits; https://holybro.com/products/spare-parts-x500-v2-kit"
+        },
+        {
+          "label": "Power modes",
+          "value": "hover 61.67 W",
+          "source": "https://holybro.com/products/x500-v2-kits; https://holybro.com/products/spare-parts-x500-v2-kit"
+        },
+        {
+          "label": "Rail",
+          "value": "Motor power rail",
+          "source": "Holybro X500 V2 kit page; docs/reference_robot_specs.md"
+        }
+      ]
+    },
+    {
+      "id": "dev.esc.esc-1",
+      "name": "ESC 1",
+      "node": "dev.esc.esc-1",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "50 g",
+          "source": "https://holybro.com/products/spare-parts-x500-v2-kit"
+        }
+      ]
+    },
+    {
+      "id": "dev.esc.esc-2",
+      "name": "ESC 2",
+      "node": "dev.esc.esc-2",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "50 g",
+          "source": "https://holybro.com/products/spare-parts-x500-v2-kit"
+        }
+      ]
+    },
+    {
+      "id": "dev.esc.esc-3",
+      "name": "ESC 3",
+      "node": "dev.esc.esc-3",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "50 g",
+          "source": "https://holybro.com/products/spare-parts-x500-v2-kit"
+        }
+      ]
+    },
+    {
+      "id": "dev.esc.esc-4",
+      "name": "ESC 4",
+      "node": "dev.esc.esc-4",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "50 g",
+          "source": "https://holybro.com/products/spare-parts-x500-v2-kit"
+        }
+      ]
+    }
+  ],
+  "modes": {
+    "design": {
+      "title": "Design",
+      "verdict": null,
+      "headline": "15 parts, 3 without a declared mass",
+      "lines": [
+        "15 parts placed on the 3D model",
+        "12 of 15 have a declared mass",
+        "Mass declared so far: 0.666 kg, incomplete",
+        "Centre of gravity: not worked out until every part has a mass"
+      ],
+      "highlight": [
+        "dev.depth-camera",
+        "dev.magnetometer.ist8310",
+        "dev.onboard-computer"
+      ],
+      "source": "lockwire check --json run.json (forces) and the lockfile's devices"
+    },
+    "declare": {
+      "title": "Declare",
+      "verdict": null,
+      "headline": "37 sourced values, 3 still unset",
+      "lines": [
+        "37 values declared, each with its source",
+        "Onboard computer: mass not declared",
+        "Depth camera: mass not declared",
+        "Magnetometer IST8310: mass not declared"
+      ],
+      "highlight": [
+        "dev.depth-camera",
+        "dev.magnetometer.ist8310",
+        "dev.onboard-computer"
+      ],
+      "source": "the lockfile (lockwire start --example drone) and lockwire check --json run.json"
+    },
+    "check": {
+      "title": "Check",
+      "verdict": "NO-GO",
+      "headline": "Don't power it on yet - 2 things do not add up",
+      "lines": [
+        "Depth camera, Onboard computer, Telemetry radio: observed 35.20 W (draw mode: nominal), expected <= 15.60 W, over by +19.60 W (+126%)",
+        "Depth camera, Onboard computer, Telemetry radio: observed 17.20 W (draw mode: 7W), expected <= 15.60 W, over by +1.60 W (+10%)",
+        "9 checks not scored (nothing declared to compare)"
+      ],
+      "highlight": [
+        "dev.depth-camera",
+        "dev.onboard-computer",
+        "dev.telemetry-radio"
+      ],
+      "source": "lockwire check --json run.json"
+    },
+    "plan": {
+      "title": "Plan",
+      "verdict": "NO-GO",
+      "headline": "NO-GO \u2014 1 violation(s), 0 warning(s)",
+      "lines": [
+        "Step 1, set power mode: fails. Observed 17.20 W rolled-up draw on Supply 5V rail at mode '7W', expected <= 15.60 W capacity",
+        "Step 2, rail load: pass"
+      ],
+      "highlight": [
+        "dev.depth-camera",
+        "dev.onboard-computer"
+      ],
+      "source": "lockwire plan lockwire.yaml lockwire.plan.yaml --json plan.json"
+    },
+    "docs": {
+      "title": "Docs",
+      "verdict": null,
+      "headline": "A reference sheet for each of the 15 parts, written from the lockfile",
+      "lines": [
+        "Onboard computer draws 25.00 W",
+        "Depth camera draws 5.00 W",
+        "Telemetry radio draws 5.20 W",
+        "Motor 1 draws 61.67 W",
+        "Motor 2 draws 61.67 W",
+        "Motor 3 draws 61.67 W"
+      ],
+      "highlight": [
+        "dev.depth-camera",
+        "dev.motor.motor-1",
+        "dev.motor.motor-2",
+        "dev.motor.motor-3",
+        "dev.motor.motor-4",
+        "dev.onboard-computer",
+        "dev.telemetry-radio"
+      ],
+      "source": "lockwire describe lockwire.yaml"
+    }
+  }
+}

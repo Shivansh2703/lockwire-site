@@ -2,6 +2,7 @@
 import "@fontsource-variable/geist";
 import "@fontsource-variable/geist-mono";
 import "../styles/site.css";
+import Demo from "../components/Demo.astro";
 import demo from "../data/demo.json";
 import test from "../data/test_step.json";
 
@@ -9,33 +10,10 @@ const EMAIL = "shivansh@lockwirerobotics.com";
 const ASK = "mailto:" + EMAIL + "?subject=" + encodeURIComponent("48-hour check");
 const GITHUB = "https://github.com/Shivansh2703/lockwire";
 
-// Display names for the parts on the 5 V rail (labels only; every number comes from demo.json).
-const PART = {
-  "mdl.companion.jetson-orin-nano": "Jetson Orin Nano computer",
-  "mdl.radio.rfd900x": "RFD900x telemetry radio",
-  "mdl.camera.oak-d-lite": "OAK-D Lite depth camera",
-};
-const watts = (n) => `${n.toFixed(2)} W`;
-const sum = (r) => r.loads.reduce((a, l) => a + l.watts, 0);
-const plan = demo.plan, fixed = demo.fixed;
-const v = plan.check.violations[0];
-const load0 = sum(plan.rail), load1 = sum(fixed.rail), cap = plan.rail.capacity_w;
-const scale = Math.max(load0, cap) * 1.08;
-const pct = (n) => `${((n / scale) * 100).toFixed(1)}%`;
+// Every number below is read from the data files.
+const plan = demo.plan;
 const zKey = "Accelerometer Z";
 const z = test.outside_pct[zKey];
-
-// Test chart: one shared scale for both windows (seconds 0-8, then 9-21).
-const W = 560, H = 170, P = 26;
-const all = [...test.chart.known_good, ...test.chart.checked.map(([t, y]) => [t + test.windows.checked_s[0], y])];
-const ys = all.map(([, y]) => y).concat(test.chart.band);
-const yMin = Math.min(...ys), yMax = Math.max(...ys), tMax = test.windows.checked_s[1];
-const X = (t) => P + (t / tMax) * (W - 2 * P);
-const Y = (y) => H - P - ((y - yMin) / (yMax - yMin)) * (H - 2 * P);
-const line = (pts, off = 0) => pts.map(([t, y], i) => `${i ? "L" : "M"}${X(t + off).toFixed(1)},${Y(y).toFixed(1)}`).join("");
-const good = line(test.chart.known_good);
-const checked = line(test.chart.checked, test.windows.checked_s[0]);
-const [bLo, bHi] = test.chart.band;
 ---
 <!doctype html>
 <html lang="en">
@@ -43,7 +21,7 @@ const [bLo, bHi] = test.chart.band;
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Lockwire · Find out your robot won't work before you buy the parts</title>
-  <meta name="description" content="Lockwire checks that the numbers from every datasheet in your robot add up, then checks the powered robot against them. See it catch a real overloaded rail on a real drone." />
+  <meta name="description" content="Lockwire checks that the numbers from every datasheet in your robot add up, then checks the powered robot against them. See it catch a real overloaded rail on a real drone design." />
   <meta property="og:title" content="Lockwire" />
   <meta property="og:description" content="Find out your robot won't work before you buy the parts." />
   <meta property="og:image" content="https://lockwirerobotics.com/og.png" />
@@ -54,93 +32,28 @@ const [bLo, bHi] = test.chart.band;
 </head>
 <body>
   <header class="nav wrap">
-    <a class="brand" href="/" aria-label="Lockwire home"><img src="/favicon.svg" alt="" width="28" height="28" />lockwire</a>
+    <a class="brand" href="/" aria-label="Lockwire home"><img src="/favicon.svg" alt="" width="24" height="24" />lockwire</a>
     <nav>
       <a href="#catches">What it catches</a>
       <a href="#plans">Plans</a>
-      <a class="btn small dark" href={ASK}>Get a 48-hour check</a>
+      <a href={GITHUB}>GitHub</a>
     </nav>
   </header>
 
   <main>
     <section class="hero wrap">
-      <span class="pill"><span class="dot"></span>A real check on a real drone build, below</span>
-      <h1>Find out your robot won't work <em>before you buy the parts.</em></h1>
+      <h1>Find out your robot won't work before you buy the parts.</h1>
       <p class="sub">Every robot is a stack of numbers from a dozen datasheets. Lockwire checks that they add up while you plan, then checks the powered robot against them.</p>
-      <div class="ctas">
-        <a class="btn dark" href={ASK}>Get a 48-hour check</a>
-        <a class="btn" href={GITHUB}>Try it free</a>
-      </div>
+      <p class="actions">
+        <a class="btn" href={ASK}>Get a 48-hour check</a>
+        <a class="quiet" href={GITHUB}>Try it free on GitHub</a>
+      </p>
     </section>
 
-    <section class="demo wrap" aria-label="Lockwire on a drone: plan, check, fix, test">
-      <div class="window">
-        <div class="stage">
-          <canvas id="robot" aria-label="3D model of the drone, with the parts that overload the 5 V rail in red"></canvas>
-          <img class="still" src="/app.png" alt="" aria-hidden="true" />
-          <ol class="steps" role="tablist" aria-label="Steps">
-            <li><button role="tab" data-step="plan" aria-selected="false">Plan</button></li>
-            <li><button role="tab" data-step="check" aria-selected="true">Check</button></li>
-            <li><button role="tab" data-step="fix" aria-selected="false">Fix</button></li>
-            <li><button role="tab" data-step="test" aria-selected="false">Test</button></li>
-          </ol>
-        </div>
-
-        <div class="panels">
-          <article class="panel" data-panel="plan" hidden>
-            <p class="kicker">Plan · Holybro X500 drone</p>
-            <h2>Three parts share one 5 V supply</h2>
-            <ul class="loads">
-              {plan.rail.loads.map((l) => <li><span>{PART[l.model] ?? l.device}</span><b>{watts(l.watts)}</b></li>)}
-            </ul>
-            <p class="note">The supply's limit, {watts(cap)}, comes from the Holybro PM02 datasheet. Each draw comes from its maker's datasheet too.</p>
-            <button class="btn small dark next" data-go="check">Check it</button>
-          </article>
-
-          <article class="panel" data-panel="check">
-            <p class="kicker">Check · <code>lockwire check</code></p>
-            <div class="verdict bad"><span>{plan.check.verdict}</span>{plan.check.headline}</div>
-            <div class="bar" style={`--load:${pct(load0)};--cap:${pct(cap)}`} data-bar>
-              <i class="fill bad"></i><i class="limit"></i>
-            </div>
-            <p class="barlabel"><b class="badtext">{watts(load0)}</b> needed · {watts(cap)} available</p>
-            <pre class="term"><span class="badtext">VIOLATION</span> 5 V supply · observed {v.observed}, expected {v.expected} (Δ {v.delta})</pre>
-            <p class="note">Caught on paper, before anyone ordered a part or powered anything on.</p>
-            <button class="btn small dark next" data-go="fix">Fix it</button>
-          </article>
-
-          <article class="panel" data-panel="fix" hidden>
-            <p class="kicker">Fix · give the computer its own regulator</p>
-            <pre class="term">{demo.fix_commands.map((c) => `$ ${c}\n`).join("")}<span class="gotext">{fixed.check.verdict}</span> {fixed.check.headline}</pre>
-            <div class="bar" style={`--load:${pct(load1)};--cap:${pct(cap)}`}>
-              <i class="fill go"></i><i class="limit"></i>
-            </div>
-            <p class="barlabel"><b class="gotext">{watts(load1)}</b> needed · {watts(cap)} available</p>
-            <button class="btn small dark next" data-go="test">Power it on</button>
-          </article>
-
-          <article class="panel" data-panel="test" hidden>
-            <p class="kicker">Test · the powered robot against its own known-good seconds</p>
-            <div class="verdict bad"><span>{test.verdict}</span>{zKey} readings out of range {z.known_good}% of the time when good, {z.checked}% after</div>
-            <svg class="chart" viewBox={`0 0 ${W} ${H}`} role="img" aria-label={`${test.chart.signal} over 21 seconds, with the normal range learned from the first 8 seconds`}>
-              <rect class="band" x={X(0)} y={Y(bHi)} width={X(tMax) - X(0)} height={Y(bLo) - Y(bHi)} />
-              <line class="split" x1={X(test.windows.checked_s[0])} x2={X(test.windows.checked_s[0])} y1={P / 2} y2={H - P} />
-              <path class="good" d={good} />
-              <path class="checked" d={checked} />
-              <text x={X(0) + 4} y={P / 2 + 6}>known good</text>
-              <text x={X(test.windows.checked_s[0]) + 4} y={P / 2 + 6}>checked</text>
-              <text x={X(0)} y={H - 6}>0 s</text>
-              <text x={X(tMax)} y={H - 6} text-anchor="end">{tMax} s</text>
-            </svg>
-            <ul class="findings">{test.findings.map((f) => <li>{f}</li>)}</ul>
-            <p class="note">From a public PX4 flight log of another quadrotor, not this drone: <a href={`https://review.px4.io/plot_app?log=${test.log_id}`}>log {test.log_id.slice(0, 8)}</a> (PX4 Flight Review, CC BY 4.0). PX4 itself logged "{test.px4_logged}". {test.caveat}</p>
-          </article>
-        </div>
-      </div>
-    </section>
+    <Demo />
 
     <section id="catches" class="wrap section">
-      <h2 class="h2">What it catches</h2>
+      <h2>What it catches</h2>
       <div class="tablewrap">
         <table>
           <thead><tr><th>Problem</th><th>How Lockwire knows</th><th>On the drone above</th></tr></thead>
@@ -155,17 +68,8 @@ const [bLo, bHi] = test.chart.band;
       </div>
     </section>
 
-    <section class="wrap section">
-      <h2 class="h2">How it fits your team</h2>
-      <div class="three">
-        <div><span class="kicker">1 · Plan</span><h3>One file for every number</h3><p>Start from your URDF or a parts list. Every value carries its source.</p></div>
-        <div><span class="kicker">2 · Check</span><h3>On every change</h3><p>A GitHub Action reruns the check, so a part swap can't quietly break the robot.</p></div>
-        <div><span class="kicker">3 · Test</span><h3>Before every power-on</h3><p>A go/no-go gate compares the powered robot with its lockfile and its known-good runs.</p></div>
-      </div>
-    </section>
-
     <section id="plans" class="wrap section">
-      <h2 class="h2">Plans</h2>
+      <h2>Plans</h2>
       <div class="plans">
         <div class="plan">
           <h3>Lockwire Free</h3>
@@ -176,9 +80,9 @@ const [bLo, bHi] = test.chart.band;
             <li>Desktop app for macOS and Linux</li>
             <li>GitHub Action for CI</li>
           </ul>
-          <a class="btn" href={GITHUB}>Try it free on GitHub</a>
+          <a class="quiet" href={GITHUB}>Try it free on GitHub</a>
         </div>
-        <div class="plan pro">
+        <div class="plan">
           <h3>Lockwire Pro</h3>
           <p class="planline">For teams with a robot on the bench.</p>
           <ul>
@@ -188,7 +92,7 @@ const [bLo, bHi] = test.chart.band;
             <li>ROS 2 bags and PX4 flight logs</li>
             <li>Set up with you on your own robot</li>
           </ul>
-          <a class="btn dark" href={ASK}>Talk to us</a>
+          <a class="quiet" href={ASK}>Get a 48-hour check</a>
         </div>
       </div>
     </section>
@@ -196,10 +100,7 @@ const [bLo, bHi] = test.chart.band;
     <section class="wrap section ask">
       <h2>Send us your parts list or URDF.</h2>
       <p>Within 48 hours you get back the numbers that don't add up.</p>
-      <div class="ctas">
-        <a class="btn dark" href={ASK}>Email {EMAIL}</a>
-        <button class="btn" type="button" id="copy" data-text={EMAIL}>Copy address</button>
-      </div>
+      <p class="actions"><a class="btn" href={ASK}>Get a 48-hour check</a> <a class="quiet" href={`mailto:${EMAIL}`}>{EMAIL}</a></p>
     </section>
   </main>
 
@@ -208,9 +109,5 @@ const [bLo, bHi] = test.chart.band;
     <span><a href={GITHUB}>GitHub</a> · <a href={`mailto:${EMAIL}`}>{EMAIL}</a></span>
     <span class="credits">Drone model: <a href={GITHUB}>lockwire</a>, Apache-2.0. Test data: <a href="https://review.px4.io/">PX4 Flight Review</a>, CC BY 4.0.</span>
   </footer>
-
-  <script>
-    import "../scripts/demo.js";
-  </script>
 </body>
 </html>

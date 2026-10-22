@@ -1,0 +1,275 @@
+{
+  "id": "arm",
+  "title": "Arm",
+  "based_on": "SO-101 by TheRobotStudio",
+  "licence": "Apache-2.0",
+  "source": "lockwire 0.2.3 from PyPI, `lockwire start --example arm`",
+  "glb": "/robots/arm.glb",
+  "parts": [
+    {
+      "id": "dev.waveshare-servo-adapter",
+      "name": "Waveshare servo adapter",
+      "node": "dev.waveshare-servo-adapter",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        }
+      ]
+    },
+    {
+      "id": "dev.shoulder-pan-servo",
+      "name": "Shoulder pan servo",
+      "node": "dev.shoulder-pan-servo",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "2.4 W",
+          "source": "https://www.waveshare.com/st3215-servo.htm; github.com/TheRobotStudio/SO-ARM100 README.md (Bill of Materials, follower-arm note)"
+        },
+        {
+          "label": "Power modes",
+          "value": "no-load 2.4 W, stall 32.4 W",
+          "source": "https://www.waveshare.com/st3215-servo.htm; github.com/TheRobotStudio/SO-ARM100 README.md (Bill of Materials, follower-arm note)"
+        },
+        {
+          "label": "Rail",
+          "value": "Supply 12V rail",
+          "source": "github.com/TheRobotStudio/SO-ARM100 README.md (Bill of Materials, follower-arm note); https://github.com/TheRobotStudio/SO-ARM100/issues/132"
+        }
+      ]
+    },
+    {
+      "id": "dev.shoulder-lift-servo",
+      "name": "Shoulder lift servo",
+      "node": "dev.shoulder-lift-servo",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "2.4 W",
+          "source": "https://www.waveshare.com/st3215-servo.htm; github.com/TheRobotStudio/SO-ARM100 README.md (Bill of Materials, follower-arm note)"
+        },
+        {
+          "label": "Power modes",
+          "value": "no-load 2.4 W, stall 32.4 W",
+          "source": "https://www.waveshare.com/st3215-servo.htm; github.com/TheRobotStudio/SO-ARM100 README.md (Bill of Materials, follower-arm note)"
+        },
+        {
+          "label": "Rail",
+          "value": "Supply 12V rail",
+          "source": "github.com/TheRobotStudio/SO-ARM100 README.md (Bill of Materials, follower-arm note); https://github.com/TheRobotStudio/SO-ARM100/issues/132"
+        }
+      ]
+    },
+    {
+      "id": "dev.elbow-flex-servo",
+      "name": "Elbow flex servo",
+      "node": "dev.elbow-flex-servo",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "2.4 W",
+          "source": "https://www.waveshare.com/st3215-servo.htm; github.com/TheRobotStudio/SO-ARM100 README.md (Bill of Materials, follower-arm note)"
+        },
+        {
+          "label": "Power modes",
+          "value": "no-load 2.4 W, stall 32.4 W",
+          "source": "https://www.waveshare.com/st3215-servo.htm; github.com/TheRobotStudio/SO-ARM100 README.md (Bill of Materials, follower-arm note)"
+        },
+        {
+          "label": "Rail",
+          "value": "Supply 12V rail",
+          "source": "github.com/TheRobotStudio/SO-ARM100 README.md (Bill of Materials, follower-arm note); https://github.com/TheRobotStudio/SO-ARM100/issues/132"
+        }
+      ]
+    },
+    {
+      "id": "dev.wrist-flex-servo",
+      "name": "Wrist flex servo",
+      "node": "dev.wrist-flex-servo",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "2.4 W",
+          "source": "https://www.waveshare.com/st3215-servo.htm; github.com/TheRobotStudio/SO-ARM100 README.md (Bill of Materials, follower-arm note)"
+        },
+        {
+          "label": "Power modes",
+          "value": "no-load 2.4 W, stall 32.4 W",
+          "source": "https://www.waveshare.com/st3215-servo.htm; github.com/TheRobotStudio/SO-ARM100 README.md (Bill of Materials, follower-arm note)"
+        },
+        {
+          "label": "Rail",
+          "value": "Supply 12V rail",
+          "source": "github.com/TheRobotStudio/SO-ARM100 README.md (Bill of Materials, follower-arm note); https://github.com/TheRobotStudio/SO-ARM100/issues/132"
+        }
+      ]
+    },
+    {
+      "id": "dev.wrist-roll-servo",
+      "name": "Wrist roll servo",
+      "node": "dev.wrist-roll-servo",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "2.4 W",
+          "source": "https://www.waveshare.com/st3215-servo.htm; github.com/TheRobotStudio/SO-ARM100 README.md (Bill of Materials, follower-arm note)"
+        },
+        {
+          "label": "Power modes",
+          "value": "no-load 2.4 W, stall 32.4 W",
+          "source": "https://www.waveshare.com/st3215-servo.htm; github.com/TheRobotStudio/SO-ARM100 README.md (Bill of Materials, follower-arm note)"
+        },
+        {
+          "label": "Rail",
+          "value": "Supply 12V rail",
+          "source": "github.com/TheRobotStudio/SO-ARM100 README.md (Bill of Materials, follower-arm note); https://github.com/TheRobotStudio/SO-ARM100/issues/132"
+        }
+      ]
+    },
+    {
+      "id": "dev.gripper-servo",
+      "name": "Gripper servo",
+      "node": "dev.gripper-servo",
+      "facts": [
+        {
+          "label": "Mass",
+          "value": "not declared",
+          "source": null
+        },
+        {
+          "label": "Draw",
+          "value": "2.4 W",
+          "source": "https://www.waveshare.com/st3215-servo.htm; github.com/TheRobotStudio/SO-ARM100 README.md (Bill of Materials, follower-arm note)"
+        },
+        {
+          "label": "Power modes",
+          "value": "no-load 2.4 W, stall 32.4 W",
+          "source": "https://www.waveshare.com/st3215-servo.htm; github.com/TheRobotStudio/SO-ARM100 README.md (Bill of Materials, follower-arm note)"
+        },
+        {
+          "label": "Rail",
+          "value": "Supply 12V rail",
+          "source": "github.com/TheRobotStudio/SO-ARM100 README.md (Bill of Materials, follower-arm note); https://github.com/TheRobotStudio/SO-ARM100/issues/132"
+        }
+      ]
+    }
+  ],
+  "modes": {
+    "design": {
+      "title": "Design",
+      "verdict": null,
+      "headline": "7 parts, 7 without a declared mass",
+      "lines": [
+        "7 parts placed on the 3D model",
+        "0 of 7 have a declared mass",
+        "Centre of gravity: not worked out until every part has a mass"
+      ],
+      "highlight": [
+        "dev.elbow-flex-servo",
+        "dev.gripper-servo",
+        "dev.shoulder-lift-servo",
+        "dev.shoulder-pan-servo",
+        "dev.waveshare-servo-adapter",
+        "dev.wrist-flex-servo",
+        "dev.wrist-roll-servo"
+      ],
+      "source": "lockwire check --json run.json (forces) and the lockfile's devices"
+    },
+    "declare": {
+      "title": "Declare",
+      "verdict": null,
+      "headline": "18 sourced values, 0 still unset",
+      "lines": [
+        "18 values declared, each with its source"
+      ],
+      "highlight": [],
+      "source": "the lockfile (lockwire start --example arm) and lockwire check --json run.json"
+    },
+    "check": {
+      "title": "Check",
+      "verdict": "NO-GO",
+      "headline": "Don't power it on yet - 1 thing does not add up",
+      "lines": [
+        "Elbow flex servo, Gripper servo, Shoulder lift servo and 3 more: observed 194.40 W (draw mode: stall), expected <= 60.00 W, over by +134.40 W (+224%)",
+        "1 frame without mass (normal for sensor and mount frames)",
+        "1 check not scored (nothing declared to compare)"
+      ],
+      "highlight": [
+        "dev.elbow-flex-servo",
+        "dev.gripper-servo",
+        "dev.shoulder-lift-servo",
+        "dev.shoulder-pan-servo",
+        "dev.wrist-flex-servo",
+        "dev.wrist-roll-servo"
+      ],
+      "source": "lockwire check --json run.json"
+    },
+    "plan": {
+      "title": "Plan",
+      "verdict": "NO-GO",
+      "headline": "NO-GO \u2014 2 violation(s), 0 warning(s)",
+      "lines": [
+        "Step 1, set power mode: fails. Observed 194.40 W rolled-up draw on Supply 12V rail at mode 'stall', expected <= 60.00 W capacity",
+        "Step 2, set power mode: fails. Observed 194.40 W rolled-up draw on Supply 12V rail at mode 'stall', expected <= 60.00 W capacity"
+      ],
+      "highlight": [
+        "dev.elbow-flex-servo",
+        "dev.gripper-servo",
+        "dev.shoulder-lift-servo",
+        "dev.shoulder-pan-servo",
+        "dev.wrist-flex-servo",
+        "dev.wrist-roll-servo"
+      ],
+      "source": "lockwire plan lockwire.yaml lockwire.plan.yaml --json plan.json"
+    },
+    "docs": {
+      "title": "Docs",
+      "verdict": null,
+      "headline": "A reference sheet for each of the 7 parts, written from the lockfile",
+      "lines": [
+        "Shoulder pan servo draws 2.40 W",
+        "Shoulder lift servo draws 2.40 W",
+        "Elbow flex servo draws 2.40 W",
+        "Wrist flex servo draws 2.40 W",
+        "Wrist roll servo draws 2.40 W",
+        "Gripper servo draws 2.40 W"
+      ],
+      "highlight": [
+        "dev.elbow-flex-servo",
+        "dev.gripper-servo",
+        "dev.shoulder-lift-servo",
+        "dev.shoulder-pan-servo",
+        "dev.wrist-flex-servo",
+        "dev.wrist-roll-servo"
+      ],
+      "source": "lockwire describe lockwire.yaml"
+    }
+  }
+}

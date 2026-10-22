@@ -1,0 +1,35 @@
+{
+  "test": {
+    "title": "Test a recording",
+    "verdict": "NO-GO",
+    "headline": "Flight controller Pixhawk 6C is outside its limit",
+    "lines": [
+      "Flight controller Pixhawk 6C: Z acceleration read -166.37 m/s\u00b2, its at-rest range: -10.00 m/s\u00b2 to -9.61 m/s\u00b2.",
+      "Flight controller Pixhawk 6C: Z acceleration read -166.37 m/s\u00b2, its limit: -156.91 m/s\u00b2 to 156.91 m/s\u00b2.",
+      "Power budget (found at design time, not from the recording): 35.20 W (draw mode: nominal), allowed <= 15.60 W.",
+      "Power budget (found at design time, not from the recording): 17.20 W (draw mode: 7W), allowed <= 15.60 W.",
+      "19 comparisons made, 27 left unscored (devices the recording does not carry).",
+      "A simulated 30 s recording of the Drone; one fault was planted in it."
+    ],
+    "highlight": [
+      "dev.flight-controller.pixhawk-6c"
+    ],
+    "label": "Simulated recording",
+    "source": "Built by the simulated-recording builder, seed 20261022"
+  },
+  "run": {
+    "title": "Run against the robot's record",
+    "verdict": "NO-GO",
+    "headline": "1 device over a limit",
+    "lines": [
+      "Flight controller Pixhawk 6C: Z acceleration read -166.37 m/s\u00b2, over a limit.",
+      "14 devices not watched: nothing in the recording to compare.",
+      "A simulated 30 s recording of the Drone; one fault was planted in it."
+    ],
+    "highlight": [
+      "dev.flight-controller.pixhawk-6c"
+    ],
+    "label": "Simulated recording",
+    "source": "Built by the simulated-recording builder, seed 20261022"
+  }
+}
