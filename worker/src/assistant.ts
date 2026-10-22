@@ -154,7 +154,12 @@ export async function handle(req: Request, env: Env, create?: Create): Promise<R
   }
 
   const cost = costUsd(res.usage);
-  await env.LIMITS.put(monthKey, String(spent + cost), { expirationTtl: 60 * 86400 });
+  try {
+    await env.LIMITS.put(monthKey, String(spent + cost), { expirationTtl: 60 * 86400 });
+  } catch (e) {
+    // The answer is already paid for: still return it; the Console spend limit is the backstop.
+    console.error("spend not recorded", e instanceof Error ? e.message : e);
+  }
 
   if (res.stop_reason === "refusal") return json({ answer: "I can't help with that one." }, 200, origin);
   const text = res.content.flatMap((b) => (b.type === "text" ? [b.text] : [])).join("").trim();
