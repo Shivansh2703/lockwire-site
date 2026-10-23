@@ -80,7 +80,7 @@ const assistantUrl = import.meta.env.PUBLIC_ASSISTANT_URL; // unset: the Ask box
     )}
     </div>
   </div>
-  <p class="demo-credit">{robot.title}: based on {robot.based_on} ({robot.licence}). Numbers come from <code>{robot.source}</code>.</p>
+  <p class="demo-credit">{robot.title}: based on {robot.based_on} ({robot.licence}{robot.licence_files.map((f) => <>, <a href={f}>{f.endsWith("NOTICE.txt") ? "notice" : "licence"}</a></>)}). Numbers come from <code>{robot.source}</code>.</p>
 </section>
 
 <script>

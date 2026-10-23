@@ -187,6 +187,10 @@
       ]
     }
   ],
+  "licence_files": [
+    "/robots/arm-LICENSE.txt",
+    "/robots/arm-NOTICE.txt"
+  ],
   "modes": {
     "design": {
       "title": "Design",

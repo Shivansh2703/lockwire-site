@@ -116,7 +116,8 @@ function render() {
   $("[data-view]").classList.toggle("has-card", !!part);
   const credit = $(".demo-credit");
   const r = data.robot;
-  credit.innerHTML = `${esc(r.title)}: based on ${esc(r.based_on)} (${esc(r.licence)}). Numbers come from <code>${esc(r.source)}</code>.`;
+  const lic = (r.licence_files ?? []).map((f) => `, <a href="${esc(f)}">${f.endsWith("NOTICE.txt") ? "notice" : "licence"}</a>`).join("");
+  credit.innerHTML = `${esc(r.title)}: based on ${esc(r.based_on)} (${esc(r.licence)}${lic}). Numbers come from <code>${esc(r.source)}</code>.`;
   const c = data.robot.catch, box = $("[data-catch]");
   if (box) {
     box.hidden = !c || state.mode !== "check";

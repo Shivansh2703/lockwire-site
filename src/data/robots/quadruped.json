@@ -337,6 +337,9 @@
       ]
     }
   ],
+  "licence_files": [
+    "/robots/quadruped-NOTICE.txt"
+  ],
   "modes": {
     "design": {
       "title": "Design",

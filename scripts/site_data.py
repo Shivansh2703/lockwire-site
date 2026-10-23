@@ -233,6 +233,8 @@ def robot(example):
         "catch": catch, "title": starter["title"], "based_on": starter["based_on"], "licence": starter["licence"],
         "source": f"lockwire {version('lockwire')} from PyPI, `lockwire start --example {example}`",
         "glb": f"/robots/{example}.glb", "parts": parts,
+        # The model's licence texts travel with it (they ship next to scene.glb in the package).
+        "licence_files": [f"/robots/{example}-{n}.txt" for n in ("LICENSE", "NOTICE") if (pkg / n).exists()],
         "modes": {"design": design, "declare": declare, "check": check, "plan": planm, "docs": docs},
     }, (pkg / "scene.glb").read_bytes()
 
@@ -245,6 +247,10 @@ if __name__ == "__main__":
         data, glb = robot(ex)
         files[ROOT / "src" / "data" / "robots" / f"{ex}.json"] = (json.dumps(data, indent=2) + "\n").encode()
         files[ROOT / "public" / "robots" / f"{ex}.glb"] = glb
+        pkg = Path(sys.modules["lockwire"].__file__).parent / "examples" / ex
+        for n in ("LICENSE", "NOTICE"):
+            if (pkg / n).exists():
+                files[ROOT / "public" / "robots" / f"{ex}-{n}.txt"] = (pkg / n).read_bytes()
     if "--check" in sys.argv:
         bad = [p.name for p, b in files.items() if not p.exists() or p.read_bytes() != b]
         if bad:

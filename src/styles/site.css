@@ -149,3 +149,7 @@ td.num { font-size: 13.5px; white-space: nowrap; }
   .nav nav a:not(.btn) { display: none; }
 }
 .plan pre.start { margin: 0; padding: 12px 14px; border-radius: 10px; background: var(--canvas); border: 1px solid var(--line); font: 13px/1.6 var(--mono); overflow-x: auto; }
+/* Examples wrap, so the long sensor-drift example cannot squeeze the middle column. */
+td.num { white-space: normal; min-width: 14em; }
+td:nth-child(2) { min-width: 16em; }
+.demo-more summary::-webkit-details-marker { display: none; }
