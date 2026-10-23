@@ -19,7 +19,8 @@ async function load(id) {
 }
 
 // Each robot's catch is a different real result: the drone's from Check, the others from the
-// planted fault in their simulated Test recording.
+// planted fault in their simulated Test recording. Picking a robot opens the tab its catch came from,
+// so the catch and the panel beside it always tell the same story.
 const CATCH_FROM = { drone: "check", arm: "test", quadruped: "test" };
 
 const state = { robot: "drone", mode: "check", part: null };
@@ -126,7 +127,7 @@ function render() {
   if (box) {
     const from = CATCH_FROM[state.robot] ?? "check";
     const t = from === "test" ? data.modes.test : null;
-    box.hidden = !(t || c) || (state.mode !== "check" && state.mode !== from);
+    box.hidden = !(t || c) || state.mode !== from;
     $("[data-catch-from]", box).textContent = t ? "Found by Test · simulated recording · Pro" : "Found by Check";
     $("[data-catch-n]", box).hidden = !!t;
     const line = $("[data-catch-line]", box);
@@ -155,7 +156,7 @@ async function pick3d() {
 }
 
 async function setRobot(id) {
-  state.robot = id; state.part = null;
+  state.robot = id; state.part = null; state.mode = CATCH_FROM[id] ?? state.mode;
   hit("robot_" + id);
   $$("[data-robot-btn]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.robotBtn === id)));
   data = await load(id);

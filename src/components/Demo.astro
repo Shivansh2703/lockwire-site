@@ -74,7 +74,7 @@ const assistantUrl = import.meta.env.PUBLIC_ASSISTANT_URL; // unset: the Ask box
           <button type="button" data-q="How would I fix it?">How would I fix it?</button>
         </div>
         <div class="demo-ask-row">
-          <input id="demo-ask-q" name="q" type="text" maxlength="500" autocomplete="off" placeholder="Ask about this robot" />
+          <input id="demo-ask-q" name="q" aria-label="Ask about this robot" type="text" maxlength="500" autocomplete="off" placeholder="Ask about this robot" />
           <button type="submit">Send</button>
         </div>
         <p class="demo-ask-out" data-ask-out role="status" aria-live="polite"></p>
