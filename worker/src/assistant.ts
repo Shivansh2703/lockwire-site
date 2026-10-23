@@ -59,7 +59,7 @@ function systemFor(robot: string): string {
   return `${RULES}\n\nData for the "${robot}" robot (JSON):\n${JSON.stringify(DATA[robot])}`;
 }
 
-const ALLOWED = /^(https:\/\/(www\.)?lockwirerobotics\.com|http:\/\/(127\.0\.0\.1|localhost)(:\d+)?)$/;
+const ALLOWED = /^(https?:\/\/(www\.)?lockwirerobotics\.com|http:\/\/(127\.0\.0\.1|localhost)(:\d+)?)$/;
 
 function json(body: unknown, status: number, origin: string | null): Response {
   const headers: Record<string, string> = { "content-type": "application/json" };
