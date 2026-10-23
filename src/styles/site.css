@@ -66,7 +66,7 @@ h1 em { font-style: normal; color: var(--accent); }
 .panel[hidden] { display: none; }
 .panel h2 { margin: 0; font-size: 22px; letter-spacing: -.02em; }
 .kicker { margin: 0; font: 500 12px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
-.kicker code { text-transform: none; letter-spacing: 0; }
+.kicker code, .kicker .tag { text-transform: none; letter-spacing: 0; }
 .note { margin: 0; font-size: 14px; color: var(--muted); }
 .note a { color: var(--accent); }
 .next { align-self: flex-start; margin-top: 4px; }
