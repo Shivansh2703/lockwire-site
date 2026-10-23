@@ -148,3 +148,4 @@ td.num { font-size: 13.5px; white-space: nowrap; }
 @media (max-width: 760px) {
   .nav nav a:not(.btn) { display: none; }
 }
+.plan pre.start { margin: 0; padding: 12px 14px; border-radius: 10px; background: var(--canvas); border: 1px solid var(--line); font: 13px/1.6 var(--mono); overflow-x: auto; }

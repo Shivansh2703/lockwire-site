@@ -103,6 +103,9 @@ const z = test.outside_pct[zKey];
             <li>AI Assistant in the app: optional, off by default, your own Claude key</li>
             <li>GitHub Action for CI</li>
           </ul>
+          <pre class="start"><code>pipx install lockwire
+lockwire start --example drone
+lockwire check</code></pre>
           <a class="btn" href={GITHUB}>Try it free on GitHub</a>
         </div>
         <div class="plan pro">
@@ -134,7 +137,7 @@ const z = test.outside_pct[zKey];
     <span>© 2026 Lockwire</span>
     <span><a href={GITHUB}>GitHub</a> · <a href={`mailto:${EMAIL}`}>{EMAIL}</a></span>
     <span class="credits">Drone model: <a href={GITHUB}>lockwire</a>, Apache-2.0. Test data: <a href="https://review.px4.io/">PX4 Flight Review</a>, CC BY 4.0.</span>
-    <span class="credits">We count page views and button clicks. No cookies, nothing about you. Questions you ask the Assistant go to Anthropic's API to be answered.</span>
+    <span class="credits">We count page views and button clicks, without cookies. Questions to the Assistant are answered by Anthropic's API.</span>
   </footer>
 
   <script>

@@ -74,9 +74,9 @@ function panelHTML() {
   const m = data.modes[state.mode];
   const hi = new Set(m?.highlight ?? []);
   const body = m
-    ? `${state.mode === "test" || state.mode === "run" ? `<p class="demo-pro-note">Test and Run are in Lockwire Pro.</p>` : ""}<div class="demo-verdict-row">${m.verdict && !(state.mode === "check" && data.robot.catch) ? `<span class="demo-verdict ${tone(m.verdict)}">${esc(m.verdict)}</span>` : ""}${m.label ? `<span class="demo-rec">${esc(m.label)}</span>` : ""}</div>
+    ? `<div class="demo-verdict-row">${m.verdict && !(state.mode === "check" && data.robot.catch) ? `<span class="demo-verdict ${tone(m.verdict)}">${esc(m.verdict)}</span>` : ""}${m.label ? `<span class="demo-rec">Lockwire Pro · ${esc(m.label.toLowerCase())}</span>` : ""}</div>
        <h3 class="demo-headline">${esc(m.headline)}</h3>
-       <details class="demo-more"${detailsOpen ? " open" : ""}><summary>Details</summary>
+       <details class="demo-more"${detailsOpen || state.mode === "docs" ? " open" : ""}><summary>Details</summary>
        <ul class="demo-lines">${m.lines.map((l) => `<li>${esc(l)}</li>`).join("")}</ul>
        <p class="demo-src"><code>${esc(m.source)}</code></p>`
     : `<p class="demo-wait">Simulated run for this robot is on the way.</p>`;

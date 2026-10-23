@@ -124,7 +124,6 @@
 
 .demo-ask-title { display: block; margin: 0 0 8px; font-weight: 600; font-size: 15px; color: var(--ink); }
 .demo-pro { margin-left: 6px; padding: 1px 6px; border-radius: 999px; font: 600 10px var(--mono); border: 1px solid currentColor; opacity: .75; vertical-align: 1px; }
-.demo-pro-note { margin: 0 0 10px; font-size: 13px; color: var(--accent); }
 /* Phones: the catch sits above the robot instead of covering it. */
 @media (max-width: 760px) {
   .demo-view { display: flex; flex-direction: column; height: auto; }
