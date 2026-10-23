@@ -31,7 +31,9 @@ const assistantUrl = import.meta.env.PUBLIC_ASSISTANT_URL; // unset: the Ask box
         <div class="demo-catch" data-catch>
           <span class="demo-verdict bad">NO-GO</span>
           <strong data-catch-title>{robot.catch.title}</strong>
-          <span class="demo-catch-n"><b data-catch-needed>{robot.catch.needed}</b> needed · <span data-catch-avail>{robot.catch.available}</span> available · <span class="over" data-catch-over>{robot.catch.over}</span></span>
+          <span class="demo-catch-from" data-catch-from>Found by Check</span>
+          <span class="demo-catch-line" data-catch-line hidden></span>
+          <span class="demo-catch-n" data-catch-n><b data-catch-needed>{robot.catch.needed}</b> needed · <span data-catch-avail>{robot.catch.available}</span> available · <span class="over" data-catch-over>{robot.catch.over}</span></span>
         </div>
       )}
       <p class="demo-hint" data-hint>Drag to turn. Click a part.</p>
@@ -64,8 +66,9 @@ const assistantUrl = import.meta.env.PUBLIC_ASSISTANT_URL; // unset: the Ask box
       </details>
     </div>
     {assistantUrl && (
+      <details class="demo-ask-fold">
+      <summary>Ask the Assistant about this robot</summary>
       <form class="demo-ask" data-ask data-url={assistantUrl} aria-label="Ask about this robot">
-        <label class="demo-ask-title" for="demo-ask-q">Ask the Lockwire Assistant</label>
         <div class="demo-ask-chips">
           <button type="button" data-q="Why is this NO-GO?">Why is this NO-GO?</button>
           <button type="button" data-q="How would I fix it?">How would I fix it?</button>
@@ -76,6 +79,7 @@ const assistantUrl = import.meta.env.PUBLIC_ASSISTANT_URL; // unset: the Ask box
         </div>
         <p class="demo-ask-out" data-ask-out role="status" aria-live="polite"></p>
       </form>
+      </details>
     )}
     </div>
   </div>

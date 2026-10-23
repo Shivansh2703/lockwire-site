@@ -108,9 +108,13 @@ td:first-child { font-weight: 600; width: 26%; }
 td:nth-child(2) { color: var(--muted); }
 td.num { font-size: 13.5px; white-space: nowrap; }
 .three { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
-.three > div, .plan { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 22px; min-width: 0; }
+.three > div, .three > .card-link, .plan { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 22px; min-width: 0; }
 .three h3, .plan h3 { margin: 8px 0 0; font-size: 18px; letter-spacing: -.01em; }
 .three p { margin: 8px 0 0; color: var(--muted); font-size: 15px; }
+.card-link { display: block; color: inherit; text-decoration: none; }
+.card-link:hover, .card-link:focus-visible { border-color: var(--accent); }
+.card-link .go { display: block; margin-top: 12px; font-size: 14px; color: var(--accent); }
+.tag { font: 500 11px var(--mono); padding: 1px 6px; border: 1px solid var(--accent); border-radius: 999px; color: var(--accent); white-space: nowrap; }
 .plans { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
 .plan { display: flex; flex-direction: column; gap: 14px; }
 .plan h3 { margin: 0; font-size: 22px; }

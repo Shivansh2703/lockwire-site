@@ -5,12 +5,14 @@ import "../styles/site.css";
 import Demo from "../components/Demo.astro";
 import demo from "../data/demo.json";
 import test from "../data/test_step.json";
+import armRun from "../data/runs/arm.json";
+import quadRun from "../data/runs/quadruped.json";
 
 const EMAIL = "shivansh@lockwirerobotics.com";
 const ASK = "mailto:" + EMAIL + "?subject=" + encodeURIComponent("48-hour check");
 const GITHUB = "https://github.com/Shivansh2703/lockwire";
 
-const DESC = "Lockwire checks power rails, mass, buses and sensors against your datasheets. For makers and robotics teams. See it catch real problems on three robot designs.";
+const DESC = "Lockwire checks power rails, mass, buses and sensors against your datasheets. For makers and robotics teams. See what it catches on three starter robot designs.";
 const SITE = "https://lockwirerobotics.com";
 const ld = [
   { "@context": "https://schema.org", "@type": "Organization", name: "Lockwire", url: SITE + "/", logo: SITE + "/favicon.svg", email: EMAIL, sameAs: [GITHUB] },
@@ -29,7 +31,7 @@ const z = test.outside_pct[zKey];
   <title>Lockwire · From Idea to Robot</title>
   <meta name="description" content={DESC} />
   <meta property="og:title" content="Lockwire" />
-  <meta property="og:description" content="From Idea to Robot. Lockwire checks every number in your robot, from the first parts list to every power-on." />
+  <meta property="og:description" content="From Idea to Robot. Lockwire checks the numbers in your robot against the datasheets, from the first parts list to every power-on." />
   <meta property="og:image" content="https://lockwirerobotics.com/og.png" />
   <meta property="og:url" content="https://lockwirerobotics.com/" />
   <meta property="og:type" content="website" />
@@ -54,7 +56,7 @@ const z = test.outside_pct[zKey];
   <main>
     <section class="hero wrap">
       <h1>From Idea <em>to Robot</em></h1>
-      <p class="sub">Plan your robot with an AI assistant. Lockwire checks every number, from the first parts list to every power-on.</p>
+      <p class="sub">Lockwire checks the numbers in your robot against the datasheets, from the first parts list to every power-on.</p>
       <div class="ctas">
         <a class="btn dark" href={ASK}>Get a free 48-hour check</a>
         <a class="textlink" href={GITHUB}>or try it free</a>
@@ -69,13 +71,16 @@ const z = test.outside_pct[zKey];
       <h2 class="h2">What it catches</h2>
       <div class="tablewrap">
         <table>
-          <thead><tr><th>Problem</th><th>How Lockwire knows</th><th>Real example</th></tr></thead>
+          <thead><tr><th>Problem</th><th>How Lockwire knows</th><th>Example</th></tr></thead>
           <tbody>
             {plan.check.violations.map((x) => (
               <tr><td>{x.quantity.endsWith("7w-mode") ? "Overloaded even in low-power mode" : "Overloaded power rail"}</td><td>Adds every part's draw on a rail and compares it with what the supply can give</td><td class="num">Drone: {x.observed.split(" (")[0]} on {x.expected.replace("<= ", "")} · <span class="badtext">{x.delta.match(/\(([^)]+)\)/)?.[1]}</span></td></tr>
             ))}
             <tr><td>Missing numbers</td><td>Names every value it could not check, so a gap is never a silent pass</td><td class="num">Drone: {plan.check.counts.not_scored} not checked, each named</td></tr>
-            <tr><td>Sensors drifting after power-on</td><td>Learns each sensor's normal range from known-good runs, then flags readings outside it</td><td class="num">Public PX4 flight log, {zKey}: outside its learned normal range {z.known_good}% of the time when healthy, <span class="badtext">{z.checked}%</span> after the fault</td></tr>
+            <tr><td>Sensors drifting after power-on</td><td>Learns each sensor's normal range from known-good runs, then flags readings outside it</td><td class="num">Public PX4 flight log, {zKey}: outside its learned normal range {z.known_good}% of the time when healthy, <span class="badtext">{z.checked}%</span> after the fault. {test.caveat} <span class="tag">Pro</span></td></tr>
+            {[["Part running hot", "Arm", armRun], ["Motor over its current limit", "Quadruped", quadRun]].map(([problem, who, r]) => (
+              <tr><td>{problem}</td><td>Compares each recorded reading with the part's datasheet limit</td><td class="num">{who}, {r.test.lines[0]} Simulated recording, one planted fault. <span class="tag">Pro</span></td></tr>
+            ))}
           </tbody>
         </table>
       </div>
@@ -84,9 +89,9 @@ const z = test.outside_pct[zKey];
     <section class="wrap section">
       <h2 class="h2">How it fits your team</h2>
       <div class="three">
-        <div><span class="kicker">1 · Plan</span><h3>One file for every number</h3><p>Start from your URDF or a parts list. Every value carries its source.</p></div>
-        <div><span class="kicker">2 · Check</span><h3>On every change</h3><p>A GitHub Action reruns the check, so a part swap can't quietly break the robot.</p></div>
-        <div><span class="kicker">3 · Test</span><h3>Before every power-on</h3><p>A go/no-go gate compares the powered robot with its lockfile and its known-good runs.</p></div>
+        <a class="card-link" href="#demo" data-goto="design"><span class="kicker">1 · Plan</span><h3>One file for every number</h3><p>Start from your URDF or a parts list. Every value carries its source.</p><span class="go">See it in the demo ›</span></a>
+        <a class="card-link" href="#demo" data-goto="check"><span class="kicker">2 · Check</span><h3>On every change</h3><p>A GitHub Action reruns the check, so a part swap can't quietly break the robot.</p><span class="go">See it in the demo ›</span></a>
+        <a class="card-link" href="#demo" data-goto="run"><span class="kicker">3 · Test</span><h3>Before every power-on</h3><p>A go/no-go gate compares the powered robot with its lockfile and its known-good runs.</p><span class="go">See it in the demo ›</span></a>
       </div>
     </section>
 
@@ -99,7 +104,7 @@ const z = test.outside_pct[zKey];
           <ul>
             <li>The check: power, mass and bus budgets</li>
             <li>Command line and Python library</li>
-            <li>Desktop app for macOS and Linux</li>
+            <li>Desktop app for macOS (Apple silicon) and Linux</li>
             <li>AI Assistant in the app: optional, off by default, your own Claude key</li>
             <li>GitHub Action for CI</li>
           </ul>

@@ -18,6 +18,10 @@ async function load(id) {
   return cache[id];
 }
 
+// Each robot's catch is a different real result: the drone's from Check, the others from the
+// planted fault in their simulated Test recording.
+const CATCH_FROM = { drone: "check", arm: "test", quadruped: "test" };
+
 const state = { robot: "drone", mode: "check", part: null };
 let data = null; // loaded data for state.robot; null until first interaction
 let view3d = null;
@@ -120,8 +124,17 @@ function render() {
   credit.innerHTML = `${esc(r.title)}: based on ${esc(r.based_on)} (${esc(r.licence)}${lic}). Numbers come from <code>${esc(r.source)}</code>.`;
   const c = data.robot.catch, box = $("[data-catch]");
   if (box) {
-    box.hidden = !c || state.mode !== "check";
-    if (c) {
+    const from = CATCH_FROM[state.robot] ?? "check";
+    const t = from === "test" ? data.modes.test : null;
+    box.hidden = !(t || c) || (state.mode !== "check" && state.mode !== from);
+    $("[data-catch-from]", box).textContent = t ? "Found by Test · simulated recording · Pro" : "Found by Check";
+    $("[data-catch-n]", box).hidden = !!t;
+    const line = $("[data-catch-line]", box);
+    line.hidden = !t;
+    if (t) {
+      $("[data-catch-title]", box).textContent = t.headline;
+      line.textContent = t.lines[0].split(": ").slice(1).join(": ");
+    } else if (c) {
       $("[data-catch-title]", box).textContent = c.title;
       $("[data-catch-needed]", box).textContent = c.needed;
       $("[data-catch-avail]", box).textContent = c.available;
@@ -184,6 +197,12 @@ $(".demo-tabs").addEventListener("keydown", (e) => {
   setMode(next).then(() => $(`#demo-tab-${next}`).focus());
 });
 root.addEventListener("keydown", (e) => { if (e.key === "Escape" && state.part) select(null); });
+
+// The team cards under the demo open their tab here; the link itself scrolls (and works without JS).
+document.addEventListener("click", (e) => {
+  const a = e.target.closest("[data-goto]");
+  if (a) setMode(a.dataset.goto);
+});
 
 // 3D after first paint; without WebGL (or on failure) the screenshot stays.
 async function start3d() {
