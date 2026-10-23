@@ -18,3 +18,8 @@ Every number on the page is read from `src/data/`, which is written by real runs
   `1b8e43d5-04d8-4130-8227-628898f319c5` (PX4 Flight Review, CC BY 4.0).
 
 The drone model is from [lockwire](https://github.com/Shivansh2703/lockwire) (Apache-2.0).
+
+## Licence
+
+Apache-2.0 (see `LICENSE`). Files under `public/robots/` keep their own licences, shipped next to them
+(`*-LICENSE.txt`, `*-NOTICE.txt`); the drone model is from the lockwire repo (Apache-2.0).
