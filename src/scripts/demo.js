@@ -74,7 +74,7 @@ function panelHTML() {
   const m = data.modes[state.mode];
   const hi = new Set(m?.highlight ?? []);
   const body = m
-    ? `<div class="demo-verdict-row">${m.verdict ? `<span class="demo-verdict ${tone(m.verdict)}">${esc(m.verdict)}</span>` : ""}${m.label ? `<span class="demo-rec">${esc(m.label)}</span>` : ""}</div>
+    ? `${state.mode === "test" || state.mode === "run" ? `<p class="demo-pro-note">Test and Run are in Lockwire Pro.</p>` : ""}<div class="demo-verdict-row">${m.verdict && !(state.mode === "check" && data.robot.catch) ? `<span class="demo-verdict ${tone(m.verdict)}">${esc(m.verdict)}</span>` : ""}${m.label ? `<span class="demo-rec">${esc(m.label)}</span>` : ""}</div>
        <h3 class="demo-headline">${esc(m.headline)}</h3>
        <details class="demo-more"${detailsOpen ? " open" : ""}><summary>Details</summary>
        <ul class="demo-lines">${m.lines.map((l) => `<li>${esc(l)}</li>`).join("")}</ul>

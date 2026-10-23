@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import { handle, costUsd, validate, MONTHLY_CAP_USD, type Env } from "../src/assistant";
+import { handle, costUsd, validate, MONTHLY_CAP_USD, DAILY_QUESTIONS, type Env } from "../src/assistant";
 import { Counter, handleHits } from "../src/hits";
 
 const kv = (init: Record<string, string> = {}) => {
@@ -37,12 +37,12 @@ describe("worker", () => {
     expect(create).not.toHaveBeenCalled();
   });
 
-  it("blocks the 11th question, and records spend", async () => {
+  it("blocks the question after the daily limit, and records spend", async () => {
     const { e, k } = env();
     const create = vi.fn(async () => msg());
-    for (let i = 0; i < 10; i++) expect((await handle(req(good), e, create)).status).toBe(200);
+    for (let i = 0; i < DAILY_QUESTIONS; i++) expect((await handle(req(good), e, create)).status).toBe(200);
     expect((await handle(req(good), e, create)).status).toBe(429);
-    expect(create).toHaveBeenCalledTimes(10);
+    expect(create).toHaveBeenCalledTimes(DAILY_QUESTIONS);
     expect([...k.m.keys()].some((x) => x.includes("1.2.3.4"))).toBe(false);
     expect(parseFloat(k.m.get(`spend:${new Date().toISOString().slice(0, 7)}`)!)).toBeGreaterThan(0);
   });

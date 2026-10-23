@@ -145,3 +145,6 @@ td.num { font-size: 13.5px; white-space: nowrap; }
 .textlink { color: var(--muted); font-size: 15px; text-underline-offset: 3px; }
 .textlink:hover { color: var(--ink); }
 .demo-wrap { margin-top: 32px; }
+@media (max-width: 760px) {
+  .nav nav a:not(.btn) { display: none; }
+}

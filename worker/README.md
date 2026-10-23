@@ -1,6 +1,6 @@
 # Lockwire assistant (Cloudflare Worker)
 
-Answers visitors' questions about the robot on the demo. Read-only. Uses the Claude API (`claude-haiku-5-5`) and your own key, with a $9.50 monthly cap and 10 questions per visitor per day.
+Answers visitors' questions about the robot on the demo. Read-only. Uses the Claude API (`claude-haiku-5-5`) and your own key, with a $9.50 monthly cap and 30 questions per visitor network per day.
 
 ## Owner steps, in order
 
@@ -24,7 +24,7 @@ Read them: `curl -H "Authorization: Bearer <token>" https://<worker-url>/stats` 
 ## How the limits work
 
 - Spend: after each call the cost is computed from the response's token usage and added to a KV counter `spend:YYYY-MM` (UTC). At or above `MONTHLY_CAP_USD` (9.5) the Worker answers 429 without calling the API. KV is eventually consistent, hence the margin under $10.
-- Rate: KV key `rl:<date>:<hash of IP + date>`, 10 per UTC day. The raw IP is never stored.
+- Rate: KV key `rl:<date>:<hash of IP + date>`, 30 per UTC day. The raw IP is never stored.
 - Prices live in one block (`PRICE`) in `src/assistant.ts`; update it if Anthropic changes them.
 - The robot data is bundled from `../src/data` at deploy time, so redeploy the Worker when that data changes.
 

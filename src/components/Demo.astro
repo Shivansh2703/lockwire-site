@@ -39,7 +39,7 @@ const assistantUrl = import.meta.env.PUBLIC_ASSISTANT_URL; // unset: the Ask box
         <button type="button" class="demo-step" data-step="-1" aria-label="Previous mode">&lsaquo;</button>
         <div class="demo-tabs" role="tablist" aria-label="Mode">
           {MODES.map((m) => (
-            <button type="button" role="tab" id={`demo-tab-${m}`} data-mode-btn={m} aria-selected={String(m === "check")} aria-controls="demo-panel" tabindex={m === "check" ? 0 : -1}>{label(m)}</button>
+            <button type="button" role="tab" id={`demo-tab-${m}`} data-mode-btn={m} aria-selected={String(m === "check")} aria-controls="demo-panel" tabindex={m === "check" ? 0 : -1}>{label(m)}{(m === "test" || m === "run") && <span class="demo-pro">Pro</span>}</button>
           ))}
         </div>
         <button type="button" class="demo-step" data-step="1" aria-label="Next mode">&rsaquo;</button>
@@ -49,7 +49,7 @@ const assistantUrl = import.meta.env.PUBLIC_ASSISTANT_URL; // unset: the Ask box
     <div class:list={["demo-side", { "has-ask": !!assistantUrl }]}>
     <div class="demo-panel" id="demo-panel" role="tabpanel" aria-labelledby="demo-tab-check" data-panel data-tone={tone}>
       <div class="demo-verdict-row">
-        {mode.verdict && <span class={`demo-verdict ${tone}`}>{mode.verdict}</span>}
+        {mode.verdict && !robot.catch && <span class={`demo-verdict ${tone}`}>{mode.verdict}</span>}
       </div>
       <h3 class="demo-headline">{mode.headline}</h3>
       <details class="demo-more">
@@ -75,7 +75,7 @@ const assistantUrl = import.meta.env.PUBLIC_ASSISTANT_URL; // unset: the Ask box
           <button type="submit">Send</button>
         </div>
         <p class="demo-ask-out" data-ask-out role="status" aria-live="polite"></p>
-        <p class="demo-ask-note">A preview of the AI Assistant built into the Lockwire app, where it also runs checks and drafts fixes you approve.</p>
+        <p class="demo-ask-note">A preview of the AI Assistant built into the Lockwire app, where it also runs checks and drafts fixes you approve. Questions go to Anthropic's API to be answered, so don't paste anything confidential. 30 a day.</p>
       </form>
     )}
     </div>

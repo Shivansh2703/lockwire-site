@@ -16,7 +16,7 @@ export interface Env {
 
 // ponytail: monthly cap is a read-modify-write on KV (eventually consistent); the 0.50 margin under the owner's $10 covers it.
 export const MONTHLY_CAP_USD = 9.5;
-export const DAILY_QUESTIONS = 10;
+export const DAILY_QUESTIONS = 30; // per visitor network; the monthly cap is what protects the money
 export const MODEL = "claude-haiku-5-5";
 
 // USD per 1M tokens, claude-haiku-5-5, prompts up to 100K tokens.
@@ -166,7 +166,8 @@ export async function handle(req: Request, env: Env, create?: Create): Promise<R
   }
 
   if (res.stop_reason === "refusal") return json({ answer: "I can't help with that one." }, 200, origin);
-  const text = res.content.flatMap((b) => (b.type === "text" ? [b.text] : [])).join("").trim();
+  // Plain text on the page: drop markdown code ticks the model sometimes adds.
+  const text = res.content.flatMap((b) => (b.type === "text" ? [b.text] : [])).join("").replace(/`/g, "").trim();
   if (!text) return json({ message: "I couldn't put an answer together. Try rephrasing." }, 200, origin);
   const answer = res.stop_reason === "max_tokens" ? `${text} (Cut short. Ask for a narrower question to get the rest.)` : text;
   return json({ answer }, 200, origin);

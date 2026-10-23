@@ -75,7 +75,7 @@ const z = test.outside_pct[zKey];
               <tr><td>{x.quantity.endsWith("7w-mode") ? "Overloaded even in low-power mode" : "Overloaded power rail"}</td><td>Adds every part's draw on a rail and compares it with what the supply can give</td><td class="num">Drone: {x.observed.split(" (")[0]} on {x.expected.replace("<= ", "")} · <span class="badtext">{x.delta.match(/\(([^)]+)\)/)?.[1]}</span></td></tr>
             ))}
             <tr><td>Missing numbers</td><td>Names every value it could not check, so a gap is never a silent pass</td><td class="num">Drone: {plan.check.counts.not_scored} not checked, each named</td></tr>
-            <tr><td>Sensors drifting after power-on</td><td>Learns each sensor's normal range from known-good runs, then flags readings outside it</td><td class="num">Public PX4 flight log: {zKey} {z.known_good}% → <span class="badtext">{z.checked}%</span> out of range</td></tr>
+            <tr><td>Sensors drifting after power-on</td><td>Learns each sensor's normal range from known-good runs, then flags readings outside it</td><td class="num">Public PX4 flight log, {zKey}: outside its learned normal range {z.known_good}% of the time when healthy, <span class="badtext">{z.checked}%</span> after the fault</td></tr>
           </tbody>
         </table>
       </div>
@@ -95,12 +95,12 @@ const z = test.outside_pct[zKey];
       <div class="plans">
         <div class="plan">
           <h3>Lockwire Free</h3>
-          <p class="planline">For makers and hobbyists. Open source: plan and check a robot yourself.</p>
+          <p class="planline">Open source. Plan and check a robot yourself.</p>
           <ul>
             <li>The check: power, mass and bus budgets</li>
             <li>Command line and Python library</li>
             <li>Desktop app for macOS and Linux</li>
-            <li>AI Assistant in the app (your own Claude key)</li>
+            <li>AI Assistant in the app: optional, off by default, your own Claude key</li>
             <li>GitHub Action for CI</li>
           </ul>
           <a class="btn" href={GITHUB}>Try it free on GitHub</a>
@@ -134,7 +134,7 @@ const z = test.outside_pct[zKey];
     <span>© 2026 Lockwire</span>
     <span><a href={GITHUB}>GitHub</a> · <a href={`mailto:${EMAIL}`}>{EMAIL}</a></span>
     <span class="credits">Drone model: <a href={GITHUB}>lockwire</a>, Apache-2.0. Test data: <a href="https://review.px4.io/">PX4 Flight Review</a>, CC BY 4.0.</span>
-    <span class="credits">We count page views and button clicks. No cookies, nothing about you.</span>
+    <span class="credits">We count page views and button clicks. No cookies, nothing about you. Questions you ask the Assistant go to Anthropic's API to be answered.</span>
   </footer>
 
   <script>
