@@ -23,6 +23,12 @@ async function load(id) {
 // so the catch and the panel beside it always tell the same story.
 const CATCH_FROM = { drone: "check", arm: "test", quadruped: "test" };
 
+// The big catch shows only on the tab it came from; there it carries the verdict instead of the panel.
+const catchShown = () => {
+  const from = CATCH_FROM[state.robot] ?? "check";
+  return state.mode === from && !!(from === "test" ? data.modes.test : data.robot.catch);
+};
+
 const state = { robot: "drone", mode: "check", part: null };
 let data = null; // loaded data for state.robot; null until first interaction
 let view3d = null;
@@ -79,7 +85,7 @@ function panelHTML() {
   const m = data.modes[state.mode];
   const hi = new Set(m?.highlight ?? []);
   const body = m
-    ? `<div class="demo-verdict-row">${m.verdict && !(state.mode === "check" && data.robot.catch) ? `<span class="demo-verdict ${tone(m.verdict)}">${esc(m.verdict)}</span>` : ""}${m.label ? `<span class="demo-rec">Lockwire Pro · ${esc(m.label.toLowerCase())}</span>` : ""}</div>
+    ? `<div class="demo-verdict-row">${m.verdict && !catchShown() ? `<span class="demo-verdict ${tone(m.verdict)}">${esc(m.verdict)}</span>` : ""}${m.label ? `<span class="demo-rec">Lockwire Pro · ${esc(m.label.toLowerCase())}</span>` : ""}</div>
        <h3 class="demo-headline">${esc(m.headline)}</h3>
        <details class="demo-more"${detailsOpen || state.mode === "docs" ? " open" : ""}><summary>Details</summary>
        <ul class="demo-lines">${m.lines.map((l) => `<li>${esc(l)}</li>`).join("")}</ul>
@@ -127,7 +133,7 @@ function render() {
   if (box) {
     const from = CATCH_FROM[state.robot] ?? "check";
     const t = from === "test" ? data.modes.test : null;
-    box.hidden = !(t || c) || state.mode !== from;
+    box.hidden = !catchShown();
     $("[data-catch-from]", box).textContent = t ? "Found by Test · simulated recording · Pro" : "Found by Check";
     $("[data-catch-n]", box).hidden = !!t;
     const line = $("[data-catch-line]", box);
