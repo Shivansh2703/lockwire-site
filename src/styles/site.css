@@ -137,3 +137,11 @@ td.num { font-size: 13.5px; white-space: nowrap; }
   .hero > * { animation: rise .6s cubic-bezier(.2, .7, .2, 1) both; }
   @keyframes rise { from { transform: translateY(12px); opacity: .001; } }
 }
+
+/* Hero kept short so the robot and its catch are on the first screen. */
+.hero { padding-top: 20px; }
+.hero h1 { margin-top: 8px; }
+.ctas { align-items: center; }
+.textlink { color: var(--muted); font-size: 15px; text-underline-offset: 3px; }
+.textlink:hover { color: var(--ink); }
+.demo-wrap { margin-top: 32px; }

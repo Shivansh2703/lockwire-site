@@ -68,17 +68,20 @@ const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&l
 const tone = (v) => (v === "NO-GO" ? "bad" : v === "GO" ? "go" : "muted");
 const isNum = (s) => /^[\d.+-]/.test(s);
 
+let detailsOpen = false;
+
 function panelHTML() {
   const m = data.modes[state.mode];
   const hi = new Set(m?.highlight ?? []);
   const body = m
     ? `<div class="demo-verdict-row">${m.verdict ? `<span class="demo-verdict ${tone(m.verdict)}">${esc(m.verdict)}</span>` : ""}${m.label ? `<span class="demo-rec">${esc(m.label)}</span>` : ""}</div>
        <h3 class="demo-headline">${esc(m.headline)}</h3>
+       <details class="demo-more"${detailsOpen ? " open" : ""}><summary>Details</summary>
        <ul class="demo-lines">${m.lines.map((l) => `<li>${esc(l)}</li>`).join("")}</ul>
        <p class="demo-src"><code>${esc(m.source)}</code></p>`
     : `<p class="demo-wait">Simulated run for this robot is on the way.</p>`;
   const parts = data.robot.parts.map((p) => `<li><button type="button" data-part="${esc(p.id)}" aria-pressed="${p.id === state.part}" class="${hi.has(p.id) ? "hl" : ""}">${esc(p.name)}</button></li>`).join("");
-  return `${body}<h4 class="demo-sub">Parts</h4><ul class="demo-parts">${parts}</ul>`;
+  return m ? `${body}<ul class="demo-parts">${parts}</ul></details>` : body;
 }
 
 function cardHTML(p) {
@@ -96,6 +99,7 @@ function paint3d() {
 
 function render() {
   const panel = $("[data-panel]");
+  detailsOpen = !!$(".demo-more", panel)?.open;
   panel.innerHTML = panelHTML();
   panel.dataset.tone = tone(data.modes[state.mode]?.verdict);
   panel.setAttribute("aria-labelledby", `demo-tab-${state.mode}`);
@@ -113,6 +117,16 @@ function render() {
   const credit = $(".demo-credit");
   const r = data.robot;
   credit.innerHTML = `${esc(r.title)}: based on ${esc(r.based_on)} (${esc(r.licence)}). Numbers come from <code>${esc(r.source)}</code>.`;
+  const c = data.robot.catch, box = $("[data-catch]");
+  if (box) {
+    box.hidden = !c || state.mode !== "check";
+    if (c) {
+      $("[data-catch-title]", box).textContent = c.title;
+      $("[data-catch-needed]", box).textContent = c.needed;
+      $("[data-catch-avail]", box).textContent = c.available;
+      $("[data-catch-over]", box).textContent = c.over;
+    }
+  }
   paint3d();
   if (state.robot !== askRobot) { askRobot = state.robot; askHistory = []; if (askOut) askOut.textContent = ""; }
 }

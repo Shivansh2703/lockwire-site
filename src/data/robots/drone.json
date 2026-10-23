@@ -1,5 +1,11 @@
 {
   "id": "drone",
+  "catch": {
+    "title": "Supply 5V rail overloaded",
+    "needed": "35.20 W",
+    "available": "15.60 W",
+    "over": "+126%"
+  },
   "title": "Drone",
   "based_on": "Holybro X500 V2 PX4 reference quadrotor",
   "licence": "Apache-2.0",
@@ -361,7 +367,11 @@
         "dev.onboard-computer",
         "dev.telemetry-radio"
       ],
-      "source": "lockwire check --json run.json"
+      "source": "lockwire check --json run.json",
+      "next_steps": [
+        "shed load on rail Supply 5V rail or raise its capacity with provenance",
+        "shed load on rail Supply 5V rail or raise its capacity with provenance"
+      ]
     },
     "plan": {
       "title": "Plan",

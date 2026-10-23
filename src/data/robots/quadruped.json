@@ -1,5 +1,11 @@
 {
   "id": "quadruped",
+  "catch": {
+    "title": "Bench supply 24V rail overloaded",
+    "needed": "678.60 W",
+    "available": "480.00 W",
+    "over": "+41%"
+  },
   "title": "Quadruped",
   "based_on": "Solo-12 (Open Dynamic Robot Initiative)",
   "licence": "BSD-3-Clause",
@@ -390,7 +396,11 @@
         "dev.motor.hind-right-hip-flexion",
         "dev.motor.hind-right-knee"
       ],
-      "source": "lockwire check --json run.json"
+      "source": "lockwire check --json run.json",
+      "next_steps": [
+        "shed load on rail Bench supply 24V rail or raise its capacity with provenance",
+        "none for pure frames"
+      ]
     },
     "plan": {
       "title": "Plan",

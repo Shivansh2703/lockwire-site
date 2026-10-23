@@ -27,6 +27,13 @@ const assistantUrl = import.meta.env.PUBLIC_ASSISTANT_URL; // unset: the Ask box
       <canvas data-canvas aria-label="3D model of the robot. Drag to turn it, click a part for its facts." tabindex="-1"></canvas>
       <div class="demo-tip" data-tip hidden></div>
       <div class="demo-card" data-card role="region" aria-label="Part facts" hidden></div>
+      {robot.catch && (
+        <div class="demo-catch" data-catch>
+          <span class="demo-verdict bad">NO-GO</span>
+          <strong data-catch-title>{robot.catch.title}</strong>
+          <span class="demo-catch-n"><b data-catch-needed>{robot.catch.needed}</b> needed · <span data-catch-avail>{robot.catch.available}</span> available · <span class="over" data-catch-over>{robot.catch.over}</span></span>
+        </div>
+      )}
       <p class="demo-hint" data-hint>Drag to turn. Click a part.</p>
       <nav class="demo-modes" aria-label="Modes">
         <button type="button" class="demo-step" data-step="-1" aria-label="Previous mode">&lsaquo;</button>
@@ -45,29 +52,30 @@ const assistantUrl = import.meta.env.PUBLIC_ASSISTANT_URL; // unset: the Ask box
         {mode.verdict && <span class={`demo-verdict ${tone}`}>{mode.verdict}</span>}
       </div>
       <h3 class="demo-headline">{mode.headline}</h3>
-      <ul class="demo-lines">{mode.lines.map((l) => <li>{l}</li>)}</ul>
-      <p class="demo-src"><code>{mode.source}</code></p>
-      <h4 class="demo-sub">Parts</h4>
-      <ul class="demo-parts">
-        {robot.parts.map((p) => (
-          <li><button type="button" data-part={p.id} aria-pressed="false" class={hi.has(p.id) ? "hl" : ""}>{p.name}</button></li>
-        ))}
-      </ul>
+      <details class="demo-more">
+        <summary>Details</summary>
+        <ul class="demo-lines">{mode.lines.map((l) => <li>{l}</li>)}</ul>
+        <p class="demo-src"><code>{mode.source}</code></p>
+        <ul class="demo-parts">
+          {robot.parts.map((p) => (
+            <li><button type="button" data-part={p.id} aria-pressed="false" class={hi.has(p.id) ? "hl" : ""}>{p.name}</button></li>
+          ))}
+        </ul>
+      </details>
     </div>
     {assistantUrl && (
       <form class="demo-ask" data-ask data-url={assistantUrl} aria-label="Ask about this robot">
-        <label class="demo-sub" for="demo-ask-q">Ask about this robot</label>
+        <label class="demo-ask-title" for="demo-ask-q">Ask the Lockwire Assistant</label>
         <div class="demo-ask-chips">
           <button type="button" data-q="Why is this NO-GO?">Why is this NO-GO?</button>
           <button type="button" data-q="How would I fix it?">How would I fix it?</button>
-          <button type="button" data-q="What did the test catch?">What did the test catch?</button>
         </div>
         <div class="demo-ask-row">
-          <input id="demo-ask-q" name="q" type="text" maxlength="500" autocomplete="off" placeholder="Type a question" />
+          <input id="demo-ask-q" name="q" type="text" maxlength="500" autocomplete="off" placeholder="Ask about this robot" />
           <button type="submit">Send</button>
         </div>
         <p class="demo-ask-out" data-ask-out role="status" aria-live="polite"></p>
-        <p class="demo-ask-note">Answers come from this page's data. 10 questions a day.</p>
+        <p class="demo-ask-note">A preview of the AI Assistant built into the Lockwire app, where it also runs checks and drafts fixes you approve.</p>
       </form>
     )}
     </div>

@@ -198,6 +198,17 @@ def robot(example):
     check_lines.append(f"{len(ns)} {'check' if len(ns) == 1 else 'checks'} not scored (nothing declared to compare)")
     check = mode("Check", run["verdict"], run["headline"], check_lines,
                  [d for f in viol for d in (f["dependent"] or "").split(", ") if d], "lockwire check --json run.json")
+    check["next_steps"] = [plain(f["action"]) for f in viol + warn if f.get("action")]
+
+    # The catch, shown big on the robot: the first thing the check found.
+    catch = None
+    if viol:
+        f0 = viol[0]
+        bud = next((b for b in doc.get("budgets", []) if b["id"] == f0["quantity"].split("/", 1)[-1]), {})
+        pct = re.search(r"\(([^)]+)\)", f0["delta"] or "")
+        catch = {"title": f"{name.get(bud.get('rail'), 'Power budget')} overloaded",
+                 "needed": f0["observed"].split(" (")[0], "available": f0["expected"].replace("<= ", ""),
+                 "over": pct[1] if pct else f0["delta"]}
 
     # plan: the starter's own plan checked before anything runs
     byp = {f["quantity"]: f for f in plan["findings"]}
@@ -218,7 +229,8 @@ def robot(example):
                 docs_loads or [d["id"] for d in devices if d.get("power")], "lockwire describe lockwire.yaml")
 
     return {
-        "id": example, "title": starter["title"], "based_on": starter["based_on"], "licence": starter["licence"],
+        "id": example,
+        "catch": catch, "title": starter["title"], "based_on": starter["based_on"], "licence": starter["licence"],
         "source": f"lockwire {version('lockwire')} from PyPI, `lockwire start --example {example}`",
         "glb": f"/robots/{example}.glb", "parts": parts,
         "modes": {"design": design, "declare": declare, "check": check, "plan": planm, "docs": docs},
