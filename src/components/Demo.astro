@@ -13,6 +13,7 @@ const mode = robot.modes.check;
 const tone = mode.verdict === "NO-GO" ? "bad" : mode.verdict === "GO" ? "go" : "muted";
 const hi = new Set(mode.highlight);
 const assistantUrl = import.meta.env.PUBLIC_ASSISTANT_URL; // unset: the Ask box is not rendered
+const { ask } = Astro.props; // the 48-hour check mailto, same link as the rest of the page
 ---
 <section class="demo wrap" id="demo" aria-label="Interactive demo" data-demo data-robot="drone" data-mode="check">
   <div class="demo-bar">
@@ -48,7 +49,7 @@ const assistantUrl = import.meta.env.PUBLIC_ASSISTANT_URL; // unset: the Ask box
       </nav>
     </div>
 
-    <div class:list={["demo-side", { "has-ask": !!assistantUrl }]}>
+    <div class="demo-side">
     <div class="demo-panel" id="demo-panel" role="tabpanel" aria-labelledby="demo-tab-check" data-panel data-tone={tone}>
       <div class="demo-verdict-row">
         {mode.verdict && !robot.catch && <span class={`demo-verdict ${tone}`}>{mode.verdict}</span>}
@@ -64,6 +65,10 @@ const assistantUrl = import.meta.env.PUBLIC_ASSISTANT_URL; // unset: the Ask box
           ))}
         </ul>
       </details>
+    </div>
+    <div class="demo-try">
+      <p><strong>Would your robot pass?</strong> Send your URDF or parts list. Within 48 hours you get back the numbers that don&#39;t add up. Free.</p>
+      <a class="btn dark small" href={ask}>Check my robot</a>
     </div>
     {assistantUrl && (
       <details class="demo-ask-fold">

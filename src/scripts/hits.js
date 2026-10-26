@@ -9,9 +9,9 @@ export function hit(e) {
 if (!off) {
   hit("view");
   document.addEventListener("click", (ev) => {
-    const a = ev.target.closest?.("a[href], #copy");
+    const a = ev.target.closest?.("a[href], [data-copy]");
     if (!a) return;
-    if (a.id === "copy") hit("copy_email");
+    if (a.hasAttribute("data-copy")) hit("copy_email");
     else if (a.href.startsWith("https://github.com/")) hit("try_free");
     else if (a.href.startsWith("mailto:") && a.href.includes("subject=48-hour")) hit("cta_check");
   });

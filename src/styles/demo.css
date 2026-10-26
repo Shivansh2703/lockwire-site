@@ -84,10 +84,13 @@
 .demo-modes .demo-tabs button[aria-selected="false"] { display: none; }
 .demo-modes .demo-tabs button[aria-selected="true"] { min-width: 96px; }
 
-/* Ask box: only exists when PUBLIC_ASSISTANT_URL is set at build time. */
-.demo-side { display: contents; }
-.demo-side.has-ask { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
-.demo-side.has-ask .demo-panel { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+/* Side column: the mode panel, the 48-hour check under it, then the Ask box (only when PUBLIC_ASSISTANT_URL is set at build time). */
+.demo-side { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
+.demo-side .demo-panel { flex: 1 1 auto; min-height: 0; overflow-y: auto; }
+.demo-try { flex: none; display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; padding: 14px 28px; border-top: 1px solid var(--line); background: var(--canvas); font-size: 14px; }
+.demo-try p { flex: 1 1 220px; margin: 0; color: var(--muted); }
+.demo-try strong { color: var(--ink); }
+@media (max-width: 760px) { .demo-try { padding: 14px 18px; } }
 .demo-ask { flex: none; padding: 14px 28px 16px; border-top: 1px solid var(--line); font-size: 14px; }
 .demo-ask .demo-sub { display: block; margin: 0 0 8px; }
 .demo-ask-chips { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 8px; }

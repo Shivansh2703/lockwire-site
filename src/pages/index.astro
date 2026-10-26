@@ -9,7 +9,7 @@ import armRun from "../data/runs/arm.json";
 import quadRun from "../data/runs/quadruped.json";
 
 const EMAIL = "shivansh@lockwirerobotics.com";
-const ASK = "mailto:" + EMAIL + "?subject=" + encodeURIComponent("48-hour check");
+const ASK = "mailto:" + EMAIL + "?subject=" + encodeURIComponent("48-hour check") + "&body=" + encodeURIComponent("Attach your URDF or parts list (a spreadsheet or links are fine).\n\nWhat the robot is for:\n");
 const GITHUB = "https://github.com/Shivansh2703/lockwire";
 
 const DESC = "Lockwire checks power rails, mass, buses and sensors against your datasheets. For makers and robotics teams. See what it catches on three starter robot designs.";
@@ -64,7 +64,7 @@ const z = test.outside_pct[zKey];
     </section>
 
     <section class="demo-wrap wrap" aria-label="Lockwire on three robots, every mode">
-      <Demo />
+      <Demo ask={ASK} />
     </section>
 
     <section id="catches" class="wrap section">
@@ -134,7 +134,7 @@ lockwire check</code></pre>
       <p>Within 48 hours you get back the numbers that don&#39;t add up. Free.</p>
       <div class="ctas">
         <a class="btn dark" href={ASK}>Email {EMAIL}</a>
-        <button class="btn" type="button" id="copy" data-text={EMAIL}>Copy address</button>
+        <button class="btn" type="button" data-copy={EMAIL}>Copy address</button>
       </div>
     </section>
   </main>
@@ -146,11 +146,21 @@ lockwire check</code></pre>
     <span class="credits">We count page views and button clicks, without cookies. Questions to the Assistant are answered by Anthropic's API.</span>
   </footer>
 
+  <p class="mailnote" id="mailnote" role="status" hidden>Your mail app should open. Nothing happened? Write to {EMAIL} <button class="btn small" type="button" data-copy={EMAIL}>Copy address</button></p>
+
   <script>
     import "../scripts/hits.js";
-    document.getElementById("copy")?.addEventListener("click", (e) => {
-      const b = e.currentTarget;
-      navigator.clipboard?.writeText(b.dataset.text).then(() => (b.textContent = "Copied"), () => {});
+    // Copy buttons, and a note after any email link in case no mail app opens.
+    const note = document.getElementById("mailnote");
+    let timer;
+    document.addEventListener("click", (e) => {
+      const b = e.target.closest?.("[data-copy]");
+      if (b) navigator.clipboard?.writeText(b.dataset.copy).then(() => (b.textContent = "Copied"), () => {});
+      if (e.target.closest?.('a[href^="mailto:"]')) {
+        note.hidden = false;
+        clearTimeout(timer);
+        timer = setTimeout(() => (note.hidden = true), 20000);
+      }
     });
   </script>
 
