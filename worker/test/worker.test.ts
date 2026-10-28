@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
 import { handle, costUsd, validate, MONTHLY_CAP_USD, DAILY_QUESTIONS, type Env } from "../src/assistant";
-import { Counter, handleHits } from "../src/hits";
+import { Counter, handleHits, WAITLIST_PER_DAY } from "../src/hits";
 
 const kv = (init: Record<string, string> = {}) => {
   const m = new Map(Object.entries(init));
@@ -90,5 +90,27 @@ describe("hit counts", () => {
     const ok = await get("Bearer s3cret");
     expect(Object.values((await ok!.json()) as Record<string, Record<string, number>>)[0]).toEqual({ view: 1 });
     expect((await handleHits(new Request("https://w.example/stats"), hitEnv().e))!.status).toBe(401); // no token configured
+  });
+
+  it("waitlist stores each email once, rate-limits, and lists only with the token", async () => {
+    const list = new Map<string, string[]>();
+    const sql = { exec: (q: string, ...b: string[]) => {
+      if (q.startsWith("INSERT INTO waitlist") && !list.has(b[0])) list.set(b[0], b);
+      return { toArray: () => [...list.values()].map(([email, robot, day]) => ({ email, robot, day })) };
+    } };
+    const counter = new Counter({ storage: { sql } } as never);
+    const k = kv();
+    const e = { STATS_TOKEN: "s3cret", LIMITS: k, HITS: { idFromName: () => "x", get: () => ({ fetch: (u: string, i?: RequestInit) => counter.fetch(new Request(u, i)) }) } } as unknown as Env;
+    const join = (b: unknown) => handleHits(new Request("https://w.example/waitlist", { method: "POST", headers: { origin: "https://lockwirerobotics.com", "cf-connecting-ip": "1.2.3.4", "content-type": "text/plain" }, body: JSON.stringify(b) }), e);
+    expect((await join({ email: "not-an-email" }))!.status).toBe(400);
+    expect((await join({ email: "A@Lab.io", robot: "hexapod" }))!.status).toBe(200);
+    expect((await join({ email: "a@lab.io" }))!.status).toBe(200);
+    expect([...list.keys()]).toEqual(["a@lab.io"]);
+    for (let i = 2; i < WAITLIST_PER_DAY; i++) await join({ email: `x${i}@lab.io` });
+    expect((await join({ email: "late@lab.io" }))!.status).toBe(429);
+    expect([...k.m.keys()].some((x) => x.includes("1.2.3.4"))).toBe(false);
+    const get = (auth?: string) => handleHits(new Request("https://w.example/waitlist", { headers: auth ? { authorization: auth } : {} }), e);
+    expect((await get())!.status).toBe(401);
+    expect(((await (await get("Bearer s3cret"))!.json()) as { email: string }[])[0]).toEqual({ email: "a@lab.io", robot: "hexapod", day: expect.any(String) });
   });
 });

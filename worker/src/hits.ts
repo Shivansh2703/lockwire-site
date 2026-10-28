@@ -1,9 +1,10 @@
 // Privacy-first click counts: one counter per (UTC day, event). No IP, user agent, referrer or id is read or stored.
-import type { Env } from "./assistant";
+// Also the waitlist: the email a visitor typed, an optional robot line, and the day. Nothing else.
+import { sha256Hex, type Env } from "./assistant";
 
 const ROBOTS = ["drone", "arm", "quadruped"];
 const MODES = ["design", "declare", "check", "plan", "test", "run", "docs"];
-const EVENTS = new Set(["view", "cta_check", "try_free", "ask", "copy_email", ...ROBOTS.map((r) => `robot_${r}`), ...MODES.map((m) => `mode_${m}`)]);
+const EVENTS = new Set(["view", "cta_check", "try_free", "ask", "copy_email", "waitlist", ...ROBOTS.map((r) => `robot_${r}`), ...MODES.map((m) => `mode_${m}`)]);
 const ALLOWED = /^(https?:\/\/(www\.)?lockwirerobotics\.com|http:\/\/(127\.0\.0\.1|localhost)(:\d+)?)$/;
 
 export const isEvent = (e: unknown): e is string => typeof e === "string" && EVENTS.has(e);
@@ -27,9 +28,18 @@ async function sameToken(given: string, want: string): Promise<boolean> {
 export class Counter {
   constructor(private state: DurableObjectState) {
     state.storage.sql.exec("CREATE TABLE IF NOT EXISTS hits (day TEXT, e TEXT, n INTEGER, PRIMARY KEY (day, e))");
+    state.storage.sql.exec("CREATE TABLE IF NOT EXISTS waitlist (email TEXT PRIMARY KEY, robot TEXT, day TEXT)");
   }
   async fetch(req: Request): Promise<Response> {
     const sql = this.state.storage.sql;
+    if (new URL(req.url).pathname === "/waitlist") {
+      if (req.method === "POST") {
+        const { email, robot, day } = (await req.json()) as { email: string; robot: string; day: string };
+        sql.exec("INSERT INTO waitlist (email, robot, day) VALUES (?, ?, ?) ON CONFLICT (email) DO NOTHING", email, robot, day);
+        return new Response(null, { status: 204 });
+      }
+      return Response.json(sql.exec("SELECT email, robot, day FROM waitlist ORDER BY day").toArray());
+    }
     if (req.method === "POST") {
       const { day, e } = (await req.json()) as { day: string; e: string };
       sql.exec("INSERT INTO hits (day, e, n) VALUES (?, ?, 1) ON CONFLICT (day, e) DO UPDATE SET n = n + 1", day, e);
@@ -44,7 +54,10 @@ export class Counter {
   }
 }
 
-/** Handles /hit and /stats; returns null for any other path. */
+export const WAITLIST_PER_DAY = 5; // per visitor network
+const EMAIL = /^[^\s@]{1,64}@[^\s@]{1,190}\.[^\s@]{2,}$/;
+
+/** Handles /hit, /stats and /waitlist; returns null for any other path. */
 export async function handleHits(req: Request, env: Env): Promise<Response | null> {
   const url = new URL(req.url);
   const origin = req.headers.get("origin");
@@ -60,9 +73,28 @@ export async function handleHits(req: Request, env: Env): Promise<Response | nul
     return reply(204, null, origin);
   }
 
-  if (url.pathname === "/stats" && req.method === "GET") {
+  if (url.pathname === "/waitlist" && req.method === "POST") {
+    if (origin && !ALLOWED.test(origin)) return reply(403, { message: "Not allowed from this site." });
+    const text = await req.text();
+    let b: { email?: unknown; robot?: unknown } = {};
+    try { b = text.length < 600 ? JSON.parse(text) ?? {} : {}; } catch { /* rejected below */ }
+    const email = typeof b.email === "string" ? b.email.trim().toLowerCase() : "";
+    const robot = typeof b.robot === "string" ? b.robot.trim().slice(0, 200) : "";
+    if (!EMAIL.test(email)) return reply(400, { message: "That email doesn't look right." }, origin);
+    const day = new Date().toISOString().slice(0, 10);
+    // Never store the raw IP: only a hash of IP + date, as the assistant does.
+    const rlKey = `wl:${day}:${(await sha256Hex(`${req.headers.get("cf-connecting-ip") ?? "unknown"}|${day}`)).slice(0, 32)}`;
+    const used = parseInt((await env.LIMITS.get(rlKey)) ?? "0", 10) || 0;
+    if (used >= WAITLIST_PER_DAY) return reply(429, { message: "Too many signups from here today. Try tomorrow." }, origin);
+    await env.LIMITS.put(rlKey, String(used + 1), { expirationTtl: 172800 });
+    await store().fetch("https://do/waitlist", { method: "POST", body: JSON.stringify({ email, robot, day }) });
+    return reply(200, { message: "You're on the list." }, origin);
+  }
+
+  if ((url.pathname === "/stats" || url.pathname === "/waitlist") && req.method === "GET") {
     const given = /^Bearer (.+)$/.exec(req.headers.get("authorization") ?? "")?.[1] ?? "";
     if (!env.STATS_TOKEN || !(await sameToken(given, env.STATS_TOKEN))) return reply(401, { message: "Unauthorized." });
+    if (url.pathname === "/waitlist") return store().fetch("https://do/waitlist");
     const days = Math.min(365, Math.max(1, parseInt(url.searchParams.get("days") ?? "30", 10) || 30));
     const since = new Date(Date.now() - (days - 1) * 86400000).toISOString().slice(0, 10);
     return store().fetch(`https://do/?since=${since}`);

@@ -1,0 +1,43 @@
+---
+// The site's main ask (owner S6). Signups go to the Worker (S7); without a Worker URL the form opens an email instead.
+import { EMAIL } from "../site";
+const url = import.meta.env.PUBLIC_ASSISTANT_URL;
+---
+<form class="waitlist" id="waitlist" data-waitlist data-url={url} data-mail={EMAIL} aria-label="Join the waitlist">
+  <div class="waitlist-row">
+    <input name="email" type="email" required autocomplete="email" placeholder="you@lab.com" aria-label="Your email" maxlength="254" />
+    <input name="robot" type="text" autocomplete="off" placeholder="Your robot (optional)" aria-label="Your robot (optional)" maxlength="200" />
+    <button class="btn dark" type="submit">Join the waitlist</button>
+  </div>
+  <p class="waitlist-note" data-waitlist-out role="status" aria-live="polite">We only use your email to tell you when Pro opens.</p>
+</form>
+
+<script>
+  import { hit } from "../scripts/hits.js";
+  for (const f of document.querySelectorAll<HTMLFormElement>("[data-waitlist]")) {
+    const out = f.querySelector<HTMLElement>("[data-waitlist-out]")!;
+    f.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const email = (f.elements.namedItem("email") as HTMLInputElement).value.trim();
+      const robot = (f.elements.namedItem("robot") as HTMLInputElement).value.trim();
+      const base = f.dataset.url;
+      if (!base) {
+        location.href = `mailto:${f.dataset.mail}?subject=${encodeURIComponent("Waitlist")}&body=${encodeURIComponent(`Add me to the Lockwire Pro waitlist.\n\nRobot: ${robot}\n`)}`;
+        return;
+      }
+      const button = f.querySelector("button")!;
+      button.disabled = true;
+      try {
+        // text/plain keeps this a simple request, so no CORS preflight.
+        const r = await fetch(base.replace(/\/$/, "") + "/waitlist", { method: "POST", headers: { "content-type": "text/plain" }, body: JSON.stringify({ email, robot }) });
+        const j = await r.json().catch(() => ({}));
+        out.textContent = r.ok ? "You're on the list. We'll write when Pro opens." : (j.message ?? "That didn't work. Try again in a minute.");
+        if (r.ok) { f.reset(); hit("waitlist"); }
+      } catch {
+        out.textContent = "That didn't work. Try again in a minute.";
+      } finally {
+        button.disabled = false;
+      }
+    });
+  }
+</script>

@@ -1,0 +1,50 @@
+---
+import "@fontsource-variable/geist";
+import "@fontsource-variable/geist-mono";
+import "../styles/site.css";
+import { ASK, EMAIL, GITHUB } from "../site";
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Contact · Lockwire</title>
+  <meta name="description" content="Write to Lockwire about Pro, Enterprise or a free 48-hour check of your robot." />
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="canonical" href="https://lockwirerobotics.com/contact" />
+</head>
+<body>
+  <header class="nav wrap">
+    <a class="brand" href="/" aria-label="Lockwire home"><img src="/favicon.svg" alt="" width="28" height="28" />lockwire</a>
+    <nav>
+      <a href="/#pricing">Pricing</a>
+      <a class="btn small dark" href="/#waitlist">Join the waitlist</a>
+    </nav>
+  </header>
+
+  <main class="wrap section contact">
+    <h1 class="h2">Contact</h1>
+    <p>Questions about Pro or Enterprise, or a free 48-hour check of your robot: write to</p>
+    <p class="contact-mail"><a href={`mailto:${EMAIL}`}>{EMAIL}</a></p>
+    <div class="ctas">
+      <button class="btn" type="button" data-copy={EMAIL}>Copy address</button>
+      <a class="btn dark" href={ASK}>Send a parts list or URDF</a>
+    </div>
+    <p class="planline">For the 48-hour check, attach your URDF or parts list. Within 48 hours you get back the numbers that don&#39;t add up. Free.</p>
+  </main>
+
+  <footer class="wrap foot">
+    <span>© 2026 Lockwire</span>
+    <span><a href={GITHUB}>GitHub</a> · <a href="/">Home</a></span>
+  </footer>
+
+  <script>
+    import "../scripts/hits.js";
+    document.addEventListener("click", (e) => {
+      const b = (e.target as Element).closest?.<HTMLElement>("[data-copy]");
+      if (b) navigator.clipboard?.writeText(b.dataset.copy!).then(() => (b.textContent = "Copied"), () => {});
+    });
+  </script>
+</body>
+</html>

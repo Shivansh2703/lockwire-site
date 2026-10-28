@@ -8,14 +8,12 @@ import test from "../data/test_step.json";
 import armRun from "../data/runs/arm.json";
 import quadRun from "../data/runs/quadruped.json";
 
-const EMAIL = "shivansh@lockwirerobotics.com";
-const ASK = "mailto:" + EMAIL + "?subject=" + encodeURIComponent("48-hour check") + "&body=" + encodeURIComponent("Attach your URDF or parts list (a spreadsheet or links are fine).\n\nWhat the robot is for:\n");
-const GITHUB = "https://github.com/Shivansh2703/lockwire";
+import WaitlistForm from "../components/WaitlistForm.astro";
+import { ASK, GITHUB, SITE } from "../site";
 
 const DESC = "Lockwire checks power rails, mass, buses and sensors against your datasheets. For makers and robotics teams. See what it catches on three starter robot designs.";
-const SITE = "https://lockwirerobotics.com";
 const ld = [
-  { "@context": "https://schema.org", "@type": "Organization", name: "Lockwire", url: SITE + "/", logo: SITE + "/favicon.svg", email: EMAIL, sameAs: [GITHUB] },
+  { "@context": "https://schema.org", "@type": "Organization", name: "Lockwire", url: SITE + "/", logo: SITE + "/favicon.svg", contactPoint: { "@type": "ContactPoint", contactType: "sales", url: SITE + "/contact" }, sameAs: [GITHUB] },
   { "@context": "https://schema.org", "@type": "SoftwareApplication", name: "Lockwire", applicationCategory: "DeveloperApplication", operatingSystem: "macOS, Linux", description: DESC, url: SITE + "/" },
 ];
 
@@ -48,8 +46,9 @@ const z = test.outside_pct[zKey];
     <a class="brand" href="/" aria-label="Lockwire home"><img src="/favicon.svg" alt="" width="28" height="28" />lockwire</a>
     <nav>
       <a href="#catches">What it catches</a>
-      <a href="#plans">Plans</a>
-      <a class="btn small dark" href={ASK}>Get a free 48-hour check</a>
+      <a href="#pricing">Pricing</a>
+      <a href="/contact">Contact</a>
+      <a class="btn small dark" href="#waitlist">Join the waitlist</a>
     </nav>
   </header>
 
@@ -57,10 +56,8 @@ const z = test.outside_pct[zKey];
     <section class="hero wrap">
       <h1>From Idea <em>to Robot</em></h1>
       <p class="sub">Lockwire checks the numbers in your robot against the datasheets, from the first parts list to every power-on.</p>
-      <div class="ctas">
-        <a class="btn dark" href={ASK}>Get a free 48-hour check</a>
-        <a class="textlink" href={GITHUB}>or try it free</a>
-      </div>
+      <WaitlistForm />
+      <p class="ctas"><a class="textlink" href={GITHUB}>or try it free on GitHub</a></p>
     </section>
 
     <section class="demo-wrap wrap" aria-label="Lockwire on three robots, every mode">
@@ -95,11 +92,12 @@ const z = test.outside_pct[zKey];
       </div>
     </section>
 
-    <section id="plans" class="wrap section">
-      <h2 class="h2">Plans</h2>
+    <section id="pricing" class="wrap section">
+      <h2 class="h2">Pricing</h2>
       <div class="plans">
         <div class="plan">
-          <h3>Lockwire Free</h3>
+          <h3>Free</h3>
+          <p class="price">$0</p>
           <p class="planline">Open source. Plan and check a robot yourself.</p>
           <ul>
             <li>The check: power, mass and bus budgets</li>
@@ -115,16 +113,29 @@ lockwire check</code></pre>
           <a class="btn" href={GITHUB}>Try it free on GitHub</a>
         </div>
         <div class="plan pro">
-          <h3>Lockwire Pro</h3>
-          <p class="planline">For teams and firms with robots on the bench and in the field.</p>
+          <h3>Pro</h3>
+          <p class="price">$29 <span>per user / month, billed monthly</span></p>
+          <p class="planline">For teams with robots on the bench and in the field.</p>
           <ul>
             <li>Everything in Free</li>
             <li>The go/no-go gate on the powered robot</li>
             <li>Known-good baselines and drift checks</li>
             <li>ROS 2 bags and PX4 flight logs</li>
-            <li>Set up with you on your own robot</li>
           </ul>
-          <a class="btn dark" href={ASK}>Talk to us</a>
+          <p class="planline">Opening to the waitlist first.</p>
+          <a class="btn dark" href="#waitlist">Join the waitlist</a>
+        </div>
+        <div class="plan">
+          <h3>Enterprise</h3>
+          <p class="price">Custom</p>
+          <p class="planline">For firms with several teams, sites or closed labs.</p>
+          <ul>
+            <li>Everything in Pro</li>
+            <li>Licensed for several teams and sites</li>
+            <li>Runs on your own machines, no cloud service</li>
+            <li>Set up with you on your own robots</li>
+          </ul>
+          <a class="btn" href="/contact">Contact us</a>
         </div>
       </div>
     </section>
@@ -133,29 +144,27 @@ lockwire check</code></pre>
       <h2>Send us your parts list or URDF.</h2>
       <p>Within 48 hours you get back the numbers that don&#39;t add up. Free.</p>
       <div class="ctas">
-        <a class="btn dark" href={ASK}>Email {EMAIL}</a>
-        <button class="btn" type="button" data-copy={EMAIL}>Copy address</button>
+        <a class="btn dark" href={ASK}>Email us your parts list</a>
+        <a class="textlink" href="/contact">or see how to reach us</a>
       </div>
     </section>
   </main>
 
   <footer class="wrap foot">
     <span>© 2026 Lockwire</span>
-    <span><a href={GITHUB}>GitHub</a> · <a href={`mailto:${EMAIL}`}>{EMAIL}</a></span>
+    <span><a href={GITHUB}>GitHub</a> · <a href="/contact">Contact</a></span>
     <span class="credits">Drone model: <a href={GITHUB}>lockwire</a>, Apache-2.0. Test data: <a href="https://review.px4.io/">PX4 Flight Review</a>, CC BY 4.0.</span>
     <span class="credits">We count page views and button clicks, without cookies. Questions to the Assistant are answered by Anthropic's API.</span>
   </footer>
 
-  <p class="mailnote" id="mailnote" role="status" hidden>Your mail app should open. Nothing happened? Write to {EMAIL} <button class="btn small" type="button" data-copy={EMAIL}>Copy address</button></p>
+  <p class="mailnote" id="mailnote" role="status" hidden>Your mail app should open. Nothing happened? Our address is on the <a href="/contact">Contact page</a>.</p>
 
   <script>
     import "../scripts/hits.js";
-    // Copy buttons, and a note after any email link in case no mail app opens.
+    // A note after any email link in case no mail app opens.
     const note = document.getElementById("mailnote");
     let timer;
     document.addEventListener("click", (e) => {
-      const b = e.target.closest?.("[data-copy]");
-      if (b) navigator.clipboard?.writeText(b.dataset.copy).then(() => (b.textContent = "Copied"), () => {});
       if (e.target.closest?.('a[href^="mailto:"]')) {
         note.hidden = false;
         clearTimeout(timer);

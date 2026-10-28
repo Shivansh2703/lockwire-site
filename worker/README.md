@@ -21,6 +21,10 @@ The site counts page views and clicks on the main buttons. Counts only: no cooki
 
 Read them: `curl -H "Authorization: Bearer <token>" https://<worker-url>/stats` (add `?days=7` for a shorter window; default 30). It answers `{ "2026-10-22": { "view": 12, "cta_check": 2 } }`.
 
+## Waitlist
+
+The site's waitlist form posts `{email, robot}` to `/waitlist`. The Worker keeps the email, the optional robot line and the UTC day in a `waitlist` table in the same Durable Object, one row per email, at most 5 signups per visitor network per day (KV key `wl:<date>:<hash of IP + date>`; the raw IP is never stored). Read the list: `curl -H "Authorization: Bearer <token>" https://<worker-url>/waitlist`.
+
 ## How the limits work
 
 - Spend: after each call the cost is computed from the response's token usage and added to a KV counter `spend:YYYY-MM` (UTC). At or above `MONTHLY_CAP_USD` (9.5) the Worker answers 429 without calling the API. KV is eventually consistent, hence the margin under $10.
