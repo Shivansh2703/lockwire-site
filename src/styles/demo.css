@@ -159,3 +159,10 @@
   .demo-drawer { position: fixed; top: auto; left: 0; width: auto; height: 78vh; border-left: 0; border-top: 1px solid var(--line); border-radius: 18px 18px 0 0; box-shadow: 0 -18px 40px rgb(0 0 0 / .2); }
   @media (prefers-reduced-motion: no-preference) { .demo-drawer { animation-name: sheet-in; } @keyframes sheet-in { from { transform: translateY(40px); opacity: 0; } } }
 }
+.drawer-pane.mcp { padding: 16px; gap: 12px; overflow-y: auto; font-size: 14px; }
+.drawer-pane.mcp > p { margin: 0; }
+.drawer-pane.mcp ol { margin: 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.drawer-pane.mcp li { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 8px; align-items: center; }
+.drawer-pane.mcp li span { grid-column: 1 / -1; font-weight: 600; }
+.drawer-pane.mcp code { padding: 8px 10px; border-radius: 8px; background: var(--term-bg); color: var(--term-ink); font: 12px/1.5 var(--mono); overflow-wrap: anywhere; }
+.drawer-pane.mcp .term-note { border-top: 0; padding: 0; }

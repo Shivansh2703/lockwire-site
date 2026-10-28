@@ -11,7 +11,7 @@ if (!off) {
   document.addEventListener("click", (ev) => {
     const a = ev.target.closest?.("a[href], [data-copy]");
     if (!a) return;
-    if (a.hasAttribute("data-copy")) hit("copy_email");
+    if (a.hasAttribute("data-copy")) { if (a.dataset.copy.includes("@")) hit("copy_email"); }
     else if (a.href.startsWith("https://github.com/")) hit("try_free");
     else if (a.href.startsWith("mailto:") && a.href.includes("subject=48-hour")) hit("cta_check");
   });

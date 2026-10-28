@@ -14,14 +14,18 @@ const tone = mode.verdict === "NO-GO" ? "bad" : mode.verdict === "GO" ? "go" : "
 const hi = new Set(mode.highlight);
 const assistantUrl = import.meta.env.PUBLIC_ASSISTANT_URL; // unset: the Ask box is not rendered
 const pkgVersion = robot.source.match(/lockwire (\S+)/)?.[1];
-const { ask } = Astro.props; // the 48-hour check mailto, same link as the rest of the page
+const { ask } = Astro.props;
+// The MCP setup lines, as the lockwire README gives them (owner S14).
+const MCP_INSTALL = 'pipx install "lockwire[mcp]"';
+const MCP_CLAUDE = "claude mcp add lockwire -- lockwire mcp";
+const MCP_JSON = '{ "mcpServers": { "lockwire": { "command": "lockwire", "args": ["mcp"] } } }'; // the 48-hour check mailto, same link as the rest of the page
 ---
 <section class="demo wrap" id="demo" aria-label="Interactive demo" data-demo data-robot="drone" data-mode="check">
   <div class="demo-bar">
     <div class="demo-pick" role="group" aria-label="Robot">
       {pickers.map((p) => <button type="button" data-robot-btn={p.id} aria-pressed={String(p.id === "drone")}>{p.title}</button>)}
     </div>
-    <button type="button" class="btn small dark demo-drawer-btn" data-drawer-open aria-expanded="false" aria-controls="demo-drawer"><span aria-hidden="true">&#9776;</span> {assistantUrl ? "Assistant & terminal" : "Terminal"}</button>
+    <button type="button" class="btn small dark demo-drawer-btn" data-drawer-open aria-expanded="false" aria-controls="demo-drawer"><span aria-hidden="true">&#9776;</span> {assistantUrl ? "Assistant & terminal" : "Terminal & AI setup"}</button>
   </div>
 
   <div class="demo-grid">
@@ -73,11 +77,12 @@ const { ask } = Astro.props; // the 48-hour check mailto, same link as the rest 
       <a class="btn dark small" href={ask}>Check my robot</a>
     </div>
     </div>
-    <aside class="demo-drawer" id="demo-drawer" data-drawer hidden aria-label={assistantUrl ? "Assistant and terminal" : "Terminal"}>
+    <aside class="demo-drawer" id="demo-drawer" data-drawer hidden aria-label="Assistant, terminal and AI setup">
       <div class="drawer-head">
         <div class="drawer-tabs" role="tablist">
           {assistantUrl && <button type="button" role="tab" data-pane-btn="assistant" aria-selected="true">Assistant</button>}
           <button type="button" role="tab" data-pane-btn="terminal" aria-selected={String(!assistantUrl)}>Terminal</button>
+          <button type="button" role="tab" data-pane-btn="mcp" aria-selected="false">Connect your AI</button>
         </div>
         <button type="button" class="drawer-close" data-drawer-close aria-label="Close">&times;</button>
       </div>
@@ -101,6 +106,15 @@ const { ask } = Astro.props; // the 48-hour check mailto, same link as the rest 
       <div class="drawer-pane" data-pane="terminal" hidden={!!assistantUrl}>
         <pre class="term" data-term tabindex="0" aria-label="Real lockwire output for this robot"></pre>
         <p class="term-note">Real output of lockwire {pkgVersion} on this starter. Install it and type the same.</p>
+      </div>
+      <div class="drawer-pane mcp" data-pane="mcp" hidden>
+        <p>Let Claude Code, Claude Desktop or Cursor check your robot with Lockwire. It runs on your machine and reads your own files. Free.</p>
+        <ol>
+          <li><span>Install</span><code>{MCP_INSTALL}</code><button type="button" class="btn small" data-copy={MCP_INSTALL}>Copy</button></li>
+          <li><span>Claude Code</span><code>{MCP_CLAUDE}</code><button type="button" class="btn small" data-copy={MCP_CLAUDE}>Copy</button></li>
+          <li><span>Claude Desktop or Cursor</span><code>{MCP_JSON}</code><button type="button" class="btn small" data-copy={MCP_JSON}>Copy</button></li>
+        </ol>
+        <p class="term-note">The JSON goes in claude_desktop_config.json, or .cursor/mcp.json for Cursor. Then ask: "Check my robot's lockwire.yaml and explain the NO-GO."</p>
       </div>
     </aside>
   </div>
