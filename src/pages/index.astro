@@ -6,6 +6,7 @@ import Demo from "../components/Demo.astro";
 import demo from "../data/demo.json";
 import test from "../data/test_step.json";
 import armRun from "../data/runs/arm.json";
+import arm from "../data/robots/arm.json";
 import quadRun from "../data/runs/quadruped.json";
 
 import WaitlistForm from "../components/WaitlistForm.astro";
@@ -18,6 +19,8 @@ const ld = [
 ];
 
 const plan = demo.plan;
+// The 0.2.4 tool-link check, as the arm's real Check run reports it.
+const massless = arm.modes.check.next_steps.map((s) => s.match(/model\/links\/([^/]+)\/mass/)?.[1]).find(Boolean);
 const zKey = "Accelerometer Z";
 const z = test.outside_pct[zKey];
 ---
@@ -73,6 +76,7 @@ const z = test.outside_pct[zKey];
             {plan.check.violations.map((x) => (
               <tr><td>{x.quantity.endsWith("7w-mode") ? "Overloaded even in low-power mode" : "Overloaded power rail"}</td><td>Adds every part's draw on a rail and compares it with what the supply can give</td><td class="num">Drone: {x.observed.split(" (")[0]} on {x.expected.replace("<= ", "")} · <span class="badtext">{x.delta.match(/\(([^)]+)\)/)?.[1]}</span></td></tr>
             ))}
+            {massless && <tr><td>Gripper or tool with no mass</td><td>Spots a tool link with no mass, which would otherwise drop out of the weight budget unseen</td><td class="num">Arm: <span class="badtext">{massless}</span> has no mass in its model</td></tr>}
             <tr><td>Missing numbers</td><td>Names every value it could not check, so a gap is never a silent pass</td><td class="num">Drone: {plan.check.counts.not_scored} not checked, each named</td></tr>
             <tr><td>Sensors drifting after power-on</td><td>Learns each sensor's normal range from known-good runs, then flags readings outside it</td><td class="num">Public PX4 flight log, {zKey}: outside its learned normal range {z.known_good}% of the time when healthy, <span class="badtext">{z.checked}%</span> after the fault. {test.caveat} <span class="tag">Pro</span></td></tr>
             {[["Part running hot", "Arm", armRun], ["Motor over its current limit", "Quadruped", quadRun]].map(([problem, who, r]) => (
@@ -86,8 +90,8 @@ const z = test.outside_pct[zKey];
     <section class="wrap section">
       <h2 class="h2">How it fits your team</h2>
       <div class="three">
-        <a class="card-link" href="#demo" data-goto="design"><span class="kicker">1 · Plan</span><h3>One file for every number</h3><p>Start from your URDF or a parts list. Every value carries its source.</p><span class="go">See it in the demo ›</span></a>
-        <a class="card-link" href="#demo" data-goto="check"><span class="kicker">2 · Check</span><h3>On every change</h3><p>A GitHub Action reruns the check, so a part swap can't quietly break the robot.</p><span class="go">See it in the demo ›</span></a>
+        <a class="card-link" href="#demo" data-goto="design"><span class="kicker">1 · Plan</span><h3>One file for every number</h3><p>Start from your URDF (xacro too) or paste a parts list. Every value carries its source.</p><span class="go">See it in the demo ›</span></a>
+        <a class="card-link" href="#demo" data-goto="check"><span class="kicker">2 · Check</span><h3>On every change</h3><p>A GitHub Action reruns the check, so a part swap can't quietly break the robot. In strict mode, even a GO with notes fails the build.</p><span class="go">See it in the demo ›</span></a>
         <a class="card-link" href="#demo" data-goto="run"><span class="kicker">3 · Test <span class="tag">Pro</span></span><h3>Before every power-on</h3><p>A go/no-go gate compares the powered robot with its lockfile and its known-good runs.</p><span class="go">See it in the demo ›</span></a>
       </div>
     </section>
@@ -100,8 +104,10 @@ const z = test.outside_pct[zKey];
           <p class="price">$0</p>
           <p class="planline">Open source. Plan and check a robot yourself.</p>
           <ul>
-            <li>The check: power, mass and bus budgets</li>
-            <li>Command line and Python library</li>
+            <li>The check: power, mass, bus and joint-torque budgets</li>
+            <li>Start from a URDF, xacro or a pasted parts list</li>
+            <li>Six starter robots to try it on</li>
+            <li>Command line, Python library and an MCP server for AI coding tools</li>
             <li>Desktop app for macOS (Apple silicon) and Linux</li>
             <li>AI Assistant in the app: optional, off by default, your own Claude key</li>
             <li>GitHub Action for CI</li>

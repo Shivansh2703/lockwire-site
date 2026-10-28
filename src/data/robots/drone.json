@@ -9,7 +9,7 @@
   "title": "Drone",
   "based_on": "Holybro X500 V2 PX4 reference quadrotor",
   "licence": "Apache-2.0",
-  "source": "lockwire 0.2.3 from PyPI, `lockwire start --example drone`",
+  "source": "lockwire 0.2.4 from PyPI, `lockwire start --example drone`",
   "glb": "/robots/drone.glb",
   "parts": [
     {
@@ -361,7 +361,7 @@
       "lines": [
         "Depth camera, Onboard computer, Telemetry radio: observed 35.20 W (draw mode: nominal), expected <= 15.60 W, over by +19.60 W (+126%)",
         "Depth camera, Onboard computer, Telemetry radio: observed 17.20 W (draw mode: 7W), expected <= 15.60 W, over by +1.60 W (+10%)",
-        "9 checks not scored (nothing declared to compare)"
+        "10 checks not scored (nothing declared to compare)"
       ],
       "highlight": [
         "dev.depth-camera",

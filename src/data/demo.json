@@ -1,5 +1,5 @@
 {
-  "source": "lockwire 0.2.3 from PyPI, `lockwire start --example drone`",
+  "source": "lockwire 0.2.4 from PyPI, `lockwire start --example drone`",
   "plan": {
     "check": {
       "verdict": "NO-GO",
@@ -8,7 +8,7 @@
       "counts": {
         "violation": 2,
         "warning": 0,
-        "not_scored": 9
+        "not_scored": 10
       },
       "violations": [
         {
@@ -61,7 +61,7 @@
       "counts": {
         "violation": 0,
         "warning": 0,
-        "not_scored": 9
+        "not_scored": 10
       },
       "violations": []
     },

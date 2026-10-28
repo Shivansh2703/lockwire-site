@@ -9,7 +9,7 @@
   "title": "Quadruped",
   "based_on": "Solo-12 (Open Dynamic Robot Initiative)",
   "licence": "BSD-3-Clause",
-  "source": "lockwire 0.2.3 from PyPI, `lockwire start --example quadruped`",
+  "source": "lockwire 0.2.4 from PyPI, `lockwire start --example quadruped`",
   "glb": "/robots/quadruped.glb",
   "parts": [
     {
