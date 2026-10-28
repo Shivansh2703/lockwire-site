@@ -4,7 +4,7 @@ import { sha256Hex, type Env } from "./assistant";
 
 const ROBOTS = ["drone", "arm", "quadruped"];
 const MODES = ["design", "declare", "check", "plan", "test", "run", "docs"];
-const EVENTS = new Set(["view", "cta_check", "try_free", "ask", "copy_email", "waitlist", ...ROBOTS.map((r) => `robot_${r}`), ...MODES.map((m) => `mode_${m}`)]);
+const EVENTS = new Set(["view", "cta_check", "try_free", "ask", "copy_email", "waitlist", "drawer", ...ROBOTS.map((r) => `robot_${r}`), ...MODES.map((m) => `mode_${m}`)]);
 const ALLOWED = /^(https?:\/\/(www\.)?lockwirerobotics\.com|http:\/\/(127\.0\.0\.1|localhost)(:\d+)?)$/;
 
 export const isEvent = (e: unknown): e is string => typeof e === "string" && EVENTS.has(e);

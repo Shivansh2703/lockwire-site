@@ -35,7 +35,7 @@ let view3d = null;
 
 // Ask box (present only when the site was built with PUBLIC_ASSISTANT_URL). Answers go in via textContent.
 const ask = $("[data-ask]");
-const askOut = ask && $("[data-ask-out]", ask);
+const chat = $("[data-chat]");
 let askHistory = [];
 let askRobot = state.robot;
 async function sendAsk(q) {
@@ -45,7 +45,8 @@ async function sendAsk(q) {
   ask.dataset.busy = "1";
   const btn = $("button[type=submit]", ask);
   btn.disabled = true;
-  askOut.textContent = "Thinking\u2026";
+  say("you", q);
+  const reply = say("ai", "Thinking\u2026");
   const robot = state.robot;
   let text;
   try {
@@ -61,9 +62,18 @@ async function sendAsk(q) {
   } catch {
     text = "Couldn't reach the assistant. Try again in a moment.";
   }
-  if (robot === state.robot) askOut.textContent = text;
+  if (robot === state.robot) reply.textContent = text;
   delete ask.dataset.busy;
   btn.disabled = false;
+}
+// One chat bubble; text goes in via textContent, never HTML.
+function say(who, text) {
+  const p = document.createElement("p");
+  p.className = `chat-msg ${who}`;
+  p.textContent = text;
+  chat.append(p);
+  chat.scrollTop = chat.scrollHeight;
+  return p;
 }
 if (ask) {
   ask.addEventListener("submit", (e) => {
@@ -150,7 +160,11 @@ function render() {
     }
   }
   paint3d();
-  if (state.robot !== askRobot) { askRobot = state.robot; askHistory = []; if (askOut) askOut.textContent = ""; }
+  if (state.robot !== askRobot) {
+    askRobot = state.robot; askHistory = [];
+    if (chat) chat.replaceChildren(chat.firstElementChild); // keep the greeting
+    if (!drawer.hidden) showTerm();
+  }
 }
 
 async function pick3d() {
@@ -184,11 +198,46 @@ function select(id) {
   render();
 }
 
+// Side drawer: Assistant and Terminal tabs. The terminal replays real lockwire output for the robot.
+const drawer = $("[data-drawer]");
+const opener = $("[data-drawer-open]");
+const termFiles = import.meta.glob("../data/terminal/*.json");
+let termRun = 0;
+async function showTerm() {
+  const pre = $("[data-term]");
+  const run = ++termRun;
+  const blocks = (await termFiles[`../data/terminal/${state.robot}.json`]()).default;
+  if (run !== termRun) return;
+  const lines = blocks.flatMap((b) => [`$ ${b.cmd}`, ...b.out.split("\n"), b.exit ? `[exit ${b.exit}]` : "", ""]);
+  pre.textContent = "";
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  for (let i = 0; i < lines.length; i += still ? lines.length : 3) {
+    if (run !== termRun) return;
+    pre.textContent += lines.slice(i, i + (still ? lines.length : 3)).join("\n") + "\n";
+    if (!still) await new Promise((ok) => setTimeout(ok, 30));
+  }
+}
+function setPane(name) {
+  $$("[data-pane-btn]").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.paneBtn === name)));
+  $$("[data-pane]").forEach((p) => (p.hidden = p.dataset.pane !== name));
+  if (name === "terminal") showTerm();
+}
+function setDrawer(open) {
+  drawer.hidden = !open;
+  root.classList.toggle("drawer-open", open);
+  opener.setAttribute("aria-expanded", String(open));
+  if (open) { hit("drawer"); setPane($("[data-pane-btn][aria-selected=true]")?.dataset.paneBtn ?? "terminal"); }
+  else opener.focus();
+}
+
 // The page is static until the first interaction; one click handler for everything.
 root.addEventListener("click", async (e) => {
   const t = e.target.closest("button");
   if (!t) return;
   if (t.dataset.q) { sendAsk(t.dataset.q); return; }
+  if (t.hasAttribute("data-drawer-open")) { setDrawer(drawer.hidden); return; }
+  if (t.hasAttribute("data-drawer-close")) { setDrawer(false); return; }
+  if (t.dataset.paneBtn) { setPane(t.dataset.paneBtn); return; }
   if (t.dataset.robotBtn && t.dataset.robotBtn !== state.robot) await setRobot(t.dataset.robotBtn);
   else if (t.dataset.modeBtn) await setMode(t.dataset.modeBtn);
   else if (t.dataset.step) await setMode(MODES[(MODES.indexOf(state.mode) + Number(t.dataset.step) + MODES.length) % MODES.length]);
@@ -204,7 +253,11 @@ $(".demo-tabs").addEventListener("keydown", (e) => {
   const next = MODES[(j + MODES.length) % MODES.length];
   setMode(next).then(() => $(`#demo-tab-${next}`).focus());
 });
-root.addEventListener("keydown", (e) => { if (e.key === "Escape" && state.part) select(null); });
+root.addEventListener("keydown", (e) => {
+  if (e.key !== "Escape") return;
+  if (!drawer.hidden) setDrawer(false);
+  else if (state.part) select(null);
+});
 
 // The team cards under the demo open their tab here; the link itself scrolls (and works without JS).
 document.addEventListener("click", (e) => {

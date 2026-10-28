@@ -6,6 +6,7 @@ Check only (exit 1 on drift): add --check
 """
 
 import json
+import os
 import re
 import struct
 import subprocess
@@ -35,6 +36,18 @@ FIX = [
 
 def lw(cwd, *args):
     return subprocess.run(["lockwire", *args], cwd=cwd, capture_output=True, text=True)
+
+
+# The drawer's Terminal tab: what a user sees typing these, plain text, wide enough not to wrap.
+TERM_ENV = {**os.environ, "NO_COLOR": "1", "COLUMNS": "200", "TERM": "dumb"}
+
+
+def terminal(cwd, *cmds):
+    out = []
+    for args in cmds:
+        p = subprocess.run(["lockwire", *args], cwd=cwd, capture_output=True, text=True, env=TERM_ENV)
+        out.append({"cmd": "lockwire " + " ".join(args), "out": (p.stdout + p.stderr).replace(str(cwd), ".").rstrip(), "exit": p.returncode})
+    return out
 
 
 def check(cwd):
@@ -127,6 +140,8 @@ def robot(example):
         doc = YAML(typ="safe").load((cwd / "lockwire.yaml").read_text())
         system = lw(cwd, "describe").stdout
         nodes = glb_nodes(pkg / "scene.glb")
+    with tempfile.TemporaryDirectory() as tmp:
+        term = terminal(Path(tmp), ["start", "--example", example], ["check"])
     cli_line = next(l for l in plan_p.stdout.splitlines() if re.match(r"(NO-GO|GO|NOT SCORED|REFUSED)", l))
     del run_p
 
@@ -236,7 +251,7 @@ def robot(example):
         # The model's licence texts travel with it (they ship next to scene.glb in the package).
         "licence_files": [f"/robots/{example}-{n}.txt" for n in ("LICENSE", "NOTICE") if (pkg / n).exists()],
         "modes": {"design": design, "declare": declare, "check": check, "plan": planm, "docs": docs},
-    }, (pkg / "scene.glb").read_bytes()
+    }, (pkg / "scene.glb").read_bytes(), term
 
 
 if __name__ == "__main__":
@@ -244,7 +259,8 @@ if __name__ == "__main__":
 
     files = {OUT: (json.dumps(build(), indent=2) + "\n").encode()}
     for ex in ROBOTS:
-        data, glb = robot(ex)
+        data, glb, term = robot(ex)
+        files[ROOT / "src" / "data" / "terminal" / f"{ex}.json"] = (json.dumps(term, indent=2) + "\n").encode()
         files[ROOT / "src" / "data" / "robots" / f"{ex}.json"] = (json.dumps(data, indent=2) + "\n").encode()
         files[ROOT / "public" / "robots" / f"{ex}.glb"] = glb
         pkg = Path(sys.modules["lockwire"].__file__).parent / "examples" / ex

@@ -13,6 +13,7 @@ const mode = robot.modes.check;
 const tone = mode.verdict === "NO-GO" ? "bad" : mode.verdict === "GO" ? "go" : "muted";
 const hi = new Set(mode.highlight);
 const assistantUrl = import.meta.env.PUBLIC_ASSISTANT_URL; // unset: the Ask box is not rendered
+const pkgVersion = robot.source.match(/lockwire (\S+)/)?.[1];
 const { ask } = Astro.props; // the 48-hour check mailto, same link as the rest of the page
 ---
 <section class="demo wrap" id="demo" aria-label="Interactive demo" data-demo data-robot="drone" data-mode="check">
@@ -20,6 +21,7 @@ const { ask } = Astro.props; // the 48-hour check mailto, same link as the rest 
     <div class="demo-pick" role="group" aria-label="Robot">
       {pickers.map((p) => <button type="button" data-robot-btn={p.id} aria-pressed={String(p.id === "drone")}>{p.title}</button>)}
     </div>
+    <button type="button" class="btn small dark demo-drawer-btn" data-drawer-open aria-expanded="false" aria-controls="demo-drawer"><span aria-hidden="true">&#9776;</span> {assistantUrl ? "Assistant & terminal" : "Terminal"}</button>
   </div>
 
   <div class="demo-grid">
@@ -70,23 +72,37 @@ const { ask } = Astro.props; // the 48-hour check mailto, same link as the rest 
       <p><strong>Would your robot pass?</strong> Send your URDF or parts list. Within 48 hours you get back the numbers that don&#39;t add up. Free.</p>
       <a class="btn dark small" href={ask}>Check my robot</a>
     </div>
-    {assistantUrl && (
-      <details class="demo-ask-fold">
-      <summary>Ask the Assistant about this robot</summary>
-      <form class="demo-ask" data-ask data-url={assistantUrl} aria-label="Ask about this robot">
-        <div class="demo-ask-chips">
-          <button type="button" data-q="Why is this NO-GO?">Why is this NO-GO?</button>
-          <button type="button" data-q="How would I fix it?">How would I fix it?</button>
-        </div>
-        <div class="demo-ask-row">
-          <input id="demo-ask-q" name="q" aria-label="Ask about this robot" type="text" maxlength="500" autocomplete="off" placeholder="Ask about this robot" />
-          <button type="submit">Send</button>
-        </div>
-        <p class="demo-ask-out" data-ask-out role="status" aria-live="polite"></p>
-      </form>
-      </details>
-    )}
     </div>
+    <aside class="demo-drawer" id="demo-drawer" data-drawer hidden aria-label={assistantUrl ? "Assistant and terminal" : "Terminal"}>
+      <div class="drawer-head">
+        <div class="drawer-tabs" role="tablist">
+          {assistantUrl && <button type="button" role="tab" data-pane-btn="assistant" aria-selected="true">Assistant</button>}
+          <button type="button" role="tab" data-pane-btn="terminal" aria-selected={String(!assistantUrl)}>Terminal</button>
+        </div>
+        <button type="button" class="drawer-close" data-drawer-close aria-label="Close">&times;</button>
+      </div>
+      {assistantUrl && (
+        <div class="drawer-pane chat" data-pane="assistant">
+          <div class="chat-log" data-chat aria-live="polite">
+            <p class="chat-msg ai">Ask me about this robot: why it failed, what to change, what a number means. I only use the numbers on this page.</p>
+          </div>
+          <form class="demo-ask" data-ask data-url={assistantUrl} aria-label="Ask about this robot">
+            <div class="demo-ask-chips">
+              <button type="button" data-q="Why is this NO-GO?">Why is this NO-GO?</button>
+              <button type="button" data-q="How would I fix it?">How would I fix it?</button>
+            </div>
+            <div class="demo-ask-row">
+              <input id="demo-ask-q" name="q" aria-label="Ask about this robot" type="text" maxlength="500" autocomplete="off" placeholder="Ask about this robot" />
+              <button type="submit">Send</button>
+            </div>
+          </form>
+        </div>
+      )}
+      <div class="drawer-pane" data-pane="terminal" hidden={!!assistantUrl}>
+        <pre class="term" data-term tabindex="0" aria-label="Real lockwire output for this robot"></pre>
+        <p class="term-note">Real output of lockwire {pkgVersion} on this starter. Install it and type the same.</p>
+      </div>
+    </aside>
   </div>
   <p class="demo-credit">{robot.title}: based on {robot.based_on} ({robot.licence}{robot.licence_files.map((f) => <>, <a href={f}>{f.endsWith("NOTICE.txt") ? "notice" : "licence"}</a></>)}). Numbers come from <code>{robot.source}</code>.</p>
 </section>
