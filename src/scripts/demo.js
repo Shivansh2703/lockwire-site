@@ -118,6 +118,7 @@ function render() {
     const on = b.dataset.modeBtn === state.mode;
     b.setAttribute("aria-selected", String(on));
     b.tabIndex = on ? 0 : -1;
+    if (on) b.parentElement.scrollTo({ left: b.offsetLeft - (b.parentElement.clientWidth - b.offsetWidth) / 2, behavior: "smooth" }); // narrow screens: keep the current mode in view
   });
   $$("[data-robot-btn]").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.robotBtn === state.robot)));
   const part = data.robot.parts.find((p) => p.id === state.part);

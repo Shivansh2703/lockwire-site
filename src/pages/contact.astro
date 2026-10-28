@@ -25,18 +25,26 @@ import { ASK, EMAIL, GITHUB } from "../site";
 
   <main class="wrap section contact">
     <h1 class="h2">Contact</h1>
-    <p>Questions about Pro or Enterprise, or a free 48-hour check of your robot: write to</p>
-    <p class="contact-mail"><a href={`mailto:${EMAIL}`}>{EMAIL}</a></p>
-    <div class="ctas">
-      <button class="btn" type="button" data-copy={EMAIL}>Copy address</button>
-      <a class="btn dark" href={ASK}>Send a parts list or URDF</a>
+    <p class="planline">Questions about Pro or Enterprise, or a robot you want checked.</p>
+    <div class="contact-cards">
+      <div class="plan">
+        <span class="kicker">Email</span>
+        <a class="contact-mail" href={`mailto:${EMAIL}`}>{EMAIL}</a>
+        <button class="btn" type="button" data-copy={EMAIL}>Copy address</button>
+      </div>
+      <div class="plan">
+        <span class="kicker">Free 48-hour check</span>
+        <p>Send your URDF or parts list. Within 48 hours you get back the numbers that don&#39;t add up.</p>
+        <a class="btn dark" href={ASK}>Send a parts list or URDF</a>
+      </div>
     </div>
-    <p class="planline">For the 48-hour check, attach your URDF or parts list. Within 48 hours you get back the numbers that don&#39;t add up. Free.</p>
   </main>
 
   <footer class="wrap foot">
-    <span>© 2026 Lockwire</span>
-    <span><a href={GITHUB}>GitHub</a> · <a href="/">Home</a></span>
+    <div class="foot-row">
+      <span>© 2026 Lockwire</span>
+      <span class="foot-links"><a href={GITHUB}>GitHub</a><a href="/">Home</a></span>
+    </div>
   </footer>
 
   <script>

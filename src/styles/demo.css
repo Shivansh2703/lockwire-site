@@ -80,9 +80,9 @@
   .demo-view { min-height: 0; }
   .demo-panel { overflow-y: auto; }
 }
-/* One mode at a time between the arrows. */
-.demo-modes .demo-tabs button[aria-selected="false"] { display: none; }
-.demo-modes .demo-tabs button[aria-selected="true"] { min-width: 96px; }
+/* Every mode in view between the arrows (owner 10-28: "add the full list to see"); on narrow screens the row scrolls sideways. */
+.demo-modes .demo-tabs button { flex: none; padding: 7px 10px; }
+@media (min-width: 761px) { .demo-modes .demo-step { display: none; } }
 
 /* Side column: the mode panel, the 48-hour check under it, then the Ask box (only when PUBLIC_ASSISTANT_URL is set at build time). */
 .demo-side { display: flex; flex-direction: column; min-width: 0; min-height: 0; }
