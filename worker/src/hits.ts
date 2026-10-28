@@ -54,7 +54,7 @@ export class Counter {
   }
 }
 
-export const WAITLIST_PER_DAY = 5; // per visitor network
+export const WAITLIST_PER_DAY = 30; // per visitor network; launch traffic arrives through shared lab and campus networks
 const EMAIL = /^[^\s@]{1,64}@[^\s@]{1,190}\.[^\s@]{2,}$/;
 
 /** Handles /hit, /stats and /waitlist; returns null for any other path. */

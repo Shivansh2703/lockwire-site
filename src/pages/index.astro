@@ -76,7 +76,7 @@ const z = test.outside_pct[zKey];
             <tr><td>Missing numbers</td><td>Names every value it could not check, so a gap is never a silent pass</td><td class="num">Drone: {plan.check.counts.not_scored} not checked, each named</td></tr>
             <tr><td>Sensors drifting after power-on</td><td>Learns each sensor's normal range from known-good runs, then flags readings outside it</td><td class="num">Public PX4 flight log, {zKey}: outside its learned normal range {z.known_good}% of the time when healthy, <span class="badtext">{z.checked}%</span> after the fault. {test.caveat} <span class="tag">Pro</span></td></tr>
             {[["Part running hot", "Arm", armRun], ["Motor over its current limit", "Quadruped", quadRun]].map(([problem, who, r]) => (
-              <tr><td>{problem}</td><td>Compares each recorded reading with the part's datasheet limit</td><td class="num">{who}, {r.test.lines[0]} Simulated recording, one planted fault. <span class="tag">Pro</span></td></tr>
+              <tr><td>{problem}</td><td>Compares each recorded reading with the part's datasheet limit</td><td class="num">{who}, {r.test.lines[0]} Preview: a simulated recording with one planted fault. <span class="tag">Pro</span></td></tr>
             ))}
           </tbody>
         </table>

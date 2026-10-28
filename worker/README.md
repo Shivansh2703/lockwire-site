@@ -23,7 +23,7 @@ Read them: `curl -H "Authorization: Bearer <token>" https://<worker-url>/stats` 
 
 ## Waitlist
 
-The site's waitlist form posts `{email, robot}` to `/waitlist`. The Worker keeps the email, the optional robot line and the UTC day in a `waitlist` table in the same Durable Object, one row per email, at most 5 signups per visitor network per day (KV key `wl:<date>:<hash of IP + date>`; the raw IP is never stored). Read the list: `curl -H "Authorization: Bearer <token>" https://<worker-url>/waitlist`.
+The site's waitlist form posts `{email, robot}` to `/waitlist`. The Worker keeps the email, the optional robot line and the UTC day in a `waitlist` table in the same Durable Object, one row per email, at most 30 signups per visitor network per day (KV key `wl:<date>:<hash of IP + date>`; the raw IP is never stored). Read the list: `curl -H "Authorization: Bearer <token>" https://<worker-url>/waitlist`.
 
 ## How the limits work
 
