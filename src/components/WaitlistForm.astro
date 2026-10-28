@@ -6,7 +6,7 @@ const url = import.meta.env.PUBLIC_ASSISTANT_URL;
 <form class="waitlist" id="waitlist" data-waitlist data-url={url} data-mail={EMAIL} aria-label="Join the waitlist">
   <div class="waitlist-row">
     <input name="email" type="email" required autocomplete="email" placeholder="you@lab.com" aria-label="Your email" maxlength="254" />
-    <input name="robot" type="text" autocomplete="off" placeholder="Your robot (optional)" aria-label="Your robot (optional)" maxlength="200" />
+    <input name="robot" type="text" autocomplete="off" placeholder="What are you building? e.g. arm, quadruped, drone" aria-label="What are you building? (optional)" maxlength="200" />
     <button class="btn dark" type="submit">Join the waitlist</button>
   </div>
   <p class="waitlist-note" data-waitlist-out role="status" aria-live="polite">We only use your email to tell you when Pro opens.</p>
