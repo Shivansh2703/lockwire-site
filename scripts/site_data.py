@@ -1,7 +1,7 @@
 """Regenerate src/data/demo.json and src/data/robots/*.json (+ public/robots/*.glb) from real
 runs of the published lockwire package.
 
-Run: uv run --with lockwire==0.2.4 python scripts/site_data.py
+Run: uv run --with lockwire==0.2.5 python scripts/site_data.py
 Check only (exit 1 on drift): add --check
 """
 

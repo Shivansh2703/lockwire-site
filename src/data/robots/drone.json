@@ -9,7 +9,7 @@
   "title": "Drone",
   "based_on": "Holybro X500 V2 PX4 reference quadrotor",
   "licence": "Apache-2.0",
-  "source": "lockwire 0.2.4 from PyPI, `lockwire start --example drone`",
+  "source": "lockwire 0.2.5 from PyPI, `lockwire start --example drone`",
   "glb": "/robots/drone.glb",
   "parts": [
     {

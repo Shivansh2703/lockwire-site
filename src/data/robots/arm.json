@@ -9,7 +9,7 @@
   "title": "Arm",
   "based_on": "SO-101 by TheRobotStudio",
   "licence": "Apache-2.0",
-  "source": "lockwire 0.2.4 from PyPI, `lockwire start --example arm`",
+  "source": "lockwire 0.2.5 from PyPI, `lockwire start --example arm`",
   "glb": "/robots/arm.glb",
   "parts": [
     {

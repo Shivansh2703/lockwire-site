@@ -1,5 +1,5 @@
 {
-  "source": "lockwire 0.2.4 from PyPI, `lockwire start --example drone`",
+  "source": "lockwire 0.2.5 from PyPI, `lockwire start --example drone`",
   "plan": {
     "check": {
       "verdict": "NO-GO",
